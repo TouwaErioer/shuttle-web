@@ -28,7 +28,7 @@
                         label: "发现"
                     },
                     {
-                        label: "订单"
+                        label: "服务"
                     },
                     {
                         label: "搜索"
