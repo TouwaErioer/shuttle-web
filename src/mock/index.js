@@ -47,7 +47,7 @@ mock.product = function () {
             'rate': 5,
             'sales': 0,
             'price': 10
-        }
+        },
     ]
 }
 export default mock

@@ -64,4 +64,9 @@
     .tab-container {
         height: 100%;
     }
+
+    .tabs-content{
+        height: 100%!important;
+        overflow: hidden scroll!important;
+    }
 </style>
