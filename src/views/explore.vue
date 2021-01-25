@@ -9,12 +9,12 @@
         <!--服务区-->
         <div class="flex flex-wrap justify-sb">
             <div
-                    v-for="(service,index) in services"
+                    v-for="service in services"
                     :key="service.id"
                     class="cover-item theme-bg"
                     hoverclass="hoverclass"
-                    :style="'background-color:' + color[index]">
-                <span :class="icon[index]" style="font-size: 25px;margin: 5px"></span>
+                    :style="'background-color:' + service.color">
+                <span :class="service.icon" style="font-size: 25px;margin: 5px"></span>
                 <p v-text="service.name"></p>
             </div>
         </div>
@@ -44,77 +44,19 @@
 </template>
 
 <script>
+    import mock from "@/mock";
 
     export default {
         name: "Explore",
-        data() {
-            return {
-                color: ['#86C166', '#51A8DD', '#8B81C3', "rgb(245 108 108 / 0.85)", '#F9BF45', '#DC9FB4', '#DB8E71', '#999'],
-                icon: ['el-icon-shopping-bag-2', 'el-icon-printer', 'el-icon-box', 'el-icon-shopping-cart-2', 'el-icon-position', 'el-icon-user', 'el-icon-s-order', 'el-icon-setting'],
-                slide_tabs: [
-                    {
-                        label: "发现"
-                    },
-                    {
-                        label: "订单"
-                    },
-                    {
-                        label: "接单"
-                    },
-                    {
-                        label: "搜索"
-                    },
-                    {
-                        label: "我的"
-                    }
-                ]
-            }
-        },
         computed: {
             getProducts() {
-                return [
-                    {
-                        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
-                        'name': '套餐一',
-                        'shop': '外卖',
-                        'rate': 5,
-                        'sales': 0,
-                        'price': 10
-                    },
-                    {
-                        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
-                        'name': '套餐二',
-                        'shop': '外卖',
-                        'rate': 5,
-                        'sales': 0,
-                        'price': 10
-                    },
-                    {
-                        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
-                        'name': '套餐三',
-                        'shop': '外卖',
-                        'rate': 5,
-                        'sales': 0,
-                        'price': 10
-                    }
-                ]
+                return mock.product()
             },
             image(){
-                return [
-                    'https://www.foodiesfeed.com/wp-content/uploads/2017/05/juicy-burger-in-a-vibrant-interior.jpg',
-                    'https://www.foodiesfeed.com/wp-content/uploads/2019/02/messy-pizza-on-a-black-table-768x512.jpg',
-                    'https://www.foodiesfeed.com/wp-content/uploads/2019/06/beautiful-vibrant-shot-of-traditional-korean-meals-768x512.jpg'
-                ]
+                return mock.carouselImage()
             },
             services(){
-                return [
-                    {'id': 1, 'name': '外卖'},
-                    {'id': 2, 'name': '打印'},
-                    {'id': 3, 'name': '超市'},
-                    {'id': 4, 'name': '快递'},
-                    {'id': 5, 'name': '跑腿'},
-                    {'id': 6, 'name': '其他'},
-                ]
+               return mock.services()
             }
         }
     };
