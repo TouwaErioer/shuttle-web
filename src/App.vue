@@ -1,15 +1,11 @@
 <template>
-    <Skeleton style="height: 100%;"/>
+    <router-view/>
 </template>
 
 <script>
-import Skeleton from './layout/skeleton'
 
 export default {
   name: 'App',
-  components: {
-      Skeleton
-  }
 }
 </script>
 

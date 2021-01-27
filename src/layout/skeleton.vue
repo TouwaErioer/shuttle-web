@@ -1,48 +1,48 @@
 <template>
     <div>
-        <Tabs :tabs="tabs" class="tab-container">
-            <div class="tip">
+        <el-tabs v-model="activeName" type="card" tab-position="bottom" :stretch="true">
+            <el-tab-pane name="explore">
+                <span slot="label"><i class="el-icon-goods"></i> 发现</span>
                 <Explore/>
-            </div>
-            <div class="tip">This is order tab</div>
-            <div class="tip">This is search tab</div>
-            <div class="tip">This is center tab</div>
-        </Tabs>
+            </el-tab-pane>
+            <el-tab-pane name="service">
+                <span slot="label"><i class="el-icon-folder"></i> 服务</span>
+                <Service/>
+            </el-tab-pane>
+            <el-tab-pane name="search">
+                <span slot="label"><i class="el-icon-search"></i> 搜索</span>
+                <Search/>
+            </el-tab-pane>
+            <el-tab-pane name="center">
+                <span slot="label"><i class="el-icon-user" slot="label"></i> 我的</span>
+                This is center tab
+            </el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 
 <script>
-    import Tabs from "vue-slide-tabs";
     import Explore from "../views/explore"
+    import Service from "@/views/service";
+    import Search from "@/views/search";
 
     export default {
         name: "skeleton",
         components: {
-            Tabs,
+            Search,
+            Service,
             Explore
         },
         data() {
             return {
-                tabs: [
-                    {
-                        label: "发现"
-                    },
-                    {
-                        label: "服务"
-                    },
-                    {
-                        label: "搜索"
-                    },
-                    {
-                        label: "我的"
-                    }
-                ]
+                activeName:'explore',
             }
         }
     };
 </script>
 
-<style>
+<style lang="scss">
+    @import "src/style/header.scss";
     /*cover vue-slide-tabs style*/
     .scroll-bar {
         border-bottom: 0px !important;
@@ -65,8 +65,17 @@
         height: 100%;
     }
 
-    .tabs-content{
-        height: 100%!important;
-        overflow: hidden scroll!important;
+    .tabs-content {
+        overflow: hidden scroll !important;
+    }
+    .el-tabs__header{
+        position: fixed!important;
+        bottom: 0px!important;
+        background: white!important;
+        width: 100%!important;
+        text-align: center!important;
+    }
+    .el-tab-pane{
+        margin-bottom: 50px;
     }
 </style>

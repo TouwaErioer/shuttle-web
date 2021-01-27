@@ -3,12 +3,12 @@ const mock = {}
 // 服务
 mock.services = function () {
     return [
-        {'id': 1, 'name': '外卖','color':'#86C166','icon':'el-icon-shopping-bag-2'},
-        {'id': 2, 'name': '打印','color':'#51A8DD','icon':'el-icon-printer'},
-        {'id': 3, 'name': '超市','color':'#8B81C3','icon':'el-icon-box'},
-        {'id': 4, 'name': '快递','color':'rgb(245 108 108 / 0.85)','icon':'el-icon-shopping-cart-2'},
-        {'id': 5, 'name': '跑腿','color':'#F9BF45','icon':'el-icon-position'},
-        {'id': 6, 'name': '其他','color':'#DC9FB4','icon':'el-icon-user'},
+        {'id': 1, 'name': '外卖', 'color': '#86C166', 'icon': 'el-icon-shopping-bag-2'},
+        {'id': 2, 'name': '打印', 'color': '#51A8DD', 'icon': 'el-icon-printer'},
+        {'id': 3, 'name': '超市', 'color': '#8B81C3', 'icon': 'el-icon-shopping-cart-2'},
+        {'id': 4, 'name': '快递', 'color': 'rgb(245 108 108 / 0.85)', 'icon': 'el-icon-box'},
+        {'id': 5, 'name': '跑腿', 'color': '#F9BF45', 'icon': 'el-icon-position'},
+        {'id': 6, 'name': '其他', 'color': '#DC9FB4', 'icon': 'el-icon-user'},
     ]
 }
 
@@ -47,7 +47,81 @@ mock.product = function () {
             'rate': 5,
             'sales': 0,
             'price': 10
-        },
+        }
     ]
+}
+
+// 搜索
+mock.search = function (keywords) {
+    if (keywords != '套餐一' & keywords != '套餐二' & keywords != '套餐三'){
+        return []
+    }
+    const results = {
+        '套餐一':
+            [
+                {
+                    'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
+                    'name': '套餐一',
+                    'shop': '外卖',
+                    'rate': 5,
+                    'sales': 0,
+                    'price': 10
+                }
+            ],
+        '套餐二':
+            [
+                {
+                    'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
+                    'name': '套餐二',
+                    'shop': '外卖',
+                    'rate': 5,
+                    'sales': 0,
+                    'price': 10
+                }
+            ],
+        '套餐三':
+            [
+                {
+                    'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
+                    'name': '套餐三',
+                    'shop': '外卖',
+                    'rate': 5,
+                    'sales': 0,
+                    'price': 10
+                }
+            ]
+    }
+    return results[keywords]
+}
+
+// 商店
+mock.stores = function () {
+    const stores = [
+        {
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
+            'name': '套餐一',
+            'shop': '外卖',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
+            'name': '套餐二',
+            'shop': '外卖',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
+            'name': '套餐三',
+            'shop': '外卖',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        }
+    ]
+    return stores
 }
 export default mock

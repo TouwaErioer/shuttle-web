@@ -3,7 +3,7 @@
         <el-image class="item-image" :src="item.image" fit="cover"/>
         <div type="flex" class="goods-info">
             <div class="item-info">
-                <el-tag size="mini" v-text="item.shop" effect="dark" class="item-tag" type="warning"></el-tag>
+                <el-tag size="mini" v-text="item.shop" effect="dark" class="item-tag" type="warning" style="font-size:1.5vh"></el-tag>
                 <span v-text="item.name" class="item-name"></span>
             </div>
             <div class="item-desc">

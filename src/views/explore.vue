@@ -1,5 +1,5 @@
 <template>
-    <div class="body" index style="padding-top: 10px;">
+    <div class="body" index>
         <!--轮播图-->
         <el-carousel height="150px" class="carousel" indicator-position="none">
             <el-carousel-item v-for="(item,index) in image" :key="index">
@@ -9,7 +9,7 @@
         <!--服务区-->
         <div class="flex flex-wrap justify-sb">
             <div v-for="service in services" :key="service.id" class="cover-item theme-bg" hoverclass="hoverclass"
-                    :style="'background-color:' + service.color">
+                    :style="'background-color:' + service.color" @click="$router.push('/service/' + service.id)">
                 <span :class="service.icon" class="icon"></span>
                 <p v-text="service.name"></p>
             </div>
@@ -31,6 +31,16 @@
     export default {
         name: "Explore",
         components: {StoreItem},
+        data(){
+            return{
+                services:[]
+            }
+        },
+        created(){
+            let services = mock.services()
+            this.services = services
+            this.$store.commit('setServices',services)
+        },
         computed: {
             getProducts() {
                 return mock.product()
@@ -38,9 +48,6 @@
             image(){
                 return mock.carouselImage()
             },
-            services(){
-               return mock.services()
-            }
         }
     };
 </script>
