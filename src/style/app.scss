@@ -1,0 +1,30 @@
+/*
+ * 全局样式
+ */
+
+// div {
+//   overflow: hidden;
+// }
+
+// flex布局
+.flex {
+  display: flex;
+
+  &[flex~="full-screen"] {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  &[flex~="column"] {
+    flex-direction: column;
+  }
+
+  & > [flex^="1"] {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  & > [flex^="1-scroll"] {
+    overflow-y: auto;
+  }
+}
