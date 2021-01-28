@@ -1,17 +1,5 @@
 <template>
   <div class="flex" flex="full-screen column">
-    <!-- <a-carousel
-      class="views"
-      flex="1-scroll"
-      ref="MyCarousel"
-      :dots="false"
-      :after-change="onChange"
-    >
-      <div v-for="item in sectionList" :key="item.name">
-        <router-view :name="item.routerViewName" />
-      </div>
-    </a-carousel> -->
-
     <el-carousel
       ref="MyCarousel"
       class="views"
@@ -65,7 +53,7 @@ export default {
         },
         {
           name: "我的",
-          routerViewName: "",
+          routerViewName: "center",
           icon: "user",
         },
       ],
@@ -108,12 +96,12 @@ export default {
       color: #409eff;
     }
 
-    i {
+    > i {
       font-size: 22px;
       margin-bottom: 3px;
     }
 
-    .menu-title {
+    > .menu-title {
       font-size: 10px;
     }
   }
