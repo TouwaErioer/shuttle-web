@@ -3,8 +3,8 @@ const mock = {}
 // 服务
 mock.services = function () {
     return [
-        {'id': 1, 'name': '外卖', 'color': '#86C166', 'icon': 'el-icon-shopping-bag-2'},
-        {'id': 2, 'name': '打印', 'color': '#51A8DD', 'icon': 'el-icon-printer'},
+        {'id': 1, 'name': '外卖', 'color': '#51A8DD', 'icon': 'el-icon-shopping-bag-2'},
+        {'id': 2, 'name': '打印', 'color': '#86C166', 'icon': 'el-icon-printer'},
         {'id': 3, 'name': '超市', 'color': '#8B81C3', 'icon': 'el-icon-shopping-cart-2'},
         {'id': 4, 'name': '快递', 'color': 'rgb(245 108 108 / 0.85)', 'icon': 'el-icon-box'},
         {'id': 5, 'name': '跑腿', 'color': '#F9BF45', 'icon': 'el-icon-position'},
@@ -27,7 +27,7 @@ mock.product = function () {
         {
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
             'name': '套餐一',
-            'shop': '外卖',
+            'shop': '套餐',
             'rate': 5,
             'sales': 0,
             'price': 10
@@ -35,7 +35,7 @@ mock.product = function () {
         {
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
             'name': '套餐二',
-            'shop': '外卖',
+            'shop': '套餐',
             'rate': 5,
             'sales': 0,
             'price': 10
@@ -43,7 +43,7 @@ mock.product = function () {
         {
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
             'name': '套餐三',
-            'shop': '外卖',
+            'shop': '套餐',
             'rate': 5,
             'sales': 0,
             'price': 10
@@ -98,30 +98,42 @@ mock.search = function (keywords) {
 mock.stores = function () {
     const stores = [
         {
-            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
-            'name': '套餐一',
-            'shop': '外卖',
-            'rate': 5,
-            'sales': 0,
-            'price': 10
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg',
+            'name': '套餐',
+            'service': '外卖',
+            'rate': 2,
+            'sales': 6,
+            'price': 10,
+            'category': '一食堂'
         },
         {
-            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
-            'name': '套餐二',
-            'shop': '外卖',
-            'rate': 5,
-            'sales': 0,
-            'price': 10
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/hot-shakshuka-819x1024.jpg',
+            'name': '面馆',
+            'service': '外卖',
+            'rate': 1,
+            'sales': 5,
+            'price': 10,
+            'category': '二食堂'
         },
         {
-            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
-            'name': '套餐三',
-            'shop': '外卖',
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
+            'name': '米线',
+            'service': '外卖',
             'rate': 5,
-            'sales': 0,
-            'price': 10
+            'sales': 1,
+            'price': 10,
+            'category': '三食堂'
         }
     ]
     return stores
+}
+
+mock.category = function (serviceId) {
+    let categories = {
+        '1':['一食堂','二食堂','三食堂'],
+        '2':['宿舍','门市'],
+        '3':['校内','校外']
+    }
+    return categories[serviceId]
 }
 export default mock

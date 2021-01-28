@@ -36,7 +36,7 @@
 <script>
     import Empty from "@/components/empty";
     import common from "@/utils/commont";
-    import StoreItem from "@/components/store-item";
+    import StoreItem from "@/components/item";
     import mock from "@/mock";
 
     export default {

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import store from "@/page/explore/store"
+import service from "@/page/explore/stores"
 import skeleton from "@/layout/skeleton"
 
 const routes = [
@@ -13,7 +13,7 @@ const routes = [
     },
     {
         path: '/service/:id',
-        component: store,
+        component: service,
         props: true
     }
 ]

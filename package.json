@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.30",
     "element-ui": "^2.15.0",
+    "mescroll.js": "^1.4.2",
     "node-sass": "^4.14.1",
     "sass-loader": "^10.1.1",
     "vue": "^2.6.11",

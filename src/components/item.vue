@@ -3,15 +3,15 @@
         <el-image class="item-image" :src="item.image" fit="cover"/>
         <div type="flex" class="goods-info">
             <div class="item-info">
-                <el-tag size="mini" v-text="item.shop" effect="dark" class="item-tag" type="warning" style="font-size:1.5vh"></el-tag>
                 <span v-text="item.name" class="item-name"></span>
+                <slot/>
             </div>
             <div class="item-desc">
                 <el-rate v-model="item.rate" disabled text-color="#ff9900" show-score>
                 </el-rate>
             </div>
             <div class="item-tag">
-                <span v-text="'销量：' + item.sales"></span>
+                <span v-text="'总销量：' + item.sales"></span>
             </div>
         </div>
     </div>
@@ -19,7 +19,7 @@
 
 <script>
     export default {
-        name: "store-item",
+        name: "item",
         props: ['item']
     }
 </script>
@@ -30,7 +30,7 @@
         background-color: #ffffff;
         border-bottom: 1px solid #dddddd;
         font-size: smaller;
-        padding-bottom: 10px;
+        padding: 10px 0;
 
         & > * {
             margin: 5px;
@@ -70,6 +70,8 @@
 
     .item-info {
         margin-top: 8px;
+        display: flex;
+        align-items: center;
     }
 
     .item-name {

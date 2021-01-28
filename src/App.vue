@@ -1,12 +1,14 @@
 <template>
-    <router-view/>
+    <transition name="el-fade-in-linear">
+        <router-view/>
+    </transition>
 </template>
 
 <script>
 
-export default {
-  name: 'App',
-}
+    export default {
+        name: 'App',
+    }
 </script>
 
 <style scoped>
