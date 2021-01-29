@@ -25,7 +25,6 @@ export default {};
         height: 1px;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
         color: rgba(0, 0, 0, 0.1);
-        color: var(--weui-FG-3);
         -webkit-transform-origin: 0 0;
         transform-origin: 0 0;
         -webkit-transform: scaleY(0.5);

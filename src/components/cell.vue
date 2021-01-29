@@ -1,5 +1,5 @@
 <template>
-    <div class="cell flex" v-bind:[type]="type" :flex="flex">
+    <div class="cell flex" :flex="flex">
         <header>
             <div class="title" v-if="title" v-text="title" />
             <i v-else-if="icon" :class="'el-icon-' + icon" />
@@ -14,7 +14,7 @@
             <i
                 v-if="access"
                 class="el-icon-arrow-right"
-                style="opacity:.8"
+                :class="{ light: accessLight }"
             />
         </footer>
     </div>
@@ -28,10 +28,11 @@ export default {
         icon: String,
         text: String,
         flex: {
-            type:String,
-            default:"align-items_center"
+            type: String,
+            default: "align-items_center",
         },
         access: Boolean,
+        accessLight: Boolean,
     },
 };
 </script>
@@ -43,6 +44,15 @@ export default {
         > .title,
         > i {
             margin-right: 15px;
+        }
+    }
+
+    > footer {
+        > i.el-icon-arrow-right {
+            color: rgba(0, 0, 0, 0.3);
+            &.light {
+                color: rgba(255, 255, 255, 0.7);
+            }
         }
     }
 }
