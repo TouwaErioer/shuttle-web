@@ -43,6 +43,14 @@ const routes = [
         path: '/product/:pid',
         component: product,
         props: true
+    },
+    {
+        path: '/center/edit',
+        component: () => import('@/page/center/edit.vue'),
+    },
+    {
+        path: '/center/setting',
+        component: () => import('@/page/center/setting.vue'),
     }
 ]
 export default new VueRouter({
