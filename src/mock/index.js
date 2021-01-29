@@ -25,6 +25,7 @@ mock.carouselImage = function () {
 mock.product = function () {
     return [
         {
+            'id': 1,
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
             'name': '套餐一',
             'shop': '套餐',
@@ -33,6 +34,7 @@ mock.product = function () {
             'price': 10
         },
         {
+            'id': 2,
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
             'name': '套餐二',
             'shop': '套餐',
@@ -41,6 +43,61 @@ mock.product = function () {
             'price': 10
         },
         {
+            'id': 3,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
+            'name': '套餐三',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 4,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
+            'name': '套餐一',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 5,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
+            'name': '套餐二',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 6,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
+            'name': '套餐三',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 7,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
+            'name': '套餐一',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 8,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
+            'name': '套餐二',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 9,
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
             'name': '套餐三',
             'shop': '套餐',
@@ -98,6 +155,7 @@ mock.search = function (keywords) {
 mock.stores = function () {
     const stores = [
         {
+            'id': 1,
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg',
             'name': '套餐',
             'service': '外卖',
@@ -107,6 +165,7 @@ mock.stores = function () {
             'category': '一食堂'
         },
         {
+            'id': 2,
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/hot-shakshuka-819x1024.jpg',
             'name': '面馆',
             'service': '外卖',
@@ -116,6 +175,7 @@ mock.stores = function () {
             'category': '二食堂'
         },
         {
+            'id': 3,
             'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
             'name': '米线',
             'service': '外卖',
@@ -123,6 +183,66 @@ mock.stores = function () {
             'sales': 1,
             'price': 10,
             'category': '三食堂'
+        },
+        {
+            'id': 4,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
+            'name': '套餐一',
+            'service': '外卖',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 5,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
+            'name': '套餐二',
+            'service': '外卖',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 6,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
+            'name': '套餐三',
+            'service': '外卖',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 7,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2019/04/mae-mu-noodles-vegetables-egg-819x1024.jpg',
+            'name': '套餐一',
+            'service': '外卖',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 8,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/fried-egg-and-guacamole-sandwiches-819x1024.jpg',
+            'name': '套餐二',
+            'service': '外卖',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
+        },
+        {
+            'id': 9,
+            'image': 'https://www.foodiesfeed.com/wp-content/uploads/2018/12/green-salad-with-hemp-seeds.jpg',
+            'name': '套餐三',
+            'service': '外卖',
+            'shop': '套餐',
+            'rate': 5,
+            'sales': 0,
+            'price': 10
         }
     ]
     return stores

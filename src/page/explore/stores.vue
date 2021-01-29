@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <Headers :color="color">
+    <div class="container">
+        <Headers>
             <span><i :class="icon"></i> {{title}}</span>
         </Headers>
         <div class="content">
@@ -59,7 +59,8 @@
                 </div>
             </el-collapse-transition>
             <div class="stores">
-                <Item v-for="store in stores" :key="store.id" :item="store"/>
+                <Item v-for="store in stores" :key="store.id" :item="store"
+                      @click.native="$router.push('/store/' + store.id)"/>
             </div>
         </div>
     </div>
@@ -93,7 +94,7 @@
             }
         },
         created() {
-            let stores = this.$store.state.services.get(parseInt(this.id))
+            let stores = this.$store.state.service.services.get(parseInt(this.id))
             this.stores = mock.stores()
             this.categories = mock.category(this.id)
             this.filter = this.categories[0]
@@ -125,11 +126,15 @@
 </script>
 
 <style scoped>
-    .stores {
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
     }
 
     .content {
-        margin: 38px 10px;
+        flex: 1;
+        overflow-y: scroll;
     }
 
     .filters {
@@ -137,6 +142,7 @@
         width: 100%;
         display: flex;
         justify-content: center;
+        padding-top: 10px;
     }
 
     .filter {
@@ -157,13 +163,8 @@
         padding: 10px 0;
     }
 
-    .option {
-        height: 30px;
-        margin-left: 2vh;
-        font-size: 3vh;
-        color: #606266;
-        line-height: 30px;
-        width: 20%;
+    .stores{
+        margin: 0 10px;
     }
 
 </style>

@@ -19,6 +19,12 @@
                 <i class="el-icon-data-analysis"></i> 后台管理
             </span>
         </div>
+
+        <div class="service" style="background: #67c23ac7" @click="$router.push('/cart')">
+            <span>
+                <i class="el-icon-shopping-cart-1"></i> 购物车
+            </span>
+        </div>
     </div>
 </template>
 

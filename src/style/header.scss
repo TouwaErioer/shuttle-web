@@ -1,6 +1,6 @@
 .simple-header {
-  top: 0;
-  left: 0;
+  //top: 0;
+  //left: 0;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -9,9 +9,9 @@
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   background: #fff;
-  position: fixed;
-  top: 0px;
-  z-index: 10;
+  //position: fixed;
+  //top: 0px;
+  //z-index: 10;
   border-bottom: 1px solid #dcdcdc;
 
   .simple-header-name {
