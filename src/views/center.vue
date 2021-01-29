@@ -1,28 +1,57 @@
 <template>
-    <div>
-        <el-row>
-            <el-col :span="8" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
-                <el-card :body-style="{ padding: '0px' }">
-                    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">
-                    <div style="padding: 14px;">
-                        <span>好吃的汉堡</span>
-                        <div class="bottom clearfix">
-                            <time class="time">{{ currentDate }}</time>
-                            <el-button type="text" class="button">操作按钮</el-button>
-                        </div>
-                    </div>
-                </el-card>
-            </el-col>
-        </el-row>
+    <div class="center">
+        <div class="user-info-area">
+            <cell :access="true">
+                <template v-slot:header>
+                    <el-avatar
+                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                    />
+                </template>
+                <div class="info-list">
+                    <cell icon="user" text="admin" />
+                    <cell icon="phone" text="13000000000" />
+                </div>
+            </cell>
+        </div>
+        <div class="features">
+            <cells>
+                <cell icon="s-order" text="我的订单" :access="true" />
+                <cell icon="present" text="积分商城" :access="true" />
+                <cell icon="bank-card" text="会员卡" :access="true" />
+            </cells>
+            <cells>
+                <cell icon="service" text="服务中心" :access="true" />
+            </cells>
+        </div>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "center"
-    }
+import cell from "@/components/cell.vue";
+import cells from "@/components/cells.vue";
+
+export default {
+    name: "center",
+    components: {
+        cell,
+        cells,
+    },
+};
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.center {
+    background-color: #f8f8f8;
+    height: 100%;
+}
 
+.user-info-area {
+    background-color: #298eeb;
+    color: #fefefe;
+    padding-top: 50px;
+}
+
+.features {
+    padding: 0 10px;
+}
 </style>

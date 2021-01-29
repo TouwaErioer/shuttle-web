@@ -20,6 +20,7 @@ const routes = [
                     explore: () => import('@/views/explore.vue'),
                     service: () => import('@/views/service.vue'),
                     search: () => import('@/views/search.vue'),
+                    center: () => import('@/views/center.vue'),
                 },
             }
         ]
