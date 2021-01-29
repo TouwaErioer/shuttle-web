@@ -5,6 +5,9 @@ Vue.use(VueRouter)
 
 import service from "@/page/explore/stores"
 import skeleton from "@/layout/skeleton"
+import store from "@/page/explore/store"
+import cart from '@/page/explore/cart'
+import product from '@/page/explore/product'
 
 const routes = [
     {
@@ -19,13 +22,26 @@ const routes = [
                     search: () => import('@/views/search.vue'),
                     center: () => import('@/views/center.vue'),
                 },
-                // component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
             }
         ]
     },
     {
         path: '/service/:id',
         component: service,
+        props: true
+    },
+    {
+        path: '/store/:id',
+        component: store,
+        props: true
+    },
+    {
+        path: '/cart',
+        component: cart
+    },
+    {
+        path: '/product/:pid',
+        component: product,
         props: true
     }
 ]

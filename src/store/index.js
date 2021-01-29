@@ -2,15 +2,14 @@ import Vue from 'vue'
 
 import Vuex from 'vuex'
 
+import cart from '@/store/modules/cart'
+import service from '@/store/modules/sevice'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state: {
-        services: new Map()
+    modules: {
+        cart,
+        service
     },
-    mutations: {
-        setServices(state, services) {
-            services.forEach(service => state.services.set(service.id, service))
-        }
-    }
 })
