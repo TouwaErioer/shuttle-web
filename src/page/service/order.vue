@@ -27,6 +27,7 @@
 </template>
 
 <script>
+
     import Page from "@/layout/page";
     import Headers from "@/components/headers";
     import mock from "@/mock";
@@ -69,10 +70,5 @@
     }
 </script>
 
-<style>
-
-    th {
-        display: none !important;
-    }
-
+<style scoped>
 </style>

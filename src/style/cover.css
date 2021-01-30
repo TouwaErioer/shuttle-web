@@ -3,3 +3,25 @@
         width: 60% !important;
     }
 }
+
+th {
+    display: none !important;
+}
+
+.el-message-box__message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.el-message-box__btns {
+    text-align: center!important;
+}
+
+.el-message-box__title{
+    text-align: center;
+}
+
+.el-message-box__close{
+    display: none!important;
+}

@@ -281,4 +281,54 @@ mock.order = function () {
         status: '1'
     }]
 }
+
+mock.receive = function () {
+    return [{
+        id: 1,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '-1'
+    }, {
+        id: 2,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '0'
+    }, {
+        id: 3,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '1'
+    }]
+}
+
+mock.received = function () {
+    return [{
+        id: 1,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '0'
+    }, {
+        id: 2,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '0'
+    }, {
+        id: 3,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '1'
+    }]
+}
 export default mock
