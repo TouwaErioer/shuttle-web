@@ -1,5 +1,5 @@
 <template>
-    <div class="cell flex" :flex="flex">
+    <div class="cell flex" :flex="flex" v-on="$listeners">
         <header>
             <div class="title" v-if="title" v-text="title" />
             <i v-else-if="icon" :class="'el-icon-' + icon" />
