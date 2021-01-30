@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="service" style="background: #6395edc9">
+        <div class="service" style="background: #6395edc9" @click="$router.push('/order')">
             <span>
                 <i class="el-icon-tickets"></i> 订单
             </span>
         </div>
-        <div class="service" style="background: #ff7f50a8">
+        <div class="service" style="background: #ff7f50a8" @click="$router.push('/receive')">
             <span>
                 <i class="el-icon-sell"></i> 接单
             </span></div>

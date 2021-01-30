@@ -1,7 +1,7 @@
 <template>
     <div class="list-item" :style="color != null?'background-color:unset;border-bottom:unset':null"
          v-if="count == null?true:count != 0">
-        <el-image class="item-image" :src="item.image" fit="cover" :preview-src-list="[item.image]"/>
+        <el-image class="item-image" :src="item.image" fit="cover"/>
         <div type="flex" class="goods-info">
             <div class="item-info">
                 <span v-text="item.name" class="item-name"></span>

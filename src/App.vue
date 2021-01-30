@@ -12,5 +12,5 @@
 </script>
 
 <style scoped>
-
+    @import 'style/cover.css';
 </style>

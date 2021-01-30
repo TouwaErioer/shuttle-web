@@ -1,59 +1,64 @@
 <template>
-    <div class="container">
-        <Headers>
-            <span><i class="el-icon-shopping-bag-2"></i> 商店详情</span>
-        </Headers>
-        <div class="detail" :style="'background-image:url(' + store.image + ')'">
-            <div class="info">
-                <item :item="store" :color="false">
-                    <el-tag size="mini" v-text="'外卖'" effect="dark" class="item-tag" type="warning"
-                            style="font-size:2vh;height: unset"></el-tag>
-                </item>
+    <Page>
+        <template v-slot:headers>
+            <Headers>
+                <span><i class="el-icon-shopping-bag-2"></i> 商店详情</span>
+            </Headers>
+            <div :style="'background-image:url(' + store.image + ')'">
+                <div class="info">
+                    <item :item="store" :color="false">
+                        <el-tag size="mini" v-text="'外卖'" effect="dark" class="item-tag" type="warning"
+                                style="font-size:2vh;height: unset"></el-tag>
+                    </item>
+                </div>
             </div>
-        </div>
+        </template>
+        <template v-slot:center>
+            <div>
+                <el-tabs v-model="activeName" type="card" :stretch="true">
+                    <el-tab-pane name="product">
+                        <span slot="label"><i class="el-icon-goods"></i> 商品</span>
+                        <div class="content">
+                            <div class="products">
+                                <Item v-for="product in products" :key="product.id" :item="product">
+                                    <template v-slot:button>
+                                        <div class="add" @click="add(product)">
+                                            <el-button type="success" size="mini" icon="el-icon-circle-plus-outline"
+                                                       round>
+                                                1￥
+                                            </el-button>
+                                        </div>
+                                    </template>
 
-        <div class="tabs">
-            <el-tabs v-model="activeName" type="card" :stretch="true">
-                <el-tab-pane name="product">
-                    <span slot="label"><i class="el-icon-goods"></i> 商品</span>
-                    <div class="content">
-                        <div class="products">
-                            <Item v-for="product in products" :key="product.id" :item="product"
-                                  @click.native="$router.push('/product/' + product.id)">
-                                <template v-slot:button>
-                                    <div class="add" @click="add(product)">
-                                        <el-button type="success" size="mini" icon="el-icon-circle-plus-outline" round>
-                                            1￥
-                                        </el-button>
-                                    </div>
-                                </template>
-
-                            </Item>
+                                </Item>
+                            </div>
                         </div>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane name="comment">
-                    <span slot="label"><i class="el-icon-chat-line-square"></i> 评论</span>
-                </el-tab-pane>
-            </el-tabs>
-        </div>
-
-        <div class="cart" @click="$router.push('/cart')">
-            <div class="car-button">
-                <span><i class="el-icon-shopping-cart-1"></i> 购物车 {{getCount}}</span>
+                    </el-tab-pane>
+                    <el-tab-pane name="comment">
+                        <span slot="label"><i class="el-icon-chat-line-square"></i> 评论</span>
+                    </el-tab-pane>
+                </el-tabs>
             </div>
-        </div>
-    </div>
+        </template>
+        <template v-slot:footer>
+            <div class="cart">
+                <div class="car-button" @click="$router.push('/cart')">
+                    <span><i class="el-icon-shopping-cart-1"></i> 购物车 {{getCount}}</span>
+                </div>
+            </div>
+        </template>
+    </Page>
 </template>
 
 <script>
     import Headers from "@/components/headers";
     import mock from "@/mock";
     import Item from "@/components/item"
+    import Page from "@/layout/page";
 
     export default {
         name: "store",
-        components: {Headers, Item},
+        components: {Page, Headers, Item},
         props: ['id'],
         data() {
             return {
@@ -86,24 +91,6 @@
 </script>
 
 <style>
-    .container {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .tabs {
-        flex: 1;
-        overflow-y: scroll;
-    }
-
-    .detail {
-        height: 125px;
-        width: 100%;
-        background: #6ab6fc;
-        display: flex;
-        align-items: center;
-    }
 
     .products {
         margin: 5px;

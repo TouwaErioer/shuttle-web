@@ -7,7 +7,8 @@ import service from "@/page/explore/stores"
 import skeleton from "@/layout/skeleton"
 import store from "@/page/explore/store"
 import cart from '@/page/explore/cart'
-import product from '@/page/explore/product'
+import order from '@/page/service/order'
+import receive from '@/page/service/receive'
 
 const routes = [
     {
@@ -40,9 +41,12 @@ const routes = [
         component: cart
     },
     {
-        path: '/product/:pid',
-        component: product,
-        props: true
+        path: '/order',
+        component: order
+    },
+    {
+        path: '/receive',
+        component: receive
     }
 ]
 export default new VueRouter({

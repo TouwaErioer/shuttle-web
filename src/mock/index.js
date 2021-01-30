@@ -110,7 +110,7 @@ mock.product = function () {
 
 // 搜索
 mock.search = function (keywords) {
-    if (keywords != '套餐一' & keywords != '套餐二' & keywords != '套餐三'){
+    if (keywords != '套餐一' & keywords != '套餐二' & keywords != '套餐三') {
         return []
     }
     const results = {
@@ -250,10 +250,35 @@ mock.stores = function () {
 
 mock.category = function (serviceId) {
     let categories = {
-        '1':['一食堂','二食堂','三食堂'],
-        '2':['宿舍','门市'],
-        '3':['校内','校外']
+        '1': ['一食堂', '二食堂', '三食堂'],
+        '2': ['宿舍', '门市'],
+        '3': ['校内', '校外']
     }
     return categories[serviceId]
+}
+
+mock.order = function () {
+    return [{
+        id: 1,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '-1'
+    }, {
+        id: 2,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '0'
+    }, {
+        id: 3,
+        product: '套餐一',
+        service: '外卖',
+        shop: '套餐',
+        date: '2016-05-02',
+        status: '1'
+    }]
 }
 export default mock

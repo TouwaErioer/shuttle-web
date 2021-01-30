@@ -1,80 +1,86 @@
 <template>
-    <div class="container">
-        <Headers>
-            <span><i :class="icon"></i> {{title}}</span>
-        </Headers>
-        <div class="content">
-            <div class="filters">
-                <div class="filter">
+    <Page>
+        <template v-slot:headers>
+            <Headers>
+                <span><i :class="icon"></i> {{title}}</span>
+            </Headers>
+        </template>
+        <template v-slot:center>
+            <div>
+                <div class="filters">
+                    <div class="filter">
                     <span @click="options['1'] = !options['1']">
                         排序 <i :class="options['1']?'el-icon-arrow-down':'el-icon-caret-bottom'"></i>
                     </span>
-                </div>
-                <div class="filter">
+                    </div>
+                    <div class="filter">
                     <span @click="options['2'] = !options['2']">
                         筛选 <i :class="options['2']?'el-icon-arrow-down':'el-icon-caret-bottom'"></i>
                     </span>
-                </div>
-                <div class="filter">
+                    </div>
+                    <div class="filter">
                     <span @click="options['3'] = !options['3']">
                         高级 <i :class="options['3']?'el-icon-arrow-down':'el-icon-caret-bottom'"></i>
                     </span>
+                    </div>
                 </div>
-            </div>
 
-            <el-collapse-transition>
-                <div class="options" v-show="options['1']">
-                    <el-radio-group v-model="sort" @change="sortStores()">
-                        <el-radio-button label="1">
-                            <i class="el-icon-price-tag"></i><span> 名称</span>
-                        </el-radio-button>
-                        <el-radio-button label="2">
-                            <i class="el-icon-star-off"></i><span> 评分</span>
-                        </el-radio-button>
-                        <el-radio-button label="3">
-                            <i class="el-icon-medal"></i><span> 销量</span>
-                        </el-radio-button>
-                    </el-radio-group>
+                <el-collapse-transition>
+                    <div class="options" v-show="options['1']">
+                        <el-radio-group v-model="sort" @change="sortStores()">
+                            <el-radio-button label="1">
+                                <i class="el-icon-price-tag"></i><span> 名称</span>
+                            </el-radio-button>
+                            <el-radio-button label="2">
+                                <i class="el-icon-star-off"></i><span> 评分</span>
+                            </el-radio-button>
+                            <el-radio-button label="3">
+                                <i class="el-icon-medal"></i><span> 销量</span>
+                            </el-radio-button>
+                        </el-radio-group>
+                    </div>
+                </el-collapse-transition>
+                <el-collapse-transition>
+                    <div class="options" v-show="options['2']">
+                        <el-radio-group v-model="filter" @change="filterStores()">
+                            <el-radio-button v-for="category in categories" :key="category" :label="category">
+                                <span v-text="category"></span>
+                            </el-radio-button>
+                        </el-radio-group>
+                    </div>
+                </el-collapse-transition>
+                <el-collapse-transition>
+                    <div class="options" v-show="options['3']">
+                        <el-radio-group v-model="advanced" @change="advancedStores()">
+                            <el-radio-button label="1">
+                                <span> 默认</span>
+                            </el-radio-button>
+                            <el-radio-button label="2">
+                                <span> 重置</span>
+                            </el-radio-button>
+                        </el-radio-group>
+                    </div>
+                </el-collapse-transition>
+
+                <div class="stores">
+                    <Item v-for="store in stores" :key="store.id" :item="store"
+                          @click.native="$router.push('/store/' + store.id)"/>
                 </div>
-            </el-collapse-transition>
-            <el-collapse-transition>
-                <div class="options" v-show="options['2']">
-                    <el-radio-group v-model="filter" @change="filterStores()">
-                        <el-radio-button v-for="category in categories" :key="category" :label="category">
-                            <span v-text="category"></span>
-                        </el-radio-button>
-                    </el-radio-group>
-                </div>
-            </el-collapse-transition>
-            <el-collapse-transition>
-                <div class="options" v-show="options['3']">
-                    <el-radio-group v-model="advanced" @change="advancedStores()">
-                        <el-radio-button label="1">
-                            <span> 默认</span>
-                        </el-radio-button>
-                        <el-radio-button label="2">
-                            <span> 重置</span>
-                        </el-radio-button>
-                    </el-radio-group>
-                </div>
-            </el-collapse-transition>
-            <div class="stores">
-                <Item v-for="store in stores" :key="store.id" :item="store"
-                      @click.native="$router.push('/store/' + store.id)"/>
             </div>
-        </div>
-    </div>
+        </template>
+    </Page>
 </template>
 
 <script>
     import Headers from "@/components/headers";
     import mock from "@/mock";
     import Item from "@/components/item";
+    import Page from "@/layout/page";
 
     export default {
         name: "stores",
         props: ['id'],
-        components: {Item, Headers},
+        components: {Page, Item, Headers},
         data() {
             return {
                 title: null,
@@ -126,16 +132,6 @@
 </script>
 
 <style scoped>
-    .container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-
-    .content {
-        flex: 1;
-        overflow-y: scroll;
-    }
 
     .filters {
         height: 30px;
