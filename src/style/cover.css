@@ -4,9 +4,9 @@
     }
 }
 
-th {
-    display: none !important;
-}
+/*th {*/
+/*    display: none !important;*/
+/*}*/
 
 .el-message-box__message {
     display: flex;

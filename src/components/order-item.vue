@@ -1,31 +1,53 @@
 <template>
-    <div>
-        <div class="order" v-for="(order,index) in getOrder" :key="index"
-             @click="handleCurrentChange(order)">
-            <div class="item">
-                <div class="row">{{order.product}}</div>
-                <div class="row">{{order.shop}}</div>
-                <div class="row">
-                    <el-tag>{{order.service}}</el-tag>
-                </div>
-            </div>
-        </div>
-        <Empty description='暂无订单' v-if="getOrder == 0"/>
+    <div style="height: 100%">
+        <el-table
+                :data="getOrder"
+                style="width: 100%;height: 100%;"
+                :stretch="true"
+                @row-click="handleCurrentChange">
+            <el-table-column
+                    prop="id"
+                    label="单号"
+                    align="center">
+                <template slot-scope="scope">
+                    <el-tag v-text="'No.' + scope.row.id"/>
+                </template>
+            </el-table-column>
+            <el-table-column
+                    prop="address"
+                    label="地址"
+                    align="center">
+            </el-table-column>
+            <el-table-column
+                    prop="status"
+                    label="状态"
+                    align="center">
+                <template slot-scope="scope">
+                    <el-tag :type="scope.row.status == 1?'success':'warning'">
+                        <i :class="scope.row.status == 1?'el-icon-circle-check':'el-icon-loading'"></i>
+                        {{getStatus}}
+                    </el-tag>
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 
 <script>
-    import Empty from "@/components/empty";
 
     export default {
         name: "order-item",
-        components: {Empty},
         props: ['type', 'name'],
         computed: {
             getOrder() {
                 if(this.type == 'receive') return this.$store.getters.getOrders(this.name)
                 else if(this.type == 'received') return this.$store.getters.getReceive
                 else return this.$store.getters.getCompleted
+            },
+            getStatus(){
+                if(this.type == 'receive') return '待接单'
+                else if(this.type == 'received') return '待确认'
+                else return '已完成'
             }
         },
         methods: {
@@ -68,30 +90,8 @@
             }
         }
     }
+
 </script>
 
 <style scoped>
-    .order {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid #dcdcdc;
-    }
-
-    .item {
-        margin: 15px 25px;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        color: #606266;
-        font-size: 13px;
-        align-items: center;
-    }
-
-    .row {
-        width: 33%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 </style>

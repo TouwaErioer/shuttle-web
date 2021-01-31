@@ -264,21 +264,24 @@ mock.order = function () {
         service: '外卖',
         shop: '套餐',
         date: '2016-05-02',
-        status: '-1'
+        status: '-1',
+        address: 'test'
     }, {
         id: 2,
         product: '套餐一',
         service: '外卖',
         shop: '套餐',
         date: '2016-05-02',
-        status: '0'
+        status: '-1',
+        address: 'test'
     }, {
         id: 3,
         product: '套餐一',
         service: '外卖',
         shop: '套餐',
         date: '2016-05-02',
-        status: '1'
+        status: '-1',
+        address: 'test'
     }]
 }
 
@@ -314,21 +317,24 @@ mock.received = function () {
         service: '外卖',
         shop: '套餐',
         date: '2016-05-02',
-        status: '0'
+        status: '0',
+        address: 'test',
     }, {
         id: 2,
         product: '套餐一',
         service: '外卖',
         shop: '套餐',
         date: '2016-05-02',
-        status: '0'
+        status: '0',
+        address: 'test',
     }, {
         id: 3,
         product: '套餐一',
         service: '外卖',
         shop: '套餐',
         date: '2016-05-02',
-        status: '1'
+        status: '1',
+        address: 'test',
     }]
 }
 export default mock
