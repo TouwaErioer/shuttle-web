@@ -8,10 +8,11 @@
         <div class="service" style="background: #ff7f50a8" @click="$router.push('/receive')">
             <span>
                 <i class="el-icon-sell"></i> 接单
-            </span></div>
-        <div class="service" style="background: pink">
+            </span>
+        </div>
+        <div class="service" style="background: pink" @click="$router.push('/cart')">
             <span>
-                <i class="el-icon-plus"></i> 添加商品
+                <i class="el-icon-shopping-cart-1"></i> 购物车
             </span>
         </div>
         <div class="service" style="background: thistle">
@@ -20,11 +21,7 @@
             </span>
         </div>
 
-        <div class="service" style="background: #67c23ac7" @click="$router.push('/cart')">
-            <span>
-                <i class="el-icon-shopping-cart-1"></i> 购物车
-            </span>
-        </div>
+
     </div>
 </template>
 
