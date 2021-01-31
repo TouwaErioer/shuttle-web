@@ -20,17 +20,15 @@
                         <span slot="label"><i class="el-icon-goods"></i> 商品</span>
                         <div class="content">
                             <div class="products">
-                                <Item v-for="product in products" :key="product.id" :item="product">
-                                    <template v-slot:button>
-                                        <div class="add" @click="add(product)">
-                                            <el-button type="success" size="mini" icon="el-icon-circle-plus-outline"
-                                                       round>
-                                                1￥
-                                            </el-button>
-                                        </div>
-                                    </template>
-
-                                </Item>
+                                    <Item v-for="product in products" :key="product.id" :item="product">
+                                        <template v-slot:button>
+                                            <div class="add" @click="add(product)">
+                                                <el-button type="success" size="mini" icon="el-icon-circle-plus-outline"
+                                                           round>1￥
+                                                </el-button>
+                                            </div>
+                                        </template>
+                                    </Item>
                             </div>
                         </div>
                     </el-tab-pane>
@@ -80,7 +78,7 @@
                         type: 'success'
                     }
                 )
-            },
+            }
         },
         computed: {
             getCount() {
@@ -90,8 +88,7 @@
     }
 </script>
 
-<style>
-
+<style scoped>
     .products {
         margin: 5px;
     }
@@ -111,21 +108,6 @@
     .info {
         margin-left: 5px;
         color: white;
-    }
-
-    .el-tabs__header {
-        margin: unset !important;
-    }
-
-    .el-tabs {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-
-    .el-tabs__content {
-        flex: 1;
-        overflow-y: scroll;
     }
 
     .car-button {

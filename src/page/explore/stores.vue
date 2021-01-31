@@ -6,6 +6,7 @@
             </Headers>
         </template>
         <template v-slot:center>
+            <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
             <div>
                 <div class="filters">
                     <div class="filter">
@@ -60,13 +61,12 @@
                         </el-radio-group>
                     </div>
                 </el-collapse-transition>
-                <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
                     <div class="stores">
                         <Item v-for="store in stores" :key="store.id" :item="store"
                               @click.native="$router.push('/store/' + store.id)"/>
                     </div>
-                </mescroll-vue>
             </div>
+            </mescroll-vue>
         </template>
     </Page>
 </template>
@@ -101,7 +101,6 @@
                 mescrollDown:{
                     callback: this.downCallBack,
                     auto: false,
-                    isBounce: true
                 }
             }
         },

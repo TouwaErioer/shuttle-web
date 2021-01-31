@@ -12,5 +12,6 @@
 </script>
 
 <style scoped>
+    /*覆盖全局样式*/
     @import 'style/cover.css';
 </style>
