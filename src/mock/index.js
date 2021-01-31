@@ -27,7 +27,7 @@ const products = [
         'rate': 5,
         'sales': 0,
         'price': 10
-    }
+    },
 ]
 
 const stores = [
@@ -53,6 +53,66 @@ const stores = [
     },
     {
         'id': 3,
+        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
+        'name': '米线',
+        'service': '外卖',
+        'rate': 5,
+        'sales': 1,
+        'price': 10,
+        'category': '三食堂'
+    },
+    {
+        'id': 4,
+        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg',
+        'name': '套餐',
+        'service': '外卖',
+        'rate': 2,
+        'sales': 6,
+        'price': 10,
+        'category': '一食堂'
+    },
+    {
+        'id': 5,
+        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/hot-shakshuka-819x1024.jpg',
+        'name': '面馆',
+        'service': '外卖',
+        'rate': 1,
+        'sales': 5,
+        'price': 10,
+        'category': '二食堂'
+    },
+    {
+        'id': 6,
+        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
+        'name': '米线',
+        'service': '外卖',
+        'rate': 5,
+        'sales': 1,
+        'price': 10,
+        'category': '三食堂'
+    },
+    {
+        'id': 7,
+        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg',
+        'name': '套餐',
+        'service': '外卖',
+        'rate': 2,
+        'sales': 6,
+        'price': 10,
+        'category': '一食堂'
+    },
+    {
+        'id': 8,
+        'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/hot-shakshuka-819x1024.jpg',
+        'name': '面馆',
+        'service': '外卖',
+        'rate': 1,
+        'sales': 5,
+        'price': 10,
+        'category': '二食堂'
+    },
+    {
+        'id': 9,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
         'name': '米线',
         'service': '外卖',

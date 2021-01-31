@@ -100,7 +100,8 @@
                 categories: [],
                 mescrollDown:{
                     callback: this.downCallBack,
-                    auto: false
+                    auto: false,
+                    isBounce: true
                 }
             }
         },
@@ -176,5 +177,4 @@
     .stores {
         margin: 0 10px;
     }
-
 </style>

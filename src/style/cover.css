@@ -4,10 +4,6 @@
     }
 }
 
-/*th {*/
-/*    display: none !important;*/
-/*}*/
-
 .el-message-box__message {
     display: flex;
     flex-direction: column;
@@ -24,4 +20,11 @@
 
 .el-message-box__close{
     display: none!important;
+}
+
+.mescroll {
+    position: fixed;
+    top: 75px;
+    bottom: 0;
+    height: auto!important;
 }
