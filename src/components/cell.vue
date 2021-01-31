@@ -1,22 +1,22 @@
 <template>
     <div class="cell flex" :flex="flex" v-on="$listeners">
-        <header>
+        <div class="header">
             <div class="title" v-if="title" v-text="title" />
             <i v-else-if="icon" :class="'el-icon-' + icon" />
-            <slot v-else name="header" />
-        </header>
+            <slot name="header" />
+        </div>
         <main flex="1">
             <div v-if="text" v-text="text" />
             <slot v-else />
         </main>
-        <footer class="flex" flex="align-items_center">
+        <div class="flex footer" flex="align-items_center">
             <slot name="footer" />
             <i
                 v-if="access"
                 class="el-icon-arrow-right"
                 :class="{ light: accessLight }"
             />
-        </footer>
+        </div>
     </div>
 </template>
 
@@ -40,14 +40,14 @@ export default {
 <style lang="scss" scoped>
 .cell {
     padding: 15px;
-    > header {
+    > .header {
         > .title,
         > i {
             margin-right: 15px;
         }
     }
 
-    > footer {
+    > .footer {
         > i.el-icon-arrow-right {
             color: rgba(0, 0, 0, 0.3);
             &.light {
@@ -55,5 +55,9 @@ export default {
             }
         }
     }
+}
+
+.cells.tidy-header > .cell > .header {
+    min-width: 6em;
 }
 </style>
