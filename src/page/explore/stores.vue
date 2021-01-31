@@ -100,13 +100,13 @@
             }
         },
         created() {
-            let stores = this.$store.state.service.services.get(parseInt(this.id))
+            let storesInfo = this.$store.state.service.services.get(parseInt(this.id))
             this.stores = mock.stores()
             this.categories = mock.category(this.id)
             this.filter = this.categories[0]
-            this.title = stores['name']
-            this.icon = stores['icon']
-            this.color = stores['color']
+            this.title = storesInfo['name']
+            this.icon = storesInfo['icon']
+            this.color = storesInfo['color']
         },
         methods: {
             sortStores() {

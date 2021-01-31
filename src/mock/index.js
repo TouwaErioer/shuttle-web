@@ -252,7 +252,10 @@ mock.category = function (serviceId) {
     let categories = {
         '1': ['一食堂', '二食堂', '三食堂'],
         '2': ['宿舍', '门市'],
-        '3': ['校内', '校外']
+        '3': ['校内', '校外'],
+        '4': [],
+        '5': [],
+        '6': []
     }
     return categories[serviceId]
 }
