@@ -1,11 +1,15 @@
 <template>
-    <div class="cells">
+    <div class="cells" :class="{ 'tidy-header': tidyHeader }">
         <slot />
     </div>
 </template>
 
 <script>
-export default {};
+export default {
+    props: {
+        tidyHeader: Boolean,
+    },
+};
 </script>
 <style lang="scss" scoped>
 .cells {

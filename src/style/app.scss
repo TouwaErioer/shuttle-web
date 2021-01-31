@@ -38,7 +38,7 @@
     overflow: hidden;
   }
 
-  & > [flex^="&scroll"],
+  & > [flex~="&1"][flex~="&scroll"],
   & > [flex^="1-scroll"] {
     overflow-y: auto;
   }
