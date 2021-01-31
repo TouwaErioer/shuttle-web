@@ -24,7 +24,6 @@
                     </span>
                     </div>
                 </div>
-
                 <el-collapse-transition>
                     <div class="options" v-show="options['1']">
                         <el-radio-group v-model="sort" @change="sortStores()">
@@ -61,11 +60,12 @@
                         </el-radio-group>
                     </div>
                 </el-collapse-transition>
-
-                <div class="stores">
-                    <Item v-for="store in stores" :key="store.id" :item="store"
-                          @click.native="$router.push('/store/' + store.id)"/>
-                </div>
+                <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+                    <div class="stores">
+                        <Item v-for="store in stores" :key="store.id" :item="store"
+                              @click.native="$router.push('/store/' + store.id)"/>
+                    </div>
+                </mescroll-vue>
             </div>
         </template>
     </Page>
@@ -76,11 +76,12 @@
     import mock from "@/mock";
     import Item from "@/components/item";
     import Page from "@/layout/page";
+    import MescrollVue from 'mescroll.js/mescroll.vue'
 
     export default {
         name: "stores",
         props: ['id'],
-        components: {Page, Item, Headers},
+        components: {Page, Item, Headers, MescrollVue},
         data() {
             return {
                 title: null,
@@ -96,7 +97,11 @@
                 sort: '1',
                 filter: null,
                 advanced: '1',
-                categories: []
+                categories: [],
+                mescrollDown:{
+                    callback: this.downCallBack,
+                    auto: false
+                }
             }
         },
         created() {
@@ -126,6 +131,15 @@
                 if (this.advanced == '2') {
                     this.stores = mock.stores()
                 }
+            },
+            mescrollInit (mescroll) {
+                this.mescroll = mescroll
+            },
+            downCallBack(mescroll){
+                this.stores = mock.stores()
+                this.$nextTick(() => {
+                    mescroll.endSuccess(this.stores.length)
+                })
             }
         }
     }
@@ -159,7 +173,7 @@
         padding: 10px 0;
     }
 
-    .stores{
+    .stores {
         margin: 0 10px;
     }
 
