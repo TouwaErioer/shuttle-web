@@ -1,5 +1,5 @@
 <template>
-    <div style="padding: 0 20px">
+    <div style="padding: 20px 20px">
         <el-input
                 placeholder="请输入商店或产品"
                 prefix-icon="el-icon-search"
