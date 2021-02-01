@@ -1,42 +1,38 @@
-import common from "@/utils/commont";
-
 const state = () => ({
-    products: [],
+    cartMap: new Map(),
     count: 0
 })
 
 const getters = {
+    getCartMap: state => {
+        return state.cartMap
+    },
     getCount: state => {
         return state.count
-    },
-    getProducts: state => {
-        return state.products
     }
 }
 
 const mutations = {
-    addProductToCart(state, product) {
+    addCart(state, product) {
         state.count++
-        let products = state.products
-        let index = products.indexOf(product)
-        if (index != -1) {
-            products[index].count++
+        let cartMap = state.cartMap
+        let id = product.id
+        let data = product.data
+        if (cartMap.has(id)) {
+            let product = cartMap.get(id)
+            product.count = product.count + 1
+            cartMap.set(id, product)
         } else {
-            product.count = 1
-            products.push(product)
+            cartMap.set(id, data)
         }
-        state.products = products
+        state.cartMap = cartMap
     },
     changeCart(state, payload) {
-
-        state.count --
-        let index = state.products.findIndex(product => product.id == payload.pid)
-        let product = state.products[index]
-        if (product.count > 0) {
-            state.products[index].count = payload.count
-        } else {
-            state.products = common.arrayRemove(state.products, product)
-        }
+        state.count += payload.currentValue - payload.oldValue
+    },
+    clear(state) {
+        state.count = 0
+        state.cartMap.clear()
     }
 }
 

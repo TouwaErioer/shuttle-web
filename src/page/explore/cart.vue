@@ -36,22 +36,24 @@
             </div>
         </template>
         <template v-slot:center>
-            <Item v-for="(item, index) in cartList" :key="index" :item="item" :price="true" :count="item.count">
-                <template v-slot:button>
-                    <el-input-number v-model="item.count" :min="0" size="mini" style="width: 40%;"
-                                     @change="handleChange(item.id,item.count)"/>
-                </template>
-                <el-tag size="mini" v-text="item.shop" effect="dark" class="item-tag" type="warning"
-                        style="font-size:2vh"></el-tag>
+            <Item v-for="(item, index) in cartList" :key="index" :item="item[1]" :price="true" :count="item[1].count">
+                <el-input-number v-model="item[1].count" :min="0" size="mini" style="width: 90px;"
+                                 @change="change" slot="button"/>
+                <el-tag size="mini" v-text="item[1].shop" effect="dark" class="item-tag" type="warning" slot="tag"/>
+                <div slot="price">
+                    <span class="label"><i class="el-icon-collection-tag"></i> 单价：</span>
+                    <span class="price" v-text="'¥' + getPrice(item[1].price)"></span>
+                </div>
             </Item>
         </template>
         <template v-slot:footer>
             <div class="pay-wrap">
-                <div class="price">
+                <div class="total-price">
                     <span><i class="el-icon-price-tag"></i> 商品金额（运费 ¥1）</span>
-                    <span>共计：<span class="count">¥{{ 0 }}</span></span>
+                    <span>共计：<span class="count">¥{{ totalPrice }}</span></span>
                 </div>
-                <el-button class="pay-btn" type="primary" icon="el-icon-download" :disabled="cartList.length == 0">下单
+                <el-button class="pay-btn" type="primary" icon="el-icon-download" :disabled="getCount == 0"
+                           @click="submit">下单
                 </el-button>
             </div>
         </template>
@@ -59,9 +61,11 @@
 </template>
 
 <script>
-    import Headers from "@/components/headers";
-    import Item from "@/components/item"
+
     import Page from "@/layout/page";
+    import Headers from "@/components/headers"
+    import Item from "@/components/item"
+    import common from "@/utils/commont";
 
     export default {
         name: "cart",
@@ -73,13 +77,43 @@
                     'address': 'test'
                 },
                 more: false,
-                isExpired: false,
-                cartList: this.$store.getters.getProducts,
+                cartList: Array.from(this.$store.getters.getCartMap),
+                isExpired: false
+            }
+        },
+        computed: {
+            getCount() {
+                return this.$store.getters.getCount
+            },
+            totalPrice() {
+                if (this.getCount != 0) {
+                    let count = 100
+                    this.$store.getters.getCartMap.forEach(function (product) {
+                        count += product.count * product.price
+                    })
+                    return common.changePrice(count)
+                }else return '0.00'
             }
         },
         methods: {
-            handleChange(pid, count) {
-                this.$store.commit('changeCart', {'pid': pid, 'count': count})
+            change(currentValue, oldValue) {
+                this.$store.commit('changeCart', {'currentValue': currentValue, 'oldValue': oldValue})
+            },
+            getPrice(price) {
+                return common.changePrice(price);
+            },
+            submit() {
+                let orders = []
+                this.$store.getters.getCartMap.forEach(function (value) {
+                    orders.push(value)
+                })
+                console.log(orders)
+                this.$store.commit('clear')
+                this.$message({
+                    message: '下单成功',
+                    type: 'success'
+                })
+                this.$router.push('/order')
             }
         }
     }
@@ -107,5 +141,14 @@
     {
         transform: translateY(10px);
         opacity: 0;
+    }
+
+    .price {
+        font-size: 3vh;
+        color: #f56c6c;
+    }
+
+    .label {
+        margin-left: 3px;
     }
 </style>

@@ -1,11 +1,11 @@
 <template>
     <div class="list-item" :style="color != null?'background-color:unset;border-bottom:unset':null"
-         v-if="count == null?true:count != 0">
+         v-if="count == null?true:count > 0">
         <el-image class="item-image" :src="item.image" fit="cover"/>
         <div type="flex" class="goods-info">
             <div class="item-info">
                 <span v-text="item.name" class="item-name"></span>
-                <slot/>
+                <slot name="tag"/>
             </div>
             <div class="item-desc">
                 <el-rate v-model="item.rate" disabled text-color="#ff9900" show-score>
@@ -15,10 +15,7 @@
             <div class="item-tag" v-if="price == null">
                 <span v-text="'总销量：' + item.sales"></span>
             </div>
-            <div v-if="price != null">
-                <span class="label"><i class="el-icon-collection-tag"></i> 单价：</span>
-                <span class="price" v-text="'¥' + item.price"></span>
-            </div>
+            <slot name="price"/>
         </div>
     </div>
 </template>
@@ -70,11 +67,6 @@
         font-size: 5px;
     }
 
-    .price {
-        font-size: 3vh;
-        color: #f56c6c;
-    }
-
     .item-image {
         width: 100px;
         height: 100px;
@@ -92,15 +84,8 @@
         font-size: 18px
     }
 
-    .item-tag {
-        margin: 3px;
-    }
-
     .item-button {
         float: right;
     }
 
-    .label {
-        margin-left: 3px;
-    }
 </style>

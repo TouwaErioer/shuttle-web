@@ -24,7 +24,7 @@
                 <div class="top-store" v-if="!top_switch">
                     <Item :item="item" v-for="item in getStores" :key="item.id">
                         <el-tag size="mini" v-text="item.service" effect="dark" class="item-tag" type="warning"
-                                style="font-size:2vh"></el-tag>
+                                slot="tag"/>
                     </Item>
                 </div>
             </transition>
@@ -33,7 +33,7 @@
                 <div class="top-product" v-if="top_switch">
                     <Item :item="item" v-for="item in getProduct" :key="item.id">
                         <el-tag size="mini" v-text="item.shop" effect="dark" class="item-tag" type="warning"
-                                style="font-size:2vh"></el-tag>
+                                slot="tag"/>
                     </Item>
                 </div>
             </transition>

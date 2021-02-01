@@ -20,15 +20,15 @@
                         <span slot="label"><i class="el-icon-goods"></i> 商品</span>
                         <div class="content">
                             <div class="products">
-                                    <Item v-for="product in products" :key="product.id" :item="product">
-                                        <template v-slot:button>
-                                            <div class="add" @click="add(product)">
-                                                <el-button type="success" size="mini" icon="el-icon-circle-plus-outline"
-                                                           round>1￥
-                                                </el-button>
-                                            </div>
-                                        </template>
-                                    </Item>
+                                <Item v-for="product in products" :key="product.id" :item="product">
+                                    <template v-slot:button>
+                                        <div class="add" @click="addToCart(product)">
+                                            <el-button type="success" size="mini" icon="el-icon-circle-plus-outline"
+                                                       round>{{getPrice(product.price)}}
+                                            </el-button>
+                                        </div>
+                                    </template>
+                                </Item>
                             </div>
                         </div>
                     </el-tab-pane>
@@ -53,6 +53,7 @@
     import mock from "@/mock";
     import Item from "@/components/item"
     import Page from "@/layout/page";
+    import common from "@/utils/commont";
 
     export default {
         name: "store",
@@ -71,13 +72,28 @@
             this.store = products[0]
         },
         methods: {
-            add(product) {
-                this.$store.commit('addProductToCart', product)
+            addToCart(product) {
+                this.$store.commit('addCart', {
+                    'id': product.id,
+                    'data': {
+                        'id': product.id,
+                        'name': product.name,
+                        'image': product.image,
+                        'price': product.price,
+                        'rate': product.rate,
+                        'shop': product.shop,
+                        'count': 1
+                    }
+                })
                 this.$message({
                         message: '添加到购物车',
-                        type: 'success'
+                        type: 'success',
+                        duration: 500
                     }
                 )
+            },
+            getPrice(price){
+                return common.changePrice(price)
             }
         },
         computed: {

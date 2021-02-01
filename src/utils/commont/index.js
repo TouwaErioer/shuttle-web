@@ -5,4 +5,8 @@ common.arrayRemove = function (arr, value) {
     });
 }
 
+common.changePrice = function (price) {
+    return (price / 100).toFixed(2)
+}
+
 export default common

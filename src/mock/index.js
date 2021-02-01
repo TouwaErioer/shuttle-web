@@ -8,7 +8,7 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 10
+        'price': 1000
     },
     {
         'id': 2,
@@ -17,7 +17,7 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 10
+        'price': 1000
     },
     {
         'id': 3,
@@ -26,7 +26,7 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 10
+        'price': 1000
     },
 ]
 

@@ -3,6 +3,7 @@
         width: 60% !important;
     }
 }
+
 .el-message-box__message {
     display: flex;
     flex-direction: column;
@@ -30,4 +31,8 @@
     top: 35px;
     bottom: 0;
     height: auto!important;
+}
+
+.el-message{
+    top: 0px!important;
 }
