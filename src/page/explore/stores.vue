@@ -7,67 +7,67 @@
         </template>
         <template v-slot:center>
             <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
-            <div>
-                <div class="filters">
-                    <div class="filter">
+                <div>
+                    <div class="filters">
+                        <div class="filter">
                     <span @click="options['1'] = !options['1']">
                         排序 <i :class="options['1']?'el-icon-arrow-down':'el-icon-caret-bottom'"></i>
                     </span>
-                    </div>
-                    <div class="filter">
+                        </div>
+                        <div class="filter">
                     <span @click="options['2'] = !options['2']">
                         筛选 <i :class="options['2']?'el-icon-arrow-down':'el-icon-caret-bottom'"></i>
                     </span>
-                    </div>
-                    <div class="filter">
+                        </div>
+                        <div class="filter">
                     <span @click="options['3'] = !options['3']">
                         高级 <i :class="options['3']?'el-icon-arrow-down':'el-icon-caret-bottom'"></i>
                     </span>
+                        </div>
                     </div>
-                </div>
-                <el-collapse-transition>
-                    <div class="options" v-show="options['1']">
-                        <el-radio-group v-model="sort" @change="sortStores()">
-                            <el-radio-button label="1">
-                                <i class="el-icon-price-tag"></i><span> 名称</span>
-                            </el-radio-button>
-                            <el-radio-button label="2">
-                                <i class="el-icon-star-off"></i><span> 评分</span>
-                            </el-radio-button>
-                            <el-radio-button label="3">
-                                <i class="el-icon-medal"></i><span> 销量</span>
-                            </el-radio-button>
-                        </el-radio-group>
-                    </div>
-                </el-collapse-transition>
-                <el-collapse-transition>
-                    <div class="options" v-show="options['2']">
-                        <el-radio-group v-model="filter" @change="filterStores()">
-                            <el-radio-button v-for="category in categories" :key="category" :label="category">
-                                <span v-text="category"></span>
-                            </el-radio-button>
-                        </el-radio-group>
-                    </div>
-                </el-collapse-transition>
-                <el-collapse-transition>
-                    <div class="options" v-show="options['3']">
-                        <el-radio-group v-model="advanced" @change="advancedStores()">
-                            <el-radio-button label="1">
-                                <span> 默认</span>
-                            </el-radio-button>
-                            <el-radio-button label="2">
-                                <span> 重置</span>
-                            </el-radio-button>
-                        </el-radio-group>
-                    </div>
-                </el-collapse-transition>
+                    <el-collapse-transition>
+                        <div class="options" v-show="options['1']">
+                            <el-radio-group v-model="sort" @change="sortStores()">
+                                <el-radio-button label="1">
+                                    <i class="el-icon-price-tag"></i><span> 名称</span>
+                                </el-radio-button>
+                                <el-radio-button label="2">
+                                    <i class="el-icon-star-off"></i><span> 评分</span>
+                                </el-radio-button>
+                                <el-radio-button label="3">
+                                    <i class="el-icon-medal"></i><span> 销量</span>
+                                </el-radio-button>
+                            </el-radio-group>
+                        </div>
+                    </el-collapse-transition>
+                    <el-collapse-transition>
+                        <div class="options" v-show="options['2']">
+                            <el-radio-group v-model="filter" @change="filterStores()">
+                                <el-radio-button v-for="category in categories" :key="category" :label="category">
+                                    <span v-text="category"></span>
+                                </el-radio-button>
+                            </el-radio-group>
+                        </div>
+                    </el-collapse-transition>
+                    <el-collapse-transition>
+                        <div class="options" v-show="options['3']">
+                            <el-radio-group v-model="advanced" @change="advancedStores()">
+                                <el-radio-button label="1">
+                                    <span> 默认</span>
+                                </el-radio-button>
+                                <el-radio-button label="2">
+                                    <span> 重置</span>
+                                </el-radio-button>
+                            </el-radio-group>
+                        </div>
+                    </el-collapse-transition>
                     <div class="stores">
                         <Item v-for="store in stores" :key="store.id" :item="store"
                               @click.native="$router.push('/store/' + store.id)">
                             <div slot="sales"><i class="el-icon-medal"></i> 总销量：<span>{{ + store.sales}}</span></div>
                         </Item>
                     </div>
-            </div>
+                </div>
             </mescroll-vue>
         </template>
     </Page>
@@ -100,7 +100,7 @@
                 filter: null,
                 advanced: '1',
                 categories: [],
-                mescrollDown:{
+                mescrollDown: {
                     callback: this.downCallBack,
                     auto: false,
                 }
@@ -109,14 +109,27 @@
         created() {
             let serviceList = JSON.parse(sessionStorage.getItem('serviceList'))
             let serviceInfo = serviceList.filter(service => service.id == this.id)[0]
-            this.stores = mock.stores()
-            this.categories = mock.category(this.id)
             this.filter = this.categories[0]
             this.title = serviceInfo.name
             this.icon = serviceInfo.icon
             this.color = serviceInfo.color
+            this.getStores()
+            this.categories = mock.category(this.id)
         },
         methods: {
+            getStores() {
+                if (this.$store.getters.cache(parseInt(this.id))) {
+                    this.stores = this.$store.getters.getStores(this.id)
+                    console.log('缓存id为' + this.id + '的stores')
+                }
+                else {
+                    console.log('获取id为' + this.id + '的stores')
+                    let stores = mock.stores(this.id)
+                    this.stores = stores
+                    this.$store.commit('setStores', stores)
+                    console.log(this.$store.getters.getStores(this.id))
+                }
+            },
             sortStores() {
                 if (this.sort == '1') {
                     this.stores = mock.stores()
@@ -135,10 +148,10 @@
                     this.stores = mock.stores()
                 }
             },
-            mescrollInit (mescroll) {
+            mescrollInit(mescroll) {
                 this.mescroll = mescroll
             },
-            downCallBack(mescroll){
+            downCallBack(mescroll) {
                 this.stores = mock.stores()
                 this.$nextTick(() => {
                     mescroll.endSuccess(this.stores.length)

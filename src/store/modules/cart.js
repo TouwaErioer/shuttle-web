@@ -7,7 +7,6 @@ const state = () => ({
 
 const getters = {
     getCartMap: state => {
-        console.log(state.cartMap)
         return state.cartMap
     },
     getCount: state => {

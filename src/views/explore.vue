@@ -72,7 +72,7 @@
         },
         computed: {
             getStores() {
-                return mock.stores()
+                return mock.stores(1)
             },
             image() {
                 return mock.carouselImage()

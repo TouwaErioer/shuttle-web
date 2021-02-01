@@ -39,7 +39,8 @@ const stores = [
         'rate': 2,
         'sales': 6,
         'price': 10,
-        'category': '一食堂'
+        'category': '一食堂',
+        'sid': 1
     },
     {
         'id': 2,
@@ -49,7 +50,8 @@ const stores = [
         'rate': 1,
         'sales': 5,
         'price': 10,
-        'category': '二食堂'
+        'category': '二食堂',
+        'sid': 1
     },
     {
         'id': 3,
@@ -59,67 +61,74 @@ const stores = [
         'rate': 5,
         'sales': 1,
         'price': 10,
-        'category': '三食堂'
+        'category': '三食堂',
+        'sid': 1
     },
     {
         'id': 4,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg',
-        'name': '套餐',
+        'name': '套餐1',
         'service': '外卖',
         'rate': 2,
         'sales': 6,
         'price': 10,
-        'category': '一食堂'
+        'category': '一食堂',
+        'sid': 2
     },
     {
         'id': 5,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/hot-shakshuka-819x1024.jpg',
-        'name': '面馆',
+        'name': '面馆1',
         'service': '外卖',
         'rate': 1,
         'sales': 5,
         'price': 10,
-        'category': '二食堂'
+        'category': '二食堂',
+        'sid': 2
     },
     {
         'id': 6,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
-        'name': '米线',
+        'name': '米线1',
         'service': '外卖',
         'rate': 5,
         'sales': 1,
         'price': 10,
-        'category': '三食堂'
+        'category': '三食堂',
+        'sid': 2
     },
     {
         'id': 7,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg',
-        'name': '套餐',
+        'name': '套餐3',
         'service': '外卖',
         'rate': 2,
         'sales': 6,
         'price': 10,
-        'category': '一食堂'
+        'category': '一食堂',
+        'sid': 3
     },
     {
         'id': 8,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/hot-shakshuka-819x1024.jpg',
-        'name': '面馆',
+        'name': '面馆2',
         'service': '外卖',
         'rate': 1,
         'sales': 5,
         'price': 10,
-        'category': '二食堂'
+        'category': '二食堂',
+        'sid': 3
     },
     {
         'id': 9,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
-        'name': '米线',
+        'name': '米线2',
         'service': '外卖',
         'rate': 5,
         'sales': 1,
         'price': 10,
-        'category': '三食堂'
+        'category': '三食堂',
+        'sid': 3
     }
 ]
 
@@ -182,8 +191,8 @@ mock.search = function (keywords) {
 }
 
 // 商店
-mock.stores = function () {
-    return stores
+mock.stores = function (sid) {
+    return stores.filter(store => store.sid == sid)
 }
 
 mock.category = function (serviceId) {
