@@ -105,13 +105,14 @@
             }
         },
         created() {
-            let storesInfo = this.$store.state.service.services.get(parseInt(this.id))
+            let serviceList = JSON.parse(sessionStorage.getItem('serviceList'))
+            let serviceInfo = serviceList.filter(service => service.id == this.id)[0]
             this.stores = mock.stores()
             this.categories = mock.category(this.id)
             this.filter = this.categories[0]
-            this.title = storesInfo['name']
-            this.icon = storesInfo['icon']
-            this.color = storesInfo['color']
+            this.title = serviceInfo.name
+            this.icon = serviceInfo.icon
+            this.color = serviceInfo.color
         },
         methods: {
             sortStores() {

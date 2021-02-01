@@ -55,9 +55,7 @@
             }
         },
         created() {
-            let services = mock.services()
-            this.services = services
-            this.$store.commit('setServices', services)
+            this.getService()
         },
         computed: {
             getStores() {
@@ -68,6 +66,13 @@
             },
             getProduct() {
                 return mock.product()
+            },
+        },
+        methods: {
+            getService() {
+                let services = mock.services()
+                this.services = services
+                sessionStorage.setItem('serviceList', JSON.stringify(services))
             }
         }
     };
