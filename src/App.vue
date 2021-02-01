@@ -13,5 +13,6 @@ export default {
 </script>
 
 <style scoped>
-@import "style/cover.css";
+    /*覆盖全局样式*/
+    @import 'style/cover.css';
 </style>

@@ -4,17 +4,21 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import service from "@/page/explore/stores"
-// import skeleton from "@/layout/skeleton"
 import store from "@/page/explore/store"
 import cart from '@/page/explore/cart'
 import order from '@/page/service/order'
 import receive from '@/page/service/receive'
 import HomeLayout from '@/layout/HomeLayout.vue'
+import entrance from '@/page/login'
 
 const routes = [
     {
-        path: '/',
-        component: HomeLayout,
+        path: '',
+        component: entrance
+    },
+    {
+        path: '/home',
+        component: HomeLayout
     },
     {
         path: '/service/:id',

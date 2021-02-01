@@ -6,6 +6,7 @@
             </Headers>
         </template>
         <template v-slot:center>
+            <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
             <div>
                 <div class="filters">
                     <div class="filter">
@@ -24,7 +25,6 @@
                     </span>
                     </div>
                 </div>
-
                 <el-collapse-transition>
                     <div class="options" v-show="options['1']">
                         <el-radio-group v-model="sort" @change="sortStores()">
@@ -61,12 +61,12 @@
                         </el-radio-group>
                     </div>
                 </el-collapse-transition>
-
-                <div class="stores">
-                    <Item v-for="store in stores" :key="store.id" :item="store"
-                          @click.native="$router.push('/store/' + store.id)"/>
-                </div>
+                    <div class="stores">
+                        <Item v-for="store in stores" :key="store.id" :item="store"
+                              @click.native="$router.push('/store/' + store.id)"/>
+                    </div>
             </div>
+            </mescroll-vue>
         </template>
     </Page>
 </template>
@@ -76,11 +76,12 @@
     import mock from "@/mock";
     import Item from "@/components/item";
     import Page from "@/layout/page";
+    import MescrollVue from 'mescroll.js/mescroll.vue'
 
     export default {
         name: "stores",
         props: ['id'],
-        components: {Page, Item, Headers},
+        components: {Page, Item, Headers, MescrollVue},
         data() {
             return {
                 title: null,
@@ -96,17 +97,21 @@
                 sort: '1',
                 filter: null,
                 advanced: '1',
-                categories: []
+                categories: [],
+                mescrollDown:{
+                    callback: this.downCallBack,
+                    auto: false,
+                }
             }
         },
         created() {
-            let stores = this.$store.state.service.services.get(parseInt(this.id))
+            let storesInfo = this.$store.state.service.services.get(parseInt(this.id))
             this.stores = mock.stores()
             this.categories = mock.category(this.id)
             this.filter = this.categories[0]
-            this.title = stores['name']
-            this.icon = stores['icon']
-            this.color = stores['color']
+            this.title = storesInfo['name']
+            this.icon = storesInfo['icon']
+            this.color = storesInfo['color']
         },
         methods: {
             sortStores() {
@@ -126,6 +131,15 @@
                 if (this.advanced == '2') {
                     this.stores = mock.stores()
                 }
+            },
+            mescrollInit (mescroll) {
+                this.mescroll = mescroll
+            },
+            downCallBack(mescroll){
+                this.stores = mock.stores()
+                this.$nextTick(() => {
+                    mescroll.endSuccess(this.stores.length)
+                })
             }
         }
     }
@@ -159,8 +173,7 @@
         padding: 10px 0;
     }
 
-    .stores{
+    .stores {
         margin: 0 10px;
     }
-
 </style>

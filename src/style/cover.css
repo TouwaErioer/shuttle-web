@@ -3,11 +3,6 @@
         width: 60% !important;
     }
 }
-
-/*th {*/
-/*    display: none !important;*/
-/*}*/
-
 .el-message-box__message {
     display: flex;
     flex-direction: column;
@@ -24,4 +19,15 @@
 
 .el-message-box__close{
     display: none!important;
+}
+
+.el-tabs__header {
+    margin: unset !important;
+}
+
+.mescroll {
+    position: fixed;
+    top: 35px;
+    bottom: 0;
+    height: auto!important;
 }

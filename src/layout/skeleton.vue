@@ -42,9 +42,9 @@ export default {
           icon: "goods",
         },
         {
-          name: "服务",
+          name: "功能",
           routerViewName: "service",
-          icon: "folder",
+          icon: "connection",
         },
         {
           name: "搜索",

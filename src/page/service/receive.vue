@@ -49,7 +49,7 @@
         },
         created() {
             this.$store.commit('setReceive', mock.received())
-            this.$store.commit('setOrders', mock.order())
+            this.$store.commit('setOrders', mock.receive())
         },
         methods: {
             getCategory() {
