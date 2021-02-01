@@ -6,7 +6,8 @@
             </Headers>
         </template>
         <template v-slot:center>
-            <el-tabs v-model="activeName" type="card" :stretch="true" tabPosition="bottom">
+            <el-tabs v-model="activeName" type="card" :stretch="true" tabPosition="bottom"
+                     style="position: fixed;bottom: 0;width: 100%;">
                 <el-tab-pane name="first" style="height: 100%">
                     <span slot="label"><i class="el-icon-tickets"></i> 订单</span>
                     <Category :categories="getCategory()" :position="'top'"/>

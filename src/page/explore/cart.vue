@@ -36,15 +36,19 @@
             </div>
         </template>
         <template v-slot:center>
-            <Item v-for="(item, index) in cartList" :key="index" :item="item[1]" :price="true" :count="item[1].count">
+            <Item v-for="(item, index) in cartList" :key="index" :item="item[1]" :price="true"
+                  :count="item[1].count">
                 <el-input-number v-model="item[1].count" :min="0" size="mini" style="width: 90px;"
                                  @change="change" slot="button"/>
-                <el-tag size="mini" v-text="item[1].shop" effect="dark" class="item-tag" type="warning" slot="tag"/>
-                <div slot="price">
-                    <span class="label"><i class="el-icon-collection-tag"></i> 单价：</span>
-                    <span class="price" v-text="'¥' + getPrice(item[1].price)"></span>
+                <el-tag size="mini" v-text="item[1].shop" effect="dark" class="tag" type="warning" slot="tag"/>
+                <div slot="price"><i class="el-icon-price-tag"></i> 价格：
+                    <span class="price-text" v-text="getPrice(item[1].price)"/>
+                </div>
+                <div slot="sales"><i class="el-icon-medal"></i> 销量：
+                    <span>{{ + item[1].sales}}</span>
                 </div>
             </Item>
+            <Empty description="购物车暂无商品" v-if="getCount == 0"/>
         </template>
         <template v-slot:footer>
             <div class="pay-wrap">
@@ -66,10 +70,11 @@
     import Headers from "@/components/headers"
     import Item from "@/components/item"
     import common from "@/utils/commont";
+    import Empty from "@/components/empty";
 
     export default {
         name: "cart",
-        components: {Page, Headers, Item},
+        components: {Empty, Page, Headers, Item},
         data() {
             return {
                 user: {
@@ -92,7 +97,7 @@
                         count += product.count * product.price
                     })
                     return common.changePrice(count)
-                }else return '0.00'
+                } else return '0.00'
             }
         },
         methods: {

@@ -78,6 +78,7 @@
         text-align: center;
         box-sizing: border-box;
         padding: 40px 0;
+        height: 100%;
     }
     .el-empty__image {
         width: 160px;

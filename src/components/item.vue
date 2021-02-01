@@ -1,23 +1,25 @@
 <template>
-    <div class="list-item" :style="color != null?'background-color:unset;border-bottom:unset':null"
-         v-if="count == null?true:count > 0">
-        <el-image class="item-image" :src="item.image" fit="cover"/>
-        <div type="flex" class="goods-info">
-            <div class="item-info">
-                <span v-text="item.name" class="item-name"></span>
-                <slot name="tag"/>
+    <transition name="slide-fade">
+        <div class="list-item" :style="color != null?'background-color:unset;border-bottom:unset':null"
+             v-if="count == null?true:count > 0">
+            <el-image class="item-image" :src="item.image" fit="cover"/>
+            <div type="flex" class="goods-info">
+                <div class="item-info">
+                    <span v-text="item.name" class="item-name"></span>
+                    <slot name="tag"/>
+                </div>
+                <div class="item-desc">
+                    <el-rate v-model="item.rate" disabled text-color="#ff9900" show-score>
+                    </el-rate>
+                    <slot name="button"/>
+                </div>
+                <div class="item-tag" :style="price != null?'unset':'height:unset'">
+                    <slot name="price"/>
+                    <slot name="sales"/>
+                </div>
             </div>
-            <div class="item-desc">
-                <el-rate v-model="item.rate" disabled text-color="#ff9900" show-score>
-                </el-rate>
-                <slot name="button"/>
-            </div>
-            <div class="item-tag" v-if="price == null">
-                <span v-text="'总销量：' + item.sales"></span>
-            </div>
-            <slot name="price"/>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -46,7 +48,7 @@
             flex: 1;
 
             .item-desc {
-                margin: 3px;
+                margin: 3px 0;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -63,8 +65,11 @@
         line-height: 17px;
     }
 
-    .el-tag {
-        font-size: 5px;
+    .item-tag{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
     }
 
     .item-image {
@@ -74,7 +79,6 @@
     }
 
     .item-info {
-        margin-top: 8px;
         display: flex;
         align-items: center;
     }

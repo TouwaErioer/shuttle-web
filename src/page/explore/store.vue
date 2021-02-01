@@ -9,6 +9,9 @@
                     <item :item="store" :color="false">
                         <el-tag size="mini" v-text="'外卖'" effect="dark" class="item-tag" type="warning"
                                 style="font-size:2vh;height: unset"></el-tag>
+                        <div slot="sales"><i class="el-icon-medal"></i> 总销量：
+                            <span>{{ + store.sales}}</span>
+                        </div>
                     </item>
                 </div>
             </div>
@@ -20,14 +23,16 @@
                         <span slot="label"><i class="el-icon-goods"></i> 商品</span>
                         <div class="content">
                             <div class="products">
-                                <Item v-for="product in products" :key="product.id" :item="product">
-                                    <template v-slot:button>
-                                        <div class="add" @click="addToCart(product)">
-                                            <el-button type="success" size="mini" icon="el-icon-circle-plus-outline"
-                                                       round>{{getPrice(product.price)}}
-                                            </el-button>
-                                        </div>
-                                    </template>
+                                <Item v-for="product in products" :key="product.id" :item="product" :price="true">
+                                    <div class="add" @click="addToCart(product)" slot="button">
+                                        <el-button size="mini" icon="el-icon-plus" round/>
+                                    </div>
+                                    <div slot="price"><i class="el-icon-price-tag"></i> 价格：
+                                        <span class="price-text" v-text="getPrice(product.price)"/>
+                                    </div>
+                                    <div slot="sales"><i class="el-icon-medal"></i> 销量：
+                                        <span>{{ + product.sales}}</span>
+                                    </div>
                                 </Item>
                             </div>
                         </div>
@@ -81,6 +86,7 @@
                         'image': product.image,
                         'price': product.price,
                         'rate': product.rate,
+                        'sales': product.sales,
                         'shop': product.shop,
                         'count': 1
                     }
@@ -88,11 +94,11 @@
                 this.$message({
                         message: '添加到购物车',
                         type: 'success',
-                        duration: 500
+                        duration: 800
                     }
                 )
             },
-            getPrice(price){
+            getPrice(price) {
                 return common.changePrice(price)
             }
         },

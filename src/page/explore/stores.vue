@@ -63,7 +63,9 @@
                 </el-collapse-transition>
                     <div class="stores">
                         <Item v-for="store in stores" :key="store.id" :item="store"
-                              @click.native="$router.push('/store/' + store.id)"/>
+                              @click.native="$router.push('/store/' + store.id)">
+                            <div slot="sales"><i class="el-icon-medal"></i> 总销量：<span>{{ + store.sales}}</span></div>
+                        </Item>
                     </div>
             </div>
             </mescroll-vue>
@@ -105,13 +107,14 @@
             }
         },
         created() {
-            let storesInfo = this.$store.state.service.services.get(parseInt(this.id))
+            let serviceList = JSON.parse(sessionStorage.getItem('serviceList'))
+            let serviceInfo = serviceList.filter(service => service.id == this.id)[0]
             this.stores = mock.stores()
             this.categories = mock.category(this.id)
             this.filter = this.categories[0]
-            this.title = storesInfo['name']
-            this.icon = storesInfo['icon']
-            this.color = storesInfo['color']
+            this.title = serviceInfo.name
+            this.icon = serviceInfo.icon
+            this.color = serviceInfo.color
         },
         methods: {
             sortStores() {

@@ -36,3 +36,7 @@
 .el-message{
     top: 0px!important;
 }
+
+.is-bottom{
+    background: white;
+}
