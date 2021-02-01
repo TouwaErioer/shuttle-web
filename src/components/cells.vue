@@ -15,7 +15,6 @@ export default {
 .cells {
     margin: 20px 0;
     background-color: #fff;
-    border-radius: 8px;
 
     > * {
         position: relative;

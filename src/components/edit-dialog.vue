@@ -1,14 +1,12 @@
 <template>
     <div>
         <i class="el-icon-edit-outline" @click="editing = true" />
-        <el-dialog title="提示" :visible.sync="editing" width="80%">
+        <el-dialog title="内容修改" :visible.sync="editing" width="300px">
             <el-input
-                :type="type"
-                :placeholder="placeholder"
+                v-bind="$props"
                 v-model="newValue"
                 :minlength="minLength"
                 :maxlength="maxLength"
-                show-word-limit
             />
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editing = false" v-text="'取 消'" />
@@ -33,6 +31,7 @@ export default {
         placeholder: String,
         minLength: Number,
         maxLength: Number,
+        showWordLimit: Boolean,
     },
     data() {
         return {

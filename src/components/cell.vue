@@ -1,8 +1,8 @@
 <template>
     <div class="cell flex" :flex="flex" v-on="$listeners">
         <div class="header">
-            <div class="title" v-if="title" v-text="title" />
-            <i v-else-if="icon" :class="'el-icon-' + icon" />
+            <i v-if="icon" :class="icon" />
+            <span v-if="title" class="title" v-text="title" />
             <slot name="header" />
         </div>
         <main flex="1">
@@ -41,9 +41,11 @@ export default {
 .cell {
     padding: 15px;
     > .header {
-        > .title,
-        > i {
+        > .title {
             margin-right: 15px;
+        }
+        > i {
+            margin-right: 0.3em;
         }
     }
 
