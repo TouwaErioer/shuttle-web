@@ -32,13 +32,13 @@
     align-items: center;
   }
 
-  & > [flex~="&1"],
+  & > [flex~="@1"],
   & > [flex^="1"] {
     flex: 1;
     overflow: hidden;
   }
 
-  & > [flex~="&1"][flex~="&scroll"],
+  & > [flex~="@1"][flex~="@scroll"],
   & > [flex^="1-scroll"] {
     overflow-y: auto;
   }
