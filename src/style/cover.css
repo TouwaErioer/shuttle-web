@@ -30,9 +30,13 @@
     position: fixed;
     top: 35px;
     bottom: 0;
-    height: auto!important;
+    height: 100%!important;
 }
 
 .el-message{
     top: 0px!important;
+}
+
+.is-bottom{
+    background: white;
 }
