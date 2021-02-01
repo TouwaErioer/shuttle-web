@@ -133,30 +133,30 @@ const stores = [
 ]
 
 const orders = [{
-        id: 1,
-        product: '套餐一',
-        service: '外卖',
-        shop: '套餐',
-        date: '2016-05-02',
-        status: '-1',
-        address: 'test'
-    }, {
-        id: 2,
-        product: '套餐一',
-        service: '外卖',
-        shop: '套餐',
-        date: '2016-05-02',
-        status: '0',
-        address: 'test'
-    }, {
-        id: 3,
-        product: '套餐一',
-        service: '外卖',
-        shop: '套餐',
-        date: '2016-05-02',
-        status: '1',
-        address: 'test'
-    }]
+    id: 1,
+    product: '套餐一',
+    service: '外卖',
+    shop: '套餐',
+    date: '2016-05-02',
+    status: '-1',
+    address: 'test'
+}, {
+    id: 2,
+    product: '套餐一',
+    service: '外卖',
+    shop: '套餐',
+    date: '2016-05-02',
+    status: '0',
+    address: 'test'
+}, {
+    id: 3,
+    product: '套餐一',
+    service: '外卖',
+    shop: '套餐',
+    date: '2016-05-02',
+    status: '1',
+    address: 'test'
+}]
 
 // 服务
 mock.services = function () {
@@ -196,15 +196,27 @@ mock.stores = function (sid) {
 }
 
 mock.category = function (serviceId) {
-    let categories = {
-        '1': ['一食堂', '二食堂', '三食堂'],
-        '2': ['宿舍', '门市'],
-        '3': ['校内', '校外'],
-        '4': [],
-        '5': [],
-        '6': []
+    let categories = [{
+        'id': 1,
+        'categories': ['一食堂', '二食堂', '三食堂']
+    }, {
+        'id': 2,
+        'categories': ['宿舍', '门市'],
+    }, {
+        'id': 3,
+        'categories': ['校内', '校外']
+    }, {
+        'id': 4,
+        'categories': []
+    }, {
+        'id': 5,
+        'categories': []
+    }, {
+        'id': 6,
+        'categories': []
     }
-    return categories[serviceId]
+    ]
+    return categories.filter(category => category.id == serviceId)
 }
 
 // 订单

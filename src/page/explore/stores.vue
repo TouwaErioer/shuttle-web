@@ -43,7 +43,7 @@
                     <el-collapse-transition>
                         <div class="options" v-show="options['2']">
                             <el-radio-group v-model="filter" @change="filterStores()">
-                                <el-radio-button v-for="category in categories" :key="category" :label="category">
+                                <el-radio-button v-for="(category,index) in categories" :key="index" :label="category">
                                     <span v-text="category"></span>
                                 </el-radio-button>
                             </el-radio-group>
@@ -114,11 +114,11 @@
             this.icon = serviceInfo.icon
             this.color = serviceInfo.color
             this.getStores()
-            this.categories = mock.category(this.id)
+            this.getCategories()
         },
         methods: {
             getStores() {
-                if (this.$store.getters.cache(parseInt(this.id))) {
+                if (this.$store.getters.storesCache(parseInt(this.id))) {
                     this.stores = this.$store.getters.getStores(this.id)
                     console.log('缓存id为' + this.id + '的stores')
                 }
@@ -127,7 +127,18 @@
                     let stores = mock.stores(this.id)
                     this.stores = stores
                     this.$store.commit('setStores', stores)
-                    console.log(this.$store.getters.getStores(this.id))
+                }
+            },
+            getCategories() {
+                if (this.$store.getters.categoriesCache(parseInt(this.id))) {
+                    this.categories = this.$store.getters.getCategories(this.id)[0]['categories']
+                    console.log('缓存id为' + this.id + '的categories')
+                }
+                else {
+                    console.log('获取id为' + this.id + '的categories')
+                    let categories = mock.category(this.id)[0]
+                    this.categories = categories['categories']
+                    this.$store.commit('setCategories', categories)
                 }
             },
             sortStores() {
@@ -140,19 +151,18 @@
                 }
             },
             filterStores() {
-                const stores = mock.stores()
-                this.stores = stores.filter(store => store.category == this.filter)
+                this.stores = this.stores.filter(store => store.category == this.filter)
             },
             advancedStores() {
                 if (this.advanced == '2') {
-                    this.stores = mock.stores()
+                    this.stores = mock.stores(this.id)
                 }
             },
             mescrollInit(mescroll) {
                 this.mescroll = mescroll
             },
             downCallBack(mescroll) {
-                this.stores = mock.stores()
+                this.stores = mock.stores(this.id)
                 this.$nextTick(() => {
                     mescroll.endSuccess(this.stores.length)
                 })

@@ -6,6 +6,7 @@ import cart from '@/store/modules/cart'
 import service from '@/store/modules/sevice'
 import orders from '@/store/modules/orders'
 import stores from '@/store/modules/stores'
+import categories from '@/store/modules/categories'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
         cart,
         service,
         orders,
-        stores
+        stores,
+        categories
     },
 })
