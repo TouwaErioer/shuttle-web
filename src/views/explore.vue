@@ -32,7 +32,7 @@
             <transition name="el-fade-in-linear">
                 <div class="top-product" v-if="top_switch">
                     <Item :item="item" v-for="item in getProduct" :key="item.id">
-                        <el-tag size="mini" v-text="item.shop" effect="dark" class="item-tag" type="warning"
+                        <el-tag size="mini" v-text="item.shop" effect="dark" class="tag" type="warning"
                                 slot="tag"/>
                     </Item>
                 </div>

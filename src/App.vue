@@ -1,5 +1,5 @@
 <template>
-    <transition name="el-fade-in-linear">
+    <transition name="slide-fade">
         <keep-alive include="home_layout">
             <router-view></router-view>
         </keep-alive>
@@ -15,4 +15,5 @@ export default {
 <style scoped>
     /*覆盖全局样式*/
     @import 'style/cover.css';
+    @import 'style/animation.css';
 </style>

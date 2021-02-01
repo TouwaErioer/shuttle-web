@@ -36,10 +36,11 @@
             </div>
         </template>
         <template v-slot:center>
-            <Item v-for="(item, index) in cartList" :key="index" :item="item[1]" :price="true" :count="item[1].count">
+            <Item v-for="(item, index) in cartList" :key="index" :item="item[1]" :price="true"
+                  :count="item[1].count">
                 <el-input-number v-model="item[1].count" :min="0" size="mini" style="width: 90px;"
                                  @change="change" slot="button"/>
-                <el-tag size="mini" v-text="item[1].shop" effect="dark" class="item-tag" type="warning" slot="tag"/>
+                <el-tag size="mini" v-text="item[1].shop" effect="dark" class="tag" type="warning" slot="tag"/>
                 <div slot="price">
                     <span class="label"><i class="el-icon-collection-tag"></i> 单价：</span>
                     <span class="price" v-text="'¥' + getPrice(item[1].price)"></span>
@@ -92,7 +93,7 @@
                         count += product.count * product.price
                     })
                     return common.changePrice(count)
-                }else return '0.00'
+                } else return '0.00'
             }
         },
         methods: {
