@@ -63,7 +63,7 @@
     export default {
         name: "store",
         components: {Page, Headers, Item},
-        props: ['id'],
+        props: ['sid'],
         data() {
             return {
                 products: [],
@@ -72,9 +72,8 @@
             }
         },
         created() {
-            let products = mock.product()
-            this.products = products
-            this.store = products[0]
+            this.getProducts()
+            this.getStore()
         },
         methods: {
             addToCart(product) {
@@ -100,6 +99,24 @@
             },
             getPrice(price) {
                 return common.changePrice(price)
+            },
+            getProducts(){
+                if (this.$store.getters.productsCache(parseInt(this.sid))) {
+                    this.products = this.$store.getters.getProducts(this.sid)
+                    console.log('缓存sid为' + this.sid + '的products')
+                }
+                else {
+                    console.log('获取sid为' + this.sid + '的products')
+                    let products = mock.product(this.sid)
+                    this.products = products
+                    this.$store.commit('setProducts', products)
+                }
+            },
+            getStore(){
+                let storeList = this.$store.getters.getStoreById(this.sid)
+                if(storeList.length == 0){
+                    this.store = mock.getStores().filter(store => store.id == this.products[0].sid)[0]
+                }else this.store = storeList[0]
             }
         },
         computed: {

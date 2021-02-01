@@ -8,7 +8,8 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 1000
+        'price': 1000,
+        'sid': 1
     },
     {
         'id': 2,
@@ -17,7 +18,8 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 1000
+        'price': 1000,
+        'sid': 1
     },
     {
         'id': 3,
@@ -26,7 +28,8 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 1000
+        'price': 1000,
+        'sid': 1
     },
 ]
 
@@ -180,8 +183,8 @@ mock.carouselImage = function () {
 }
 
 // 产品
-mock.product = function () {
-    return products
+mock.product = function (sid) {
+    return products.filter(product => product.sid == sid)
 }
 
 // 搜索
@@ -193,6 +196,10 @@ mock.search = function (keywords) {
 // 商店
 mock.stores = function (sid) {
     return stores.filter(store => store.sid == sid)
+}
+
+mock.getStores = function(){
+    return stores
 }
 
 mock.category = function (serviceId) {

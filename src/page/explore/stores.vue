@@ -82,7 +82,7 @@
 
     export default {
         name: "stores",
-        props: ['id'],
+        props: ['sid'],
         components: {Page, Item, Headers, MescrollVue},
         data() {
             return {
@@ -108,7 +108,7 @@
         },
         created() {
             let serviceList = JSON.parse(sessionStorage.getItem('serviceList'))
-            let serviceInfo = serviceList.filter(service => service.id == this.id)[0]
+            let serviceInfo = serviceList.filter(service => service.id == this.sid)[0]
             this.filter = this.categories[0]
             this.title = serviceInfo.name
             this.icon = serviceInfo.icon
@@ -118,25 +118,25 @@
         },
         methods: {
             getStores() {
-                if (this.$store.getters.storesCache(parseInt(this.id))) {
-                    this.stores = this.$store.getters.getStores(this.id)
-                    console.log('缓存id为' + this.id + '的stores')
+                if (this.$store.getters.storesCache(parseInt(this.sid))) {
+                    this.stores = this.$store.getters.getStoresBySid(this.sid)
+                    console.log('缓存id为' + this.sid + '的stores')
                 }
                 else {
-                    console.log('获取id为' + this.id + '的stores')
-                    let stores = mock.stores(this.id)
+                    console.log('获取id为' + this.sid + '的stores')
+                    let stores = mock.stores(this.sid)
                     this.stores = stores
                     this.$store.commit('setStores', stores)
                 }
             },
             getCategories() {
-                if (this.$store.getters.categoriesCache(parseInt(this.id))) {
-                    this.categories = this.$store.getters.getCategories(this.id)[0]['categories']
-                    console.log('缓存id为' + this.id + '的categories')
+                if (this.$store.getters.categoriesCache(parseInt(this.sid))) {
+                    this.categories = this.$store.getters.getCategories(this.sid)[0]['categories']
+                    console.log('缓存id为' + this.sid + '的categories')
                 }
                 else {
-                    console.log('获取id为' + this.id + '的categories')
-                    let categories = mock.category(this.id)[0]
+                    console.log('获取id为' + this.sid + '的categories')
+                    let categories = mock.category(this.sid)[0]
                     this.categories = categories['categories']
                     this.$store.commit('setCategories', categories)
                 }
@@ -155,14 +155,14 @@
             },
             advancedStores() {
                 if (this.advanced == '2') {
-                    this.stores = mock.stores(this.id)
+                    this.stores = mock.stores(this.sid)
                 }
             },
             mescrollInit(mescroll) {
                 this.mescroll = mescroll
             },
             downCallBack(mescroll) {
-                this.stores = mock.stores(this.id)
+                this.stores = mock.stores(this.sid)
                 this.$nextTick(() => {
                     mescroll.endSuccess(this.stores.length)
                 })

@@ -3,14 +3,17 @@ const state = () => ({
 })
 
 const getters = {
-    getStores: (state) => (id) => {
-        return state.stores.filter(store => store.sid == id)
+    getStoresBySid: (state) => (sid) => {
+        return state.stores.filter(store => store.sid == sid)
     },
-    storesCache: (state) => (id) => {
+    storesCache: (state) => (sid) => {
         for (let store of state.stores) {
-            if (store.sid == id) return true
+            if (store.sid == sid) return true
         }
         return false
+    },
+    getStoreById: (state) => (id) => {
+        return state.stores.filter(store => store.id == id)
     }
 }
 

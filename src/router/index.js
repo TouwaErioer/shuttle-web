@@ -21,12 +21,12 @@ const routes = [
         component: HomeLayout
     },
     {
-        path: '/service/:id',
+        path: '/service/:sid',
         component: service,
         props: true
     },
     {
-        path: '/store/:id',
+        path: '/store/:sid',
         component: store,
         props: true
     },
