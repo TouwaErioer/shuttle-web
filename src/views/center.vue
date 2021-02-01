@@ -7,13 +7,7 @@
                 @click="$router.push('/center/edit')"
             >
                 <template v-slot:header>
-                    <el-avatar
-                        :src="
-                            'https://api.multiavatar.com/' +
-                            userInfo.name +
-                            '.png'
-                        "
-                    />
+                    <el-avatar :src="avatarUrl" />
                 </template>
                 <div class="info-list">
                     <cell icon="el-icon-user" text="admin" />
@@ -67,6 +61,11 @@ export default {
                 local: "5-001",
             },
         };
+    },
+    computed: {
+        avatarUrl: function () {
+            return `https://api.multiavatar.com/${this.userInfo.name}.png`;
+        },
     },
 };
 </script>
