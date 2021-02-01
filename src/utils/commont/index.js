@@ -6,7 +6,7 @@ common.arrayRemove = function (arr, value) {
 }
 
 common.changePrice = function (price) {
-    return (price / 100).toFixed(2)
+    return (price / 100).toFixed(1)
 }
 
 export default common

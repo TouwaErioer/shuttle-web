@@ -13,10 +13,10 @@
                     </el-rate>
                     <slot name="button"/>
                 </div>
-                <div class="item-tag" v-if="price == null">
-                    <span v-text="'总销量：' + item.sales"></span>
+                <div class="item-tag" :style="price != null?'unset':'height:unset'">
+                    <slot name="price"/>
+                    <slot name="sales"/>
                 </div>
-                <slot name="price"/>
             </div>
         </div>
     </transition>
@@ -48,7 +48,7 @@
             flex: 1;
 
             .item-desc {
-                margin: 3px;
+                margin: 3px 0;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -65,8 +65,11 @@
         line-height: 17px;
     }
 
-    .el-tag {
-        font-size: 5px;
+    .item-tag{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 100%;
     }
 
     .item-image {
@@ -76,7 +79,6 @@
     }
 
     .item-info {
-        margin-top: 8px;
         display: flex;
         align-items: center;
     }

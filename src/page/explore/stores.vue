@@ -63,7 +63,9 @@
                 </el-collapse-transition>
                     <div class="stores">
                         <Item v-for="store in stores" :key="store.id" :item="store"
-                              @click.native="$router.push('/store/' + store.id)"/>
+                              @click.native="$router.push('/store/' + store.id)">
+                            <div slot="sales"><i class="el-icon-medal"></i> 总销量：<span>{{ + store.sales}}</span></div>
+                        </Item>
                     </div>
             </div>
             </mescroll-vue>

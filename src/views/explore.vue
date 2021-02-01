@@ -16,24 +16,36 @@
         </div>
         <div style="overflow: scroll">
             <el-divider>
-                <li class="el-icon-sort" @click="top_switch = !top_switch" v-text="top_switch?' 热门商品':' 热门服务'"> 热门服务
+                <li class="el-icon-sort" @click="switchTop" v-text="top_switch?' 热门商品':' 热门服务'"> 热门服务
                 </li>
             </el-divider>
             <!--热门服务-->
             <transition name="el-fade-in-linear">
                 <div class="top-store" v-if="!top_switch">
-                    <Item :item="item" v-for="item in getStores" :key="item.id">
+                    <Item :item="item" v-for="item in getStores" :key="item.id"
+                          @click.native="$router.push('/store/' + item.id)">
                         <el-tag size="mini" v-text="item.service" effect="dark" class="item-tag" type="warning"
                                 slot="tag"/>
+                        <div slot="sales"><i class="el-icon-medal"></i> 总销量：
+                            <span>{{ + item.sales}}</span></div>
                     </Item>
                 </div>
             </transition>
             <!--热门商品-->
             <transition name="el-fade-in-linear">
                 <div class="top-product" v-if="top_switch">
-                    <Item :item="item" v-for="item in getProduct" :key="item.id">
+                    <Item :item="item" v-for="item in getProduct" :key="item.id" :price="true">
                         <el-tag size="mini" v-text="item.shop" effect="dark" class="tag" type="warning"
                                 slot="tag"/>
+                        <div class="add" @click="addToCart(item)" slot="button">
+                            <el-button size="mini" icon="el-icon-plus" round/>
+                        </div>
+                        <div slot="price"><i class="el-icon-price-tag"></i> 价格：
+                            <span class="price-text" v-text="getPrice(item.price)"/>
+                        </div>
+                        <div slot="sales"><i class="el-icon-medal"></i> 销量：
+                            <span>{{ + item.sales}}</span>
+                        </div>
                     </Item>
                 </div>
             </transition>
@@ -44,6 +56,7 @@
 <script>
     import mock from "@/mock";
     import Item from "@/components/item";
+    import common from "@/utils/commont";
 
     export default {
         name: "Explore",
@@ -73,6 +86,37 @@
                 let services = mock.services()
                 this.services = services
                 sessionStorage.setItem('serviceList', JSON.stringify(services))
+            },
+            switchTop() {
+                this.top_switch = !this.top_switch
+                let text = this.top_switch ? '热门商品' : '热门服务'
+                this.$message({
+                    message: '切换为' + text,
+                    type: 'info'
+                })
+            },
+            addToCart(product) {
+                this.$store.commit('addCart', {
+                    'id': product.id,
+                    'data': {
+                        'id': product.id,
+                        'name': product.name,
+                        'image': product.image,
+                        'price': product.price,
+                        'rate': product.rate,
+                        'sales': product.sales,
+                        'shop': product.shop,
+                        'count': 1
+                    }
+                })
+                this.$message({
+                        message: '添加到购物车',
+                        type: 'success'
+                    }
+                )
+            },
+            getPrice(price) {
+                return common.changePrice(price)
             }
         }
     };
