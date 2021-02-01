@@ -1,10 +1,13 @@
+import common from "@/utils/commont";
+
 const state = () => ({
-    cartMap: new Map(),
-    count: 0
+    cartMap: new Map(JSON.parse(localStorage.getItem('cart'))),
+    count: common.getCartCount()
 })
 
 const getters = {
     getCartMap: state => {
+        console.log(state.cartMap)
         return state.cartMap
     },
     getCount: state => {
@@ -26,13 +29,16 @@ const mutations = {
             cartMap.set(id, data)
         }
         state.cartMap = cartMap
+        common.addToLocalStorage(product)
     },
     changeCart(state, payload) {
         state.count += payload.currentValue - payload.oldValue
+        common.changeCart(payload)
     },
     clear(state) {
         state.count = 0
         state.cartMap.clear()
+        common.clearCart()
     }
 }
 

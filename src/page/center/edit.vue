@@ -1,8 +1,9 @@
 <template>
     <page class="page">
         <template #headers>
+
             <headers>
-                <cell><span>个人信息</span></cell>
+                <span><i class="el-icon-user"></i> 个人信息</span>
             </headers>
         </template>
         <template #center>
