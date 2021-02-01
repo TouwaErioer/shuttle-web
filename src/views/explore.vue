@@ -92,7 +92,8 @@
                 let text = this.top_switch ? '热门商品' : '热门服务'
                 this.$message({
                     message: '切换为' + text,
-                    type: 'info'
+                    type: 'info',
+                    duration: 800
                 })
             },
             addToCart(product) {

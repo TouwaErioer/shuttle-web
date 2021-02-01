@@ -93,7 +93,8 @@
                 })
                 this.$message({
                         message: '添加到购物车',
-                        type: 'success'
+                        type: 'success',
+                        duration: 800
                     }
                 )
             },

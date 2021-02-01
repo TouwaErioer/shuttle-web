@@ -48,6 +48,7 @@
                     <span>{{ + item[1].sales}}</span>
                 </div>
             </Item>
+            <Empty description="购物车暂无商品" v-if="getCount == 0"/>
         </template>
         <template v-slot:footer>
             <div class="pay-wrap">
@@ -69,10 +70,11 @@
     import Headers from "@/components/headers"
     import Item from "@/components/item"
     import common from "@/utils/commont";
+    import Empty from "@/components/empty";
 
     export default {
         name: "cart",
-        components: {Page, Headers, Item},
+        components: {Empty, Page, Headers, Item},
         data() {
             return {
                 user: {
