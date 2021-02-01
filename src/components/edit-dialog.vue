@@ -8,16 +8,10 @@
                 :minlength="minLength"
                 :maxlength="maxLength"
             />
+            <div class="error-msg" v-if="!pass" v-text="errorMsg" />
             <span slot="footer" class="dialog-footer">
                 <el-button @click="editing = false" v-text="'取 消'" />
-                <el-button
-                    type="primary"
-                    @click="
-                        editing = false;
-                        $emit('save', newValue);
-                    "
-                    v-text="'保 存'"
-                />
+                <el-button type="primary" @click="handle" v-text="'保 存'" />
             </span>
         </el-dialog>
     </div>
@@ -32,30 +26,38 @@ export default {
         minLength: Number,
         maxLength: Number,
         showWordLimit: Boolean,
+        regex: String,
+        errorMsg: String,
     },
     data() {
         return {
             editing: false,
             newValue: "",
+            regExp: null,
+            pass: true,
         };
     },
     methods: {
-        handleClose(done) {
-            this.$confirm("确认关闭？")
-                .then((_) => {
-                    console.log(_);
-                    done();
-                })
-                .catch((_) => {
-                    console.error(_);
-                });
+        handle() {
+            if (!this.regExp.test(this.newValue)) {
+                this.pass = false;
+                return;
+            }
+
+            this.pass = true;
+            this.editing = false;
+            this.$emit("save", this.newValue);
         },
     },
     created: function () {
         this.newValue = this.$props.value;
+        this.regExp = new RegExp(this.regex);
     },
 };
 </script>
 
 <style lang="scss" scoped>
+.error-msg {
+    color: #f03618;
+}
 </style>

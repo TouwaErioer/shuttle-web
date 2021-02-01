@@ -7,10 +7,14 @@
         </template>
         <template #center>
             <cells :tidy-header="true">
-                <cell icon="el-icon-user" title="头像" :access="true">
+                <cell icon="el-icon-user" title="头像">
                     <template v-slot:footer>
                         <el-avatar
-                            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                            :src="
+                                'https://api.multiavatar.com/' +
+                                userInfo.name +
+                                '.png'
+                            "
                         />
                     </template>
                 </cell>
@@ -31,6 +35,8 @@
                             :max-length="11"
                             show-word-limit
                             @save="setPhone"
+                            regex="^1[3-9][0-9]{9}$"
+                            errorMsg="长度11位"
                         />
                     </template>
                 </cell>
