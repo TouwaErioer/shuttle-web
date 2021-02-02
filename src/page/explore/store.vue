@@ -4,7 +4,8 @@
             <Headers>
                 <span><i class="el-icon-shopping-bag-2"></i> 商店详情</span>
             </Headers>
-            <div :style="'background-image:url(' + store.image + ')'">
+            <div style="overflow: hidden;">
+                <div class="info-background" :style="'background:url(' + store.image + ');background-size: cover'"></div>
                 <div class="info">
                     <item :item="store" :color="false">
                         <el-tag size="mini" v-text="'外卖'" effect="dark" class="item-tag" type="warning"
@@ -147,6 +148,8 @@
     .info {
         margin-left: 5px;
         color: white;
+        position: absolute;
+        top: 50px;
     }
 
     .car-button {
@@ -160,4 +163,26 @@
         justify-content: center;
         align-items: center;
     }
+
+    .info-background{
+        width:100%;
+        height:135px;
+        background-size:cover;
+        transform: scale(1.02);
+        filter:blur(3px);
+    }
+
+    /*.info-background::before{*/
+    /*    content:'';*/
+    /*    position:absolute;*/
+    /*    top:0;*/
+    /*    left:0;*/
+    /*    width:100%;*/
+    /*    height:135px;*/
+    /*    filter:blur(3px);*/
+    /*    z-index:-1;*/
+    /*    background:url('https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg');*/
+    /*    background-size:cover;*/
+    /*    transform: scale(1.02)*/
+    /*}*/
 </style>
