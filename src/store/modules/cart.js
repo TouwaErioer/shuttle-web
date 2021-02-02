@@ -28,16 +28,14 @@ const mutations = {
             cartMap.set(id, data)
         }
         state.cartMap = cartMap
-        common.addToLocalStorage(product)
     },
     changeCart(state, payload) {
         state.count += payload.currentValue - payload.oldValue
-        common.changeCart(payload)
+        if(state.cartMap.get(payload.id).count == 0) state.cartMap.delete(payload.id)
     },
     clear(state) {
         state.count = 0
         state.cartMap.clear()
-        common.clearCart()
     }
 }
 

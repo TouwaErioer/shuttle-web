@@ -78,7 +78,7 @@
                 return mock.carouselImage()
             },
             getProduct() {
-                return mock.product()
+                return mock.product(1)
             },
         },
         methods: {
