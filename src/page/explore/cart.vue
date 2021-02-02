@@ -39,7 +39,8 @@
             <Item v-for="(item, index) in cartList" :key="index" :item="item[1]" :price="true"
                   :count="item[1].count">
                 <el-input-number v-model="item[1].count" :min="0" size="mini" style="width: 90px;"
-                                 @change="change" slot="button"/>
+                                 @change="(currentValue, oldValue) => {change(currentValue, oldValue, item[1].id)}"
+                                 slot="button"/>
                 <el-tag size="mini" v-text="item[1].shop" effect="dark" class="tag" type="warning" slot="tag"/>
                 <div slot="price"><i class="el-icon-price-tag"></i> 价格：
                     <span class="price-text" v-text="getPrice(item[1].price)"/>
@@ -101,8 +102,9 @@
             }
         },
         methods: {
-            change(currentValue, oldValue) {
-                this.$store.commit('changeCart', {'currentValue': currentValue, 'oldValue': oldValue})
+            change(currentValue, oldValue, id) {
+                this.$store.commit('changeCart',
+                    {'currentValue': currentValue, 'oldValue': oldValue, 'id': id})
             },
             getPrice(price) {
                 return common.changePrice(price);

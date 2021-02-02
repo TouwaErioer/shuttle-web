@@ -8,7 +8,8 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 1000
+        'price': 1000,
+        'sid': 1
     },
     {
         'id': 2,
@@ -17,7 +18,8 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 1000
+        'price': 1000,
+        'sid': 1
     },
     {
         'id': 3,
@@ -26,7 +28,8 @@ const products = [
         'shop': '套餐',
         'rate': 5,
         'sales': 0,
-        'price': 1000
+        'price': 1000,
+        'sid': 1
     },
 ]
 
@@ -39,7 +42,8 @@ const stores = [
         'rate': 2,
         'sales': 6,
         'price': 10,
-        'category': '一食堂'
+        'category': '一食堂',
+        'sid': 1
     },
     {
         'id': 2,
@@ -49,7 +53,8 @@ const stores = [
         'rate': 1,
         'sales': 5,
         'price': 10,
-        'category': '二食堂'
+        'category': '二食堂',
+        'sid': 1
     },
     {
         'id': 3,
@@ -59,95 +64,102 @@ const stores = [
         'rate': 5,
         'sales': 1,
         'price': 10,
-        'category': '三食堂'
+        'category': '三食堂',
+        'sid': 1
     },
     {
         'id': 4,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg',
-        'name': '套餐',
+        'name': '套餐1',
         'service': '外卖',
         'rate': 2,
         'sales': 6,
         'price': 10,
-        'category': '一食堂'
+        'category': '一食堂',
+        'sid': 2
     },
     {
         'id': 5,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/hot-shakshuka-819x1024.jpg',
-        'name': '面馆',
+        'name': '面馆1',
         'service': '外卖',
         'rate': 1,
         'sales': 5,
         'price': 10,
-        'category': '二食堂'
+        'category': '二食堂',
+        'sid': 2
     },
     {
         'id': 6,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
-        'name': '米线',
+        'name': '米线1',
         'service': '外卖',
         'rate': 5,
         'sales': 1,
         'price': 10,
-        'category': '三食堂'
+        'category': '三食堂',
+        'sid': 2
     },
     {
         'id': 7,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/korean-spicy-seafood-soup-with-king-prawns-from-top-view-768x512.jpg',
-        'name': '套餐',
+        'name': '套餐3',
         'service': '外卖',
         'rate': 2,
         'sales': 6,
         'price': 10,
-        'category': '一食堂'
+        'category': '一食堂',
+        'sid': 3
     },
     {
         'id': 8,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2021/01/hot-shakshuka-819x1024.jpg',
-        'name': '面馆',
+        'name': '面馆2',
         'service': '外卖',
         'rate': 1,
         'sales': 5,
         'price': 10,
-        'category': '二食堂'
+        'category': '二食堂',
+        'sid': 3
     },
     {
         'id': 9,
         'image': 'https://www.foodiesfeed.com/wp-content/uploads/2020/08/omelette-with-freshly-baked-pastry-in-a-cafe-1-768x576.jpg',
-        'name': '米线',
+        'name': '米线2',
         'service': '外卖',
         'rate': 5,
         'sales': 1,
         'price': 10,
-        'category': '三食堂'
+        'category': '三食堂',
+        'sid': 3
     }
 ]
 
 const orders = [{
-        id: 1,
-        product: '套餐一',
-        service: '外卖',
-        shop: '套餐',
-        date: '2016-05-02',
-        status: '-1',
-        address: 'test'
-    }, {
-        id: 2,
-        product: '套餐一',
-        service: '外卖',
-        shop: '套餐',
-        date: '2016-05-02',
-        status: '0',
-        address: 'test'
-    }, {
-        id: 3,
-        product: '套餐一',
-        service: '外卖',
-        shop: '套餐',
-        date: '2016-05-02',
-        status: '1',
-        address: 'test'
-    }]
+    id: 1,
+    product: '套餐一',
+    service: '外卖',
+    shop: '套餐',
+    date: '2016-05-02',
+    status: '-1',
+    address: 'test'
+}, {
+    id: 2,
+    product: '套餐一',
+    service: '外卖',
+    shop: '套餐',
+    date: '2016-05-02',
+    status: '0',
+    address: 'test'
+}, {
+    id: 3,
+    product: '套餐一',
+    service: '外卖',
+    shop: '套餐',
+    date: '2016-05-02',
+    status: '1',
+    address: 'test'
+}]
 
 // 服务
 mock.services = function () {
@@ -171,8 +183,8 @@ mock.carouselImage = function () {
 }
 
 // 产品
-mock.product = function () {
-    return products
+mock.product = function (sid) {
+    return products.filter(product => product.sid == sid)
 }
 
 // 搜索
@@ -182,20 +194,36 @@ mock.search = function (keywords) {
 }
 
 // 商店
-mock.stores = function () {
+mock.stores = function (sid) {
+    return stores.filter(store => store.sid == sid)
+}
+
+mock.getStores = function(){
     return stores
 }
 
 mock.category = function (serviceId) {
-    let categories = {
-        '1': ['一食堂', '二食堂', '三食堂'],
-        '2': ['宿舍', '门市'],
-        '3': ['校内', '校外'],
-        '4': [],
-        '5': [],
-        '6': []
+    let categories = [{
+        'id': 1,
+        'categories': ['一食堂', '二食堂', '三食堂']
+    }, {
+        'id': 2,
+        'categories': ['宿舍', '门市'],
+    }, {
+        'id': 3,
+        'categories': ['校内', '校外']
+    }, {
+        'id': 4,
+        'categories': []
+    }, {
+        'id': 5,
+        'categories': []
+    }, {
+        'id': 6,
+        'categories': []
     }
-    return categories[serviceId]
+    ]
+    return categories.filter(category => category.id == serviceId)
 }
 
 // 订单

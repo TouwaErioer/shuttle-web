@@ -72,13 +72,13 @@
         },
         computed: {
             getStores() {
-                return mock.stores()
+                return mock.stores(1)
             },
             image() {
                 return mock.carouselImage()
             },
             getProduct() {
-                return mock.product()
+                return mock.product(1)
             },
         },
         methods: {
