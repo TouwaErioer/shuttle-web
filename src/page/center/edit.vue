@@ -2,7 +2,7 @@
     <page class="page">
         <template #headers>
             <headers>
-                <cell><span>个人信息</span></cell>
+                <span>个人信息</span>
             </headers>
         </template>
         <template #center>

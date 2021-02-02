@@ -29,7 +29,12 @@
                     :access="true"
                     @click="$router.push('/center/setting')"
                 />
-                <cell icon="el-icon-bank-card" text="充值" :access="true">
+                <cell
+                    icon="el-icon-bank-card"
+                    text="充值"
+                    :access="true"
+                    @click="$router.push('/center/balance')"
+                >
                     <template v-slot:footer>
                         <div v-text="'￥ 0'" />
                     </template>
