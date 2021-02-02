@@ -8,7 +8,11 @@
             >
                 <template v-slot:header>
                     <el-avatar
-                        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                        :src="
+                            'https://api.multiavatar.com/' +
+                            userInfo.name +
+                            '.png'
+                        "
                     />
                 </template>
                 <div class="info-list">
@@ -54,6 +58,15 @@ export default {
     components: {
         cell,
         cells,
+    },
+    data() {
+        return {
+            userInfo: {
+                name: "hahaha",
+                phone: "1234567890",
+                local: "5-001",
+            },
+        };
     },
 };
 </script>
