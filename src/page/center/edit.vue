@@ -10,13 +10,7 @@
             <cells :tidy-header="true">
                 <cell icon="el-icon-user" title="头像">
                     <template v-slot:footer>
-                        <el-avatar
-                            :src="
-                                'https://api.multiavatar.com/' +
-                                userInfo.name +
-                                '.png'
-                            "
-                        />
+                        <el-avatar :src="avatarUrl" />
                     </template>
                 </cell>
             </cells>
@@ -90,6 +84,11 @@ export default {
         setLocal: function (res) {
             this.userInfo.local = res;
             console.log(res);
+        },
+    },
+    computed: {
+        avatarUrl: function () {
+            return `https://api.multiavatar.com/${this.userInfo.name}.png`;
         },
     },
 };

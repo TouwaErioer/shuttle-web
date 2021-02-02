@@ -7,13 +7,7 @@
                 @click="$router.push('/center/edit')"
             >
                 <template v-slot:header>
-                    <el-avatar
-                        :src="
-                            'https://api.multiavatar.com/' +
-                            userInfo.name +
-                            '.png'
-                        "
-                    />
+                    <el-avatar :src="avatarUrl" />
                 </template>
                 <div class="info-list">
                     <cell icon="el-icon-user" text="admin" />
@@ -35,7 +29,12 @@
                     :access="true"
                     @click="$router.push('/center/setting')"
                 />
-                <cell icon="el-icon-bank-card" text="充值" :access="true">
+                <cell
+                    icon="el-icon-bank-card"
+                    text="充值"
+                    :access="true"
+                    @click="$router.push('/center/balance')"
+                >
                     <template v-slot:footer>
                         <div v-text="'￥ 0'" />
                     </template>
@@ -67,6 +66,11 @@ export default {
                 local: "5-001",
             },
         };
+    },
+    computed: {
+        avatarUrl: function () {
+            return `https://api.multiavatar.com/${this.userInfo.name}.png`;
+        },
     },
 };
 </script>

@@ -49,6 +49,10 @@ const routes = [
     {
         path: '/center/setting',
         component: () => import('@/page/center/setting.vue'),
+    },
+    {
+        path: '/center/balance',
+        component: () => import('@/page/center/balance.vue'),
     }
 ]
 export default new VueRouter({
