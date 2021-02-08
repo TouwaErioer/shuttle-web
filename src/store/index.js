@@ -8,6 +8,7 @@ import orders from '@/store/modules/orders'
 import stores from '@/store/modules/stores'
 import categories from '@/store/modules/categories'
 import products from '@/store/modules/product'
+import newOrders from '@/store/modules/newOrders'
 
 Vue.use(Vuex)
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         orders,
         stores,
         categories,
-        products
+        products,
+        newOrders
     },
 })
