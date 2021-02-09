@@ -51,6 +51,7 @@
         created() {
             this.$store.commit('setReceive', mock.received())
             this.$store.commit('setOrders', mock.receive())
+            this.$store.commit('open', this)
         },
         methods: {
             getCategory() {
