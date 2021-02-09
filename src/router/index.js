@@ -10,10 +10,11 @@ import order from '@/page/service/order'
 import receive from '@/page/service/receive'
 import HomeLayout from '@/layout/HomeLayout.vue'
 import entrance from '@/page/login'
+import {check} from "@/utils/api/user";
 
 const routes = [
     {
-        path: '',
+        path: '/login',
         component: entrance
     },
     {
@@ -55,6 +56,25 @@ const routes = [
         component: () => import('@/page/center/balance.vue'),
     }
 ]
-export default new VueRouter({
+
+const routers = new VueRouter({
     routes
 })
+
+routers.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        if (to.path !== '/login') next({path: '/login'});
+        else next()
+    } else {
+        check().then(res => {
+            if (res === undefined) {
+                localStorage.removeItem('token');
+                next({path: '/login'})
+            } else if (res.code === 1)
+                next();
+        })
+    }
+});
+
+export default routers
