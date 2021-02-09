@@ -1,36 +1,21 @@
-import {get, post, del} from '@/utils/request/request'
+import {get, post} from '@/utils/request/request'
 
-const api = '/user/'
+const API = '/user/'
 
 // 登录
-export const login = (params) => post(api + 'login', params)
+export const Login = (params) => post(API + 'login', params)
 
 // 注册
-export const register = (params) => post(api + 'register', params)
+export const register = (params) => post(API + 'register', params)
 
 // 重置密码
-export const reset = (params) => post(api + 'resetPassword', params)
+export const reset = (params) => post(API + 'resetPassword', params)
 
 // 检查
-export const check = () => get(api + 'check')
-
-// 发送邮件
-export const sendEmail = (params) => post(api + 'sendEmail', params)
-
-// 删除用户
-export const deleteUser = (params) => del(api + 'delete', params)
+export const check = () => get(API + 'check')
 
 // 更新用户资料
-export const update = (params) => post(api + 'update', params)
+export const update = (params) => post(API + 'update', params)
 
-// 根据id查询用户
-export const findUserById = (params) => get(api + 'findUserById/', params)
-
-// 查询全部用户
-export const findAll = () => get(api + 'findAll')
-
-// 根据邮箱查询用户
-export const findByEmail = (params) => get(api + 'findByEmail', params)
-
-// 增加用户点数
-export const addScore = (params) => post(api + 'addScore', params)
+// 充值
+export const Recharge = (params) => post(API + 'recharge',params);

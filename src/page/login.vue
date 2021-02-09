@@ -6,11 +6,11 @@
                     <h2 class="title">登录</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input placeholder="Email" id="login-email" type="email"/>
+                        <input placeholder="请输入电话或昵称" id="login-user"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input placeholder="Password" id="login-password" type="password"/>
+                        <input placeholder="请输入密码" id="login-password" type="password"/>
                     </div>
                     <el-button v-text="'Login'" class="btn solid" @click="sign()"/>
                 </form>
@@ -18,23 +18,23 @@
                     <h2 class="title">注册</h2>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" placeholder="Email" id="register-email"/>
+                        <input placeholder="请输入电话" id="register-phone"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="Password" id="register-password"/>
+                        <input type="password" placeholder="请输入密码" id="register-password"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" placeholder="rePassword" id="register-rePassword"/>
+                        <input type="password" placeholder="请重复输入密码" id="register-rePassword"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-address-card"></i>
-                        <input type="text" placeholder="address" id="register-address"/>
+                        <input type="text" placeholder="请输入地址" id="register-address"/>
                     </div>
                     <div class="input-field">
-                        <i class="fas fa-phone"></i>
-                        <input type="text" placeholder="phone" id="register-phone"/>
+                        <i class="fas fa-lock"></i>
+                        <input placeholder="请输入昵称" id="register-name"/>
                     </div>
                     <el-button @click="register()" v-text="'Sign up'" class="btn"/>
                 </form>
@@ -73,6 +73,8 @@
 
 <script>
 
+    import {Login, register} from "@/utils/api/user";
+
     export default {
         name: 'login',
         data() {
@@ -87,63 +89,56 @@
             },
             sign() {
                 const login_from = {
-                    email: document.getElementById('login-email').value,
+                    user: document.getElementById('login-user').value,
                     password: document.getElementById('login-password').value
                 }
-                const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
                 if (!Object.values(login_from).every(v => !!v)) {
                     this.$message.error('请输邮箱或密码')
-                } else if (!regExp.test(login_from.email)) {
-                    this.$message.error('邮箱格式错误')
                 } else {
                     let data = {
-                        email: login_from.email,
+                        phone: login_from.user,
                         password: login_from.password,
                         expired: 60
                     }
-                    console.log('登录 ' + data)
-                    this.$router.push('/home')
-                    // login({
-                    //     email: login_from.email,
-                    //     password: login_from.password,
-                    //     expired: 60
-                    // }).then(res => {
-                    //     if (res != null) {
-                    //         let user = res.data.user
-                    //         localStorage.setItem('token', res.data.token)
-                    //         localStorage.setItem('userInfo', JSON.stringify(user))
-                    //         this.$router.push('/service')
-                    //         console.log(res, '登录')
-                    //     }
-                    // })
+                    Login(data).then(res => {
+                        console.log(res)
+                        if (res.code === 1) {
+                            let user = res.data.user
+                            localStorage.setItem('token', res.data.token)
+                            localStorage.setItem('userInfo', JSON.stringify(user))
+                            this.$router.push('/home')
+                        }
+                    })
                 }
             },
             register() {
-                const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
                 const phoneRegEx = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/;
                 const register_from = {
-                    email: document.getElementById('register-email').value,
+                    phone: document.getElementById('register-phone').value,
                     password: document.getElementById('register-password').value,
                     rePassword: document.getElementById('register-rePassword').value,
                     address: document.getElementById('register-address').value,
-                    phone: document.getElementById('register-phone').value,
+                    name: document.getElementById('register-name').value,
                 }
                 if (!Object.values(register_from).every(v => !!v)) {
-                    this.$message.error('请输入 邮箱 或 密码 或 寝室号')
-                } else if (!regExp.test(register_from.email)) {
-                    this.$message.error('邮箱格式错误')
+                    this.$message.error('请输入 邮箱 或 密码 或 寝室号 或 昵称')
                 } else if (register_from.password != register_from.rePassword) {
                     this.$message.error('两次输入密码不一致')
                 } else if (!phoneRegEx.test(register_from.phone)) {
                     this.$message.error('号码格式错误')
                 } else {
                     const data = {
-                        'email': register_from.email,
+                        'phone': register_from.phone,
+                        'name': register_from.name,
                         'password': register_from.password,
                         'address': register_from.address,
-                        'type': 0
                     }
-                    console.log('注册 ' + data)
+                    register(data).then(res => {
+                        if(res.code === 1){
+                            this.$message.success("注册成功！")
+                            this.$router.push('/login')
+                        }
+                    })
                 }
             }
         }
