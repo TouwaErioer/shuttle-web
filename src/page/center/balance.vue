@@ -10,6 +10,14 @@
         <template #center>
             <cells class="opthin-area">
                 <cell>
+                    <div class="balance">
+                        <div><i class="el-icon-coin"></i> 余额：</div>
+                        <div style="color: #e6a23c" v-text="score + '积分'"></div>
+                    </div>
+                </cell>
+            </cells>
+            <cells class="opthin-area">
+                <cell>
                     <el-input placeholder="请输入充值金额" v-model="total" suffix-icon="el-icon-wallet"/>
                 </cell>
             </cells>
@@ -39,21 +47,33 @@
     import Cells from "../../components/cells.vue";
     import Headers from "../../components/headers.vue";
     import page from "../../layout/page.vue";
+    import {findSore} from "@/utils/api/user";
 
     export default {
         components: {page, Headers, Cells, Cell},
         data() {
             return {
                 options: [5, 10, 20, 30, 50, 100, 200, 300, 500],
-                total: null
+                total: null,
+                score: 0
             };
+        },
+        created(){
+            this.findScore();
         },
         methods: {
             getUserId() {
                 return JSON.parse(localStorage.getItem('userInfo')).id
             },
-            check(){
-                if(this.total === null) this.$message.error("请输入或选择金额")
+            check() {
+                if (this.total === null) this.$message.error("请输入或选择金额")
+            },
+            findScore(){
+                findSore(this.getUserId()).then(res => {
+                    if(res.code === 1){
+                        this.score = res.data;
+                    }
+                })
             }
         }
     };
@@ -66,10 +86,6 @@
         margin: 0 !important;
     }
 
-    .balance {
-        font-size: 40px;
-        font-weight: bolder;
-    }
 
     .item {
         border-radius: 8px;
@@ -116,5 +132,10 @@
     .tip {
         color: #909399;
         padding: 0 30px;
+    }
+
+    .balance{
+        display: flex;
+        justify-content: space-between;
     }
 </style>

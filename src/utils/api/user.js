@@ -19,3 +19,5 @@ export const update = (params) => post(API + 'update', params)
 
 // 充值
 export const Recharge = (params) => post(API + 'recharge',params);
+
+export const findSore = (params) => get(API + 'findSore/' + params)
