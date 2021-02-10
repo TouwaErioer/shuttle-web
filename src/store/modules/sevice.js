@@ -1,16 +1,15 @@
 const state = () => ({
-    services: new Map()
-})
+    services: JSON.parse(sessionStorage.getItem('serviceList'))
+});
 
 const getters = {
-
-}
+    getService: (state) => {
+        return state.services
+    }
+};
 
 const mutations = {
-    setServices(state, services) {
-        services.forEach(service => state.services.set(service.id, service))
-    }
-}
+};
 
 export default {
     state,
