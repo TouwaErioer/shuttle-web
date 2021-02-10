@@ -18,7 +18,7 @@ export const findAllOrders = () => get(api + 'findAll')
 export const findAllCompleted = (pageNo) => get(api + 'findAll?completed=0&?pageNo=' + pageNo)
 
 // 根据userId查询所有订单
-export const findByUserId = (userId) => get(api + 'findByUid/' + userId)
+export const findByUserId = (userId) => get(api + 'findByCid/' + userId)
 
 // 接单
 export const receive = (orderId) => get(api + 'receive/' + orderId)

@@ -77,15 +77,13 @@ routers.beforeEach((to, from, next) => {
         if (to.path !== '/login') next({path: '/login'});
         else next()
     } else {
-        if (to.path === '/home') {
-            check().then(res => {
-                if (res === undefined) {
-                    localStorage.removeItem('token');
-                    next({path: '/login'})
-                } else if (res.code === 1)
-                    next();
-            })
-        }else next()
+        check().then(res => {
+            if (res === undefined) {
+                localStorage.removeItem('token');
+                next({path: '/login'})
+            } else if (res.code === 1)
+                next();
+        })
     }
 });
 

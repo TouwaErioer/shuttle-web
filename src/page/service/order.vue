@@ -7,7 +7,7 @@
         </template>
         <template v-slot:center>
             <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
-                <el-tabs v-model="activeName" type="card" :stretch="true">
+                <el-tabs v-model="activeName" type="card" :stretch="true" v-if="tableData != null">
                     <el-tab-pane label="已下单" name="first">
                         <span slot="label"><i class="el-icon-sold-out"></i> 已下单</span>
                         <Tables :table-data="getTableData('已下单')" :type="'已下单'"/>
@@ -33,28 +33,46 @@
     import mock from "@/mock";
     import Tables from "@/components/tables";
     import MescrollVue from 'mescroll.js/mescroll.vue'
+    import {findByUserId} from "@/utils/api/order";
+    import common from "@/utils/commont";
 
     export default {
         name: "order",
         components: {Tables, Headers, Page, MescrollVue},
         data() {
             return {
-                tableData: mock.order(),
+                tableData: null,
                 activeName: 'first',
                 mescrollDown:{
-                    callback: this.downCallBack
+                    callback: this.downCallBack,
+                    auto: false
                 }
             }
         },
-        methods: {
-            getTableData(type) {
-                if (type == '已下单') {
-                    return this.tableData.filter(order => order.status == -1)
-                } else if (type == '配送中') {
-                    return this.tableData.filter(order => order.status == 0)
-                } else if (type == '已完成') {
-                    return this.tableData.filter(order => order.status == 1)
+        computed:{
+            getTableData() {
+                return (type) => {
+                    if (type === '已下单') {
+                        return this.tableData.filter(order => order.status === -1)
+                    } else if (type === '配送中') {
+                        return this.tableData.filter(order => order.status === 0)
+                    } else if (type === '已完成') {
+                        return this.tableData.filter(order => order.status === 1)
+                    }
                 }
+            }
+        },
+        created(){
+            this.getOrder()
+        },
+        methods: {
+            getOrder(){
+                let userInfo = common.getUserInfo();
+                findByUserId(userInfo.id).then(res => {
+                    if(res.code === 1){
+                        this.tableData = res.data.list;
+                    }
+                })
             },
             mescrollInit (mescroll) {
                 this.mescroll = mescroll

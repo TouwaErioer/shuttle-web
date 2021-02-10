@@ -150,7 +150,7 @@
                     orders.push({
                         pid: value.id,
                         cid: userInfo.id,
-                        sid: null,
+                        sid: 1,
                         date: date,
                         address: userInfo.address,
                         note: note,
