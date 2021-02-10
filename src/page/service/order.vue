@@ -6,19 +6,118 @@
             </Headers>
         </template>
         <template v-slot:center>
-            <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+            <mescroll-vue ref="mescroll" :down="mescrollDown" :up="mescrollUp" @init="mescrollInit">
                 <el-tabs v-model="activeName" type="card" :stretch="true" v-if="tableData != null">
                     <el-tab-pane label="已下单" name="first">
                         <span slot="label"><i class="el-icon-sold-out"></i> 已下单</span>
-                        <Tables :table-data="getTableData('已下单')" :type="'已下单'"/>
+                        <el-table
+                                :data="getTableData('已下单')"
+                                style="width: 100%"
+                                :stretch="true"
+                                @row-click="handleCurrentChange">
+                            <el-table-column
+                                    prop="product"
+                                    label="商品"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <el-tag effect="dark" :color="getService(scope.row.serviceId).color"
+                                            :style="'border-color:' + getService(scope.row.serviceId).color"
+                                            v-text="scope.row.product.name">
+                                    </el-tag>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    prop="date"
+                                    label="时间"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <div v-text="changeDate(scope.row.date)"></div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    prop="status"
+                                    label="状态"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <el-tag :type="getStatusType(scope.row.status)">
+                                        <i :class="getStatusIcon(scope.row.status)"></i>
+                                        {{getStatus(scope.row.status)}}
+                                    </el-tag>
+                                </template>
+                            </el-table-column>
+                        </el-table>
                     </el-tab-pane>
                     <el-tab-pane label="配送中" name="second">
                         <span slot="label"><i class="el-icon-shopping-cart-full"></i> 配送中</span>
-                        <Tables :table-data="getTableData('配送中')" :type="'配送中'"/>
+                        <el-table
+                                :data="getTableData('配送中')"
+                                style="width: 100%"
+                                :stretch="true"
+                                @row-click="handleCurrentChange">
+                            <el-table-column
+                                    prop="product"
+                                    label="商品"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <span>{{scope.row.product.name}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    prop="date"
+                                    label="时间"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <div v-text="changeDate(scope.row.date)"></div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    prop="status"
+                                    label="状态"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <el-tag :type="getStatusType(scope.row.status)">
+                                        <i :class="getStatusIcon(scope.row.status)"></i>
+                                        {{getStatus(scope.row.status)}}
+                                    </el-tag>
+                                </template>
+                            </el-table-column>
+                        </el-table>
                     </el-tab-pane>
                     <el-tab-pane label="已完成" name="third">
                         <span slot="label"><i class="el-icon-circle-check"></i> 已完成</span>
-                        <Tables :table-data="getTableData('已完成')" :type="'已完成'"/>
+                        <el-table
+                                :data="getTableData('已完成')"
+                                style="width: 100%"
+                                :stretch="true"
+                                @row-click="handleCurrentChange">
+                            <el-table-column
+                                    prop="product"
+                                    label="商品"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <span>{{scope.row.product.name}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    prop="date"
+                                    label="时间"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <div v-text="changeDate(scope.row.date)"></div>
+                                </template>
+                            </el-table-column>
+                            <el-table-column
+                                    prop="status"
+                                    label="状态"
+                                    align="center">
+                                <template slot-scope="scope">
+                                    <el-tag :type="getStatusType(scope.row.status)">
+                                        <i :class="getStatusIcon(scope.row.status)"></i>
+                                        {{getStatus(scope.row.status)}}
+                                    </el-tag>
+                                </template>
+                            </el-table-column>
+                        </el-table>
                     </el-tab-pane>
                 </el-tabs>
             </mescroll-vue>
@@ -30,26 +129,31 @@
 
     import Page from "@/layout/page";
     import Headers from "@/components/headers";
-    import mock from "@/mock";
-    import Tables from "@/components/tables";
     import MescrollVue from 'mescroll.js/mescroll.vue'
-    import {findByUserId} from "@/utils/api/order";
-    import common from "@/utils/commont";
+    import {deleteOrder, findByUserId} from "@/utils/api/order";
 
     export default {
         name: "order",
-        components: {Tables, Headers, Page, MescrollVue},
+        components: {Headers, Page, MescrollVue},
         data() {
             return {
-                tableData: null,
+                tableData: [{
+                    serviceId: null
+                }],
                 activeName: 'first',
-                mescrollDown:{
+                mescrollDown: {
                     callback: this.downCallBack,
+                    auto: false
+                },
+                pageNo: 1,
+                userInfo: this.$store.getters.getUserInfo,
+                mescrollUp: {
+                    callback: this.upCallBack,
                     auto: false
                 }
             }
         },
-        computed:{
+        computed: {
             getTableData() {
                 return (type) => {
                     if (type === '已下单') {
@@ -60,28 +164,109 @@
                         return this.tableData.filter(order => order.status === 1)
                     }
                 }
+            },
+            getService(){
+                return (serviceId) => {
+                    const serviceList = this.$store.getters.getService;
+                    return serviceList.filter(service => service.id === serviceId)[0];
+                }
             }
         },
-        created(){
+        created() {
             this.getOrder()
         },
         methods: {
-            getOrder(){
-                let userInfo = common.getUserInfo();
-                findByUserId(userInfo.id).then(res => {
-                    if(res.code === 1){
+            getOrder() {
+                findByUserId(this.userInfo.id, this.pageNo).then(res => {
+                    if (res.code === 1) {
                         this.tableData = res.data.list;
                     }
                 })
             },
-            mescrollInit (mescroll) {
+            mescrollInit(mescroll) {
                 this.mescroll = mescroll
             },
-            downCallBack(mescroll){
-                let order = mock.order()
-                this.tableData = order
+            downCallBack(mescroll) {
+                this.pageNo = 1;
+                this.getOrder();
                 this.$nextTick(() => {
-                    mescroll.endSuccess(order.length)
+                    mescroll.endSuccess(this.tableData.length)
+                })
+            },
+            upCallBack() {
+                this.pageNo += 1;
+                findByUserId(this.userInfo.id, this.pageNo).then(res => {
+                    if (res.code === 1) {
+                        this.tableData.push(...res.data.list);
+                        this.$nextTick(() => {
+                            this.mescroll.endSuccess(res.data.list.length)
+                        })
+                    } else this.mescroll.endErr()
+                });
+            },
+            getStatus(status) {
+                if (status === -1) {
+                    return '待接单'
+                } else if (status === 0) {
+                    return '配送中'
+                } else if (status === 1) {
+                    return '已完成'
+                }
+            },
+            getStatusIcon(status) {
+                if (status === -1) {
+                    return 'el-icon-loading'
+                } else if (status === 0) {
+                    return 'el-icon-shopping-cart-full'
+                } else if (status === 1) {
+                    return 'el-icon-circle-check'
+                }
+            },
+            getStatusType(status) {
+                if (status === -1) {
+                    return 'primary'
+                } else if (status === 0) {
+                    return 'warning'
+                } else if (status === 1) {
+                    return 'success'
+                }
+            },
+            handleCurrentChange(row) {
+                const serviceName = this.getService(row.serviceId).name;
+                let confirmButton = '确定';
+                if (this.type !== '配送中') {
+                    confirmButton = '删除'
+                }
+                let html =
+                    "<div><i class='el-icon-user'></i><span> 用户：" + row.client.name + "</span></div>" +
+                    "<div><i class='el-icon-school'></i><span> 地址：" + row.client.address + "</span></div>" +
+                    "<div><i class='el-icon-collection-tag'></i><span> 商品：" + row.product.name + "</span></div>" +
+                    "<div><i class='el-icon-folder'></i><span> 服务：" + serviceName + "</span></div>" +
+                    "<div><i class='el-icon-goods'></i><span> 商店：" + row.storeName + "</span></div>" +
+                    "<div><i class='el-icon-time'></i><span> 时间：" + row.date + "</span></div>";
+                this.$confirm(html, '详情', {
+                    confirmButtonText: confirmButton,
+                    cancelButtonText: '返回',
+                    dangerouslyUseHTMLString: true,
+                }).then(() => {
+                    this.deleteOrder(row)
+                }).catch(() => {
+
+                });
+            },
+            changeDate(date) {
+                return new Date(date).toLocaleDateString()
+            },
+            deleteOrder(row) {
+                deleteOrder({
+                    id: row.id,
+                    cid: row.cid,
+                    status: row.status
+                }).then(res => {
+                    if (res.code === 1) {
+                        this.$message.success('删除成功！');
+                        this.$router.go(0);
+                    }
                 })
             }
         }

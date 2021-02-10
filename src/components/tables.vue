@@ -44,8 +44,6 @@
         data() {
             return {
                 orders: this.tableData,
-                currentOrder: null,
-                dialogDetailVisible: false
             }
         },
         methods: {
@@ -76,11 +74,7 @@
                     return 'success'
                 }
             },
-            action(order) {
-                this.orders = common.arrayRemove(this.orders, order)
-            },
             handleCurrentChange(row) {
-
                 const serviceList = common.getService();
                 const serviceName = serviceList.filter(service => service.id === row.serviceId)[0].name;
                 let confirmButton = '确定';

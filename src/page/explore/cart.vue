@@ -139,24 +139,26 @@
                 return common.changePrice(price);
             },
             submit() {
-                let userInfo = common.getUserInfo()
+                let userInfo = common.getUserInfo();
                 let orders = [];
-                let date = this.changeDate(new Date())
+                let date = this.changeDate(new Date());
                 this.$store.getters.getCartMap.forEach(function (value) {
-                    let type = value.extend.type;
-                    let note, file;
-                    if (type === 'note') note = value.extend.value;
-                    else if (type === 'file') file = value.extend.value.url;
-                    orders.push({
-                        pid: value.id,
-                        cid: userInfo.id,
-                        sid: 1,
-                        date: date,
-                        address: userInfo.address,
-                        note: note,
-                        file: file,
-                        status: -1
-                    })
+                    for (let n = 0; n < value.count; n++) {
+                        let type = value.extend.type;
+                        let note, file;
+                        if (type === 'note') note = value.extend.value;
+                        else if (type === 'file') file = value.extend.value.url;
+                        orders.push({
+                            pid: value.id,
+                            cid: userInfo.id,
+                            sid: 1,
+                            date: date,
+                            address: userInfo.address,
+                            note: note,
+                            file: file,
+                            status: -1
+                        })
+                    }
                 });
                 console.log(orders);
                 insertOrder(orders, {
@@ -172,9 +174,7 @@
                         });
                         this.$router.push('/order');
                     }
-                })
-
-
+                });
             },
             getToken() {
                 return localStorage.getItem('token');
