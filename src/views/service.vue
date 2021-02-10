@@ -15,7 +15,7 @@
                 <i class="el-icon-shopping-cart-1"></i> 购物车
             </span>
         </div>
-        <div class="service" style="background: thistle">
+        <div class="service" style="background: thistle" v-if="$store.getters.getUserInfo.admin">
             <span>
                 <i class="el-icon-data-analysis"></i> 后台管理
             </span>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+
     export default {
         name: "service"
     }
