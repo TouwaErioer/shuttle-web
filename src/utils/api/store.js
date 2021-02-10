@@ -1,7 +1,12 @@
 import {get} from '@/utils/request/request'
 
+const API = '/store/';
+
 // 根据serviceId查询store
-export const findStoreByServiceID = (serviceId) => get('/store/findStoreByServiceID/' + serviceId)
+export const findStoreByServiceId = (serviceId) => get(API + 'findByServiceId/' + serviceId);
 
 // 查询热门store
-export const findPopularStore = () => get('/store/popular')
+export const findPopularStore = () => get(API + 'rank');
+
+// 根据id查询store
+export const findStoreById = (id) => get(API + 'findById/' + id);

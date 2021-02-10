@@ -22,10 +22,11 @@
             <!--热门服务-->
             <transition name="el-fade-in-linear">
                 <div class="top-store" v-if="!top_switch">
-                    <Item :item="item" v-for="item in getStores" :key="item.id"
+                    <Item :item="item" v-for="item in popularStore" :key="item.id"
                           @click.native="$router.push('/store/' + item.id)">
-                        <el-tag size="mini" v-text="item.service" effect="dark" class="item-tag" type="warning"
-                                slot="tag"/>
+                        <el-tag size="mini" v-text="item.services.name" effect="dark" class="item-tag"
+                                :style="'border-color:' + item.services.color"
+                                slot="tag" :color="item.services.color"/>
                         <div slot="sales"><i class="el-icon-medal"></i> 总销量：
                             <span>{{ + item.sales}}</span></div>
                     </Item>
@@ -34,8 +35,8 @@
             <!--热门商品-->
             <transition name="el-fade-in-linear">
                 <div class="top-product" v-if="top_switch">
-                    <Item :item="item" v-for="item in getProduct" :key="item.id" :price="true">
-                        <el-tag size="mini" v-text="item.shop" effect="dark" class="tag" type="warning"
+                    <Item :item="item" v-for="item in popularProduct" :key="item.id" :price="true">
+                        <el-tag size="mini" v-text="item.store.name" effect="dark" class="tag" type="warning"
                                 slot="tag"/>
                         <div class="add" @click="addToCart(item)" slot="button">
                             <el-button size="mini" icon="el-icon-plus" round/>
@@ -57,6 +58,9 @@
     import mock from "@/mock";
     import Item from "@/components/item";
     import common from "@/utils/commont";
+    import {findAllService} from "@/utils/api/service";
+    import {findPopularStore} from "@/utils/api/store";
+    import {findPopularProduct} from "@/utils/api/product";
 
     export default {
         name: "Explore",
@@ -64,11 +68,15 @@
         data() {
             return {
                 services: [],
-                top_switch: false
+                top_switch: false,
+                popularStore: [],
+                popularProduct: [],
             }
         },
         created() {
-            this.getService()
+            this.getService();
+            this.getRankStores();
+            this.getRankProduct();
         },
         computed: {
             getStores() {
@@ -83,9 +91,27 @@
         },
         methods: {
             getService() {
-                let services = mock.services()
-                this.services = services
-                sessionStorage.setItem('serviceList', JSON.stringify(services))
+                findAllService().then(res => {
+                    if (res.code === 1) {
+                        let services = res.data.list;
+                        this.services = services
+                        sessionStorage.setItem('serviceList', JSON.stringify(services))
+                    }
+                });
+            },
+            getRankStores() {
+                findPopularStore().then(res => {
+                    if (res.code === 1) {
+                        this.popularStore = res.data;
+                    }
+                })
+            },
+            getRankProduct() {
+                findPopularProduct().then(res => {
+                    if (res.code === 1) {
+                        this.popularProduct = res.data;
+                    }
+                })
             },
             switchTop() {
                 this.top_switch = !this.top_switch

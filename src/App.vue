@@ -12,7 +12,6 @@
         name: "App",
         created() {
             window.addEventListener('beforeunload', e => this.update(e))
-            console.log(this.$store.getters.getCartMap)
         },
         methods: {
             // 刷新或关闭调用

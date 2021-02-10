@@ -4,11 +4,11 @@ const state = () => ({
 
 const getters = {
     getCategories: (state) => (id) => {
-        return state.categories.filter(category => category.id == id)
+        return state.categories.filter(category => category.serviceId === id)
     },
     categoriesCache: (state) => (id) => {
         for (let category of state.categories) {
-            if (category.id == id) return true
+            if (category.serviceId === id) return true
         }
         return false
     }
@@ -16,7 +16,7 @@ const getters = {
 
 const mutations = {
     setCategories(state, categories) {
-        state.categories.push(categories)
+        state.categories.push(...categories)
     }
 }
 

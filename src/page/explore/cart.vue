@@ -9,11 +9,11 @@
                     <div>
                         <div class="email">
                             <i class="el-icon-user"></i>
-                            <span v-text="' ' + user.email"></span>
+                            <span v-text="' ' + userInfo.name"></span>
                         </div>
                         <div class="address">
                             <i class="el-icon-school"></i>
-                            <span v-text="' ' + user.address"></span>
+                            <span v-text="' ' + userInfo.address"></span>
                         </div>
                     </div>
                     <i :class="more? 'el-icon-arrow-up':'el-icon-arrow-down'" class="arrow" @click="more = !more"></i>
@@ -41,7 +41,33 @@
                 <el-input-number v-model="item[1].count" :min="0" size="mini" style="width: 90px;"
                                  @change="(currentValue, oldValue) => {change(currentValue, oldValue, item[1].id)}"
                                  slot="button"/>
-                <el-tag size="mini" v-text="item[1].shop" effect="dark" class="tag" type="warning" slot="tag"/>
+                <div slot="tag">
+                    <el-tag size="mini" v-text="item[1].storeName" effect="dark" class="tag" type="warning"/>
+                    <el-tag size="mini" effect="dark" @click="dialogExtendVisible = true"><i class="el-icon-link"></i>
+                    </el-tag>
+                    <el-dialog :title="item[1].extend.type === 'note'?'取件号':'文件'" :visible.sync="dialogExtendVisible"
+                               width="80%" center>
+                        <div class="dialog">
+                            <div class="dialog-control" v-if="item[1].extend.type === 'note'">
+                                <el-input v-model="item[1].extend.value" suffix-icon="el-icon-chat-line-square"
+                                          placeholder="请输入订单号"/>
+                            </div>
+                            <div class="dialog-control" v-if="item[1].extend.type !== 'note'">
+                                <el-upload class="upload dialog-control"
+                                           action="http://127.0.0.1:8081/file/upload"
+                                           multiple
+                                           :limit="1"
+                                           :on-success="handleResult"
+                                           :headers="{Authorization:getToken()}"
+                                           :file-list="[{name:item[1].extend.value.name,url:item[1].extend.value.url}]"
+                                           :on-remove="removeFile">
+                                    <el-button size="small" type="primary">点击上传</el-button>
+                                    <div slot="tip" class="el-upload__tip">只能上传一个不超过10MB的文件</div>
+                                </el-upload>
+                            </div>
+                        </div>
+                    </el-dialog>
+                </div>
                 <div slot="price"><i class="el-icon-price-tag"></i> 价格：
                     <span class="price-text" v-text="getPrice(item[1].price)"/>
                 </div>
@@ -49,7 +75,7 @@
                     <span>{{ + item[1].sales}}</span>
                 </div>
             </Item>
-            <Empty description="购物车暂无商品" v-if="getCount == 0"/>
+            <Empty description="购物车暂无商品" v-if="getCount === 0"/>
         </template>
         <template v-slot:footer>
             <div class="pay-wrap">
@@ -57,7 +83,7 @@
                     <span><i class="el-icon-price-tag"></i> 商品金额（运费 ¥1）</span>
                     <span>共计：<span class="count">¥{{ totalPrice }}</span></span>
                 </div>
-                <el-button class="pay-btn" type="primary" icon="el-icon-download" :disabled="getCount == 0"
+                <el-button class="pay-btn" type="primary" icon="el-icon-download" :disabled="getCount === 0"
                            @click="submit">下单
                 </el-button>
             </div>
@@ -72,55 +98,99 @@
     import Item from "@/components/item"
     import common from "@/utils/commont";
     import Empty from "@/components/empty";
+    import {insertOrder} from "@/utils/api/order";
 
     export default {
         name: "cart",
         components: {Empty, Page, Headers, Item},
         data() {
             return {
-                user: {
-                    'email': 'adim@hope.com',
-                    'address': 'test'
-                },
                 more: false,
                 cartList: Array.from(this.$store.getters.getCartMap),
-                isExpired: false
+                isExpired: false,
+                userInfo: null,
+                dialogExtendVisible: false,
+                fileName: null
             }
+        },
+        created() {
+            this.userInfo = common.getUserInfo();
         },
         computed: {
             getCount() {
-                return this.$store.getters.getCount
+                return this.$store.getters.getCount;
             },
             totalPrice() {
-                if (this.getCount != 0) {
-                    let count = 100
+                if (this.getCount !== 0) {
+                    let count = 100;
                     this.$store.getters.getCartMap.forEach(function (product) {
                         count += product.count * product.price
-                    })
-                    return common.changePrice(count)
+                    });
+                    return common.changePrice(count);
                 } else return '0.00'
             }
         },
         methods: {
             change(currentValue, oldValue, id) {
                 this.$store.commit('changeCart',
-                    {'currentValue': currentValue, 'oldValue': oldValue, 'id': id})
+                    {'currentValue': currentValue, 'oldValue': oldValue, 'id': id});
             },
             getPrice(price) {
                 return common.changePrice(price);
             },
             submit() {
-                let orders = []
+                let userInfo = common.getUserInfo()
+                let orders = [];
+                let date = this.changeDate(new Date())
                 this.$store.getters.getCartMap.forEach(function (value) {
-                    orders.push(value)
+                    let type = value.extend.type;
+                    let note, file;
+                    if (type === 'note') note = value.extend.value;
+                    else if (type === 'file') file = value.extend.value.url;
+                    orders.push({
+                        pid: value.id,
+                        cid: userInfo.id,
+                        sid: null,
+                        date: date,
+                        address: userInfo.address,
+                        note: note,
+                        file: file,
+                        status: -1
+                    })
+                });
+                console.log(orders);
+                insertOrder(orders, {
+                    'headers': {
+                        'Content-Type': 'application/json'
+                    }
+                }, this.isExpired).then(res => {
+                    if (res.code === 1) {
+                        this.$store.commit('clear');
+                        this.$message({
+                            message: '下单成功',
+                            type: 'success'
+                        });
+                        this.$router.push('/order');
+                    }
                 })
-                console.log(orders)
-                this.$store.commit('clear')
-                this.$message({
-                    message: '下单成功',
-                    type: 'success'
+
+
+            },
+            getToken() {
+                return localStorage.getItem('token');
+            },
+            handleResult(response, file) {
+                this.$store.commit('changeFile', {
+                    fileName: this.fileName,
+                    curFileName: file.name,
+                    url: response.data
                 })
-                this.$router.push('/order')
+            },
+            removeFile(file) {
+                this.fileName = file.name
+            },
+            changeDate(date) {
+                return date.toISOString().split('T')[0] + ' ' + date.toTimeString().split(' ')[0]
             }
         }
     }
@@ -157,5 +227,23 @@
 
     .label {
         margin-left: 3px;
+    }
+
+    .dialog {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .dialog-control {
+        margin: 10px 0;
+    }
+
+    .upload {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 </style>

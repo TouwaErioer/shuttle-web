@@ -1,4 +1,8 @@
 import {get} from '@/utils/request/request'
 
+const API = '/product/'
+
 // 根据storeId查询products
-export const findProductsByStoreID = (storeId) => get('/product/findProductsByStoreID/' + storeId)
+export const findProductsByStoreId = (storeId) => get(API + 'findByStoreId/' + storeId)
+
+export const findPopularProduct = () => get(API + 'rank')

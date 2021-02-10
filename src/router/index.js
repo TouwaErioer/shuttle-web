@@ -14,6 +14,10 @@ import {check} from "@/utils/api/user";
 
 const routes = [
     {
+        path: '/',
+        redirect: '/home'
+    },
+    {
         path: '/login',
         component: entrance
     },
@@ -54,10 +58,16 @@ const routes = [
     {
         path: '/center/balance',
         component: () => import('@/page/center/balance.vue'),
+    },
+    {
+        path: '/result/:status',
+        component: () => import('@/page/center/result'),
+        props: true
     }
 ]
 
 const routers = new VueRouter({
+    mode: 'history',
     routes
 })
 

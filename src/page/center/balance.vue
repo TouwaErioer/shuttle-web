@@ -10,14 +10,6 @@
         <template #center>
             <cells class="opthin-area">
                 <cell>
-                    <div class="balance">
-                        <div><i class="el-icon-coin"></i> 余额：</div>
-                        <div style="color: #e6a23c" v-text="score + '积分'"></div>
-                    </div>
-                </cell>
-            </cells>
-            <cells class="opthin-area">
-                <cell>
                     <el-input placeholder="请输入充值金额" v-model="total" suffix-icon="el-icon-wallet"/>
                 </cell>
             </cells>
@@ -33,6 +25,14 @@
             </el-row>
         </template>
         <div slot="footer" class="recharge">
+            <cells class="opthin-area">
+                <cell>
+                    <div class="balance">
+                        <div><i class="el-icon-coin"></i> 余额：</div>
+                        <div style="color: #e6a23c" v-text="score + '积分'"></div>
+                    </div>
+                </cell>
+            </cells>
             <form action="http://127.0.0.1:8081/user/recharge" method="post" class="recharge-form">
                 <input :value="getUserId()" name="userId" style="display: none"/>
                 <input :value="total" name="total" style="display: none" required/>

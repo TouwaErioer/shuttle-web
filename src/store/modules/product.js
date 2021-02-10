@@ -3,12 +3,12 @@ const state = () => ({
 })
 
 const getters = {
-    getProducts: (state) => (sid) => {
-        return state.products.filter(product => product.sid == sid)
+    getProducts: (state) => (storeId) => {
+        return state.products.filter(product => product.storeId == storeId)
     },
-    productsCache: (state) => (sid) => {
+    productsCache: (state) => (storeId) => {
         for (let product of state.products) {
-            if (product.sid == sid) return true
+            if (product.storeId == storeId) return true
         }
         return false
     }

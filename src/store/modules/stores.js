@@ -4,11 +4,11 @@ const state = () => ({
 
 const getters = {
     getStoresBySid: (state) => (sid) => {
-        return state.stores.filter(store => store.sid == sid)
+        return state.stores.filter(store => store.serviceId == sid)
     },
     storesCache: (state) => (sid) => {
         for (let store of state.stores) {
-            if (store.sid == sid) return true
+            if (store.serviceId === sid) return true
         }
         return false
     },

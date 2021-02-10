@@ -40,3 +40,9 @@
 .is-bottom{
     background: white;
 }
+
+
+
+.el-upload-list{
+    width: 100%;
+}

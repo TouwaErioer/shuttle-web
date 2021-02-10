@@ -49,7 +49,7 @@
             <cells>
                 <cell icon="el-icon-lock" title="修改密码" :access="true" @click="dialogResetPasswordVisible = true"/>
             </cells>
-            <el-dialog title="修改密码" :visible.sync="dialogResetPasswordVisible" width="80%">
+            <el-dialog title="修改密码" :visible.sync="dialogResetPasswordVisible" width="80%" center>
                 <div class="reset-password">
                     <el-input placeholder="请输入新密码" v-model="resetPassword" suffix-icon="el-icon-key"
                               class="reset"/>

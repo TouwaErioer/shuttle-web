@@ -44,7 +44,7 @@
                         <div class="options" v-show="options['2']">
                             <el-radio-group v-model="filter" @change="filterStores()">
                                 <el-radio-button v-for="(category,index) in categories" :key="index" :label="category">
-                                    <span v-text="category"></span>
+                                    <span v-text="category.name"></span>
                                 </el-radio-button>
                             </el-radio-group>
                         </div>
@@ -79,6 +79,8 @@
     import Item from "@/components/item";
     import Page from "@/layout/page";
     import MescrollVue from 'mescroll.js/mescroll.vue'
+    import {findStoreByServiceId} from "@/utils/api/store";
+    import {findCategoryByServiceId} from "@/utils/api/category";
 
     export default {
         name: "stores",
@@ -123,22 +125,31 @@
                     console.log('缓存id为' + this.sid + '的stores')
                 }
                 else {
-                    console.log('获取id为' + this.sid + '的stores')
-                    let stores = mock.stores(this.sid)
-                    this.stores = stores
-                    this.$store.commit('setStores', stores)
+                    console.log('获取id为' + this.sid + '的stores');
+                    findStoreByServiceId(this.sid).then(res => {
+                        if(res.code === 1){
+                            let stores = res.data;
+                            this.stores = stores;
+                            this.$store.commit('setStores', stores)
+                        }
+                    })
                 }
             },
             getCategories() {
                 if (this.$store.getters.categoriesCache(parseInt(this.sid))) {
-                    this.categories = this.$store.getters.getCategories(this.sid)[0]['categories']
+                    this.categories = this.$store.getters.getCategories(this.sid)[0];
                     console.log('缓存id为' + this.sid + '的categories')
                 }
                 else {
-                    console.log('获取id为' + this.sid + '的categories')
-                    let categories = mock.category(this.sid)[0]
-                    this.categories = categories['categories']
-                    this.$store.commit('setCategories', categories)
+                    console.log('获取id为' + this.sid + '的categories');
+                    findCategoryByServiceId(this.sid).then(res => {
+                        if(res.code === 1){
+                            let categories = res.data;
+                            this.categories = categories;
+                            this.$store.commit('setCategories', this.categories)
+                        }
+                    })
+
                 }
             },
             sortStores() {
