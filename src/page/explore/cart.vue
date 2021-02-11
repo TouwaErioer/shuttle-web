@@ -156,7 +156,17 @@
                             address: userInfo.address,
                             note: note,
                             file: file,
-                            status: -1
+                            status: -1,
+                            client:{
+                                phone: userInfo.phone,
+                                address: userInfo.address,
+                                name: userInfo.name
+                            },
+                            serviceId: value.serviceId,
+                            product:{
+                                name: value.name
+                            },
+                            storeName: value.storeName
                         })
                     }
                 });

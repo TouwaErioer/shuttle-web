@@ -22,8 +22,11 @@ const getters = {
 }
 
 const mutations = {
+    updateOrders(state, order) {
+        state.orders.push(order)
+    },
     setOrders(state, orders) {
-        state.orders = orders
+        state.orders.push(...orders)
     },
     receive(state, order) {
         state.orders = common.arrayRemove(state.orders, order)

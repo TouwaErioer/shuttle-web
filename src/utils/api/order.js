@@ -11,9 +11,6 @@ export const deleteOrder = (oderId, config) => del(api + 'delete', oderId, confi
 // 修改订单
 export const updateOrder = (order) => post(api + 'update', order);
 
-// 查询全部的待接订单
-export const findAllOrders = () => get(api + 'findAll');
-
 // 查询全部的已接订单
 export const findAllCompleted = (pageNo) => get(api + 'findAll?completed=0&?pageNo=' + pageNo);
 
@@ -21,4 +18,10 @@ export const findAllCompleted = (pageNo) => get(api + 'findAll?completed=0&?page
 export const findByUserId = (userId, pageNo) => get(api + 'findByCid/' + userId + '?pageNo=' + pageNo);
 
 // 接单
-export const receive = (orderId) => get(api + 'receive/' + orderId);
+export const Receive = (param) => post(api + 'receive', param);
+
+// 查询全部的待接订单
+export const findByReceive = (pageNo) => get(api + 'findByReceive?pageNo=' + pageNo);
+
+// 根据sid查询所有订单
+export const findBySid = (userId, pageNo) => get(api + 'findBySid/' + userId + '?pageNo=' + pageNo);

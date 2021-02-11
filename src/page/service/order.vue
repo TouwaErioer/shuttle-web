@@ -275,7 +275,8 @@
                     "<div><i class='el-icon-collection-tag'></i><span> 商品：" + row.product.name + "</span></div>" +
                     "<div><i class='el-icon-folder'></i><span> 服务：" + serviceName + "</span></div>" +
                     "<div><i class='el-icon-goods'></i><span> 商店：" + row.storeName + "</span></div>" +
-                    "<div><i class='el-icon-time'></i><span> 时间：" + row.date + "</span></div>";
+                    "<div><i class='el-icon-time'></i><span> 时间：" + row.date + "</span></div>" +
+                    "<div><i class='el-icon-link'></i><span> 附件：" + this.getExtend(row) + "</span></div>";
                 this.$confirm(html, '详情', {
                     confirmButtonText: confirmButton,
                     cancelButtonText: '返回',
@@ -336,6 +337,11 @@
                         this.$router.go(0);
                     }
                 })
+            },
+            getExtend(order) {
+                if ((order.note === '' || order.note === null) && (order.file === '' || order.file === null)) return '无';
+                else if (order.note !== '' && order.note !== null) return order.note;
+                else if (order.file !== '' && order.file === null) return order.file
             }
         }
     }

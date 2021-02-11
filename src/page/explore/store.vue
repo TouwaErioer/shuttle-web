@@ -133,7 +133,8 @@
                         'extend': {
                             type: this.type,
                             value: this.value
-                        }
+                        },
+                        'serviceId': product.store.serviceId
                     }
                 });
                 this.$message({

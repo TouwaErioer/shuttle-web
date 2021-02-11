@@ -33,9 +33,9 @@
     import Page from "@/layout/page";
     import Headers from "@/components/headers";
     import Category from "@/components/category";
-    import mock from "@/mock";
     import MescrollVue from 'mescroll.js/mescroll.vue'
     import OrderItem from "@/components/order-item";
+    import {findByReceive, findBySid} from "@/utils/api/order";
 
     export default {
         name: "receive",
@@ -44,28 +44,69 @@
             return {
                 activeName: 'first',
                 mescrollDown: {
-                    callback: this.downCallBack
-                }
+                    callback: this.downCallBack,
+                    auto: false
+                },
+                userInfo: this.$store.getters.getUserInfo,
+                mescrollUp: {
+                    callback: this.upCallBack,
+                    auto: false
+                },
+                pageNo: 1,
+                ws: null
             }
         },
         created() {
-            this.$store.commit('setReceive', mock.received())
-            this.$store.commit('setOrders', mock.receive())
-            this.$store.commit('open', this)
+            this.getOrder(this.pageNo);
+            this.getReceived();
+            if ("WebSocket" in window) {
+                this.ws = new WebSocket("ws://127.0.0.1:8081/ws");
+
+                this.ws.onopen = function () {
+                    console.log('已连接')
+                };
+                let self = this;
+                this.ws.onmessage = function (evt) {
+                    self.$store.commit('updateOrders', JSON.parse(evt.data));
+                    console.log(JSON.parse(evt.data));
+                };
+
+                this.ws.onclose = function () {
+                    console.log('已关闭')
+                };
+            }
         },
         methods: {
+            getOrder(pageNo) {
+                findByReceive(pageNo).then(res => {
+                    if (res.code === 1) {
+                        this.$store.commit('setOrders', res.data.list)
+                    }
+                })
+            },
+            getReceived() {
+                findBySid(this.userInfo.id, 1).then(res => {
+                    if (res.code === 1) {
+                        this.$store.commit('setReceive', res.data.list);
+                    }
+                })
+            },
             getCategory() {
-                let services = [{'id': 0, 'name': '全部'}]
-                services.push(...mock.services())
+                let services = [{'id': 0, 'name': '全部'}];
+                services.push(...this.$store.getters.getService);
                 return services
             },
             mescrollInit(mescroll) {
                 this.mescroll = mescroll
             },
-            downCallBack(mescroll) {
+            downCallBack() {
                 this.$nextTick(() => {
-                    mescroll.endSuccess()
+                    this.mescroll.endSuccess()
                 })
+            },
+            upCallBack() {
+                this.pageNo += 1;
+                this.getOrder(this.pageNo)
             }
         }
     }
