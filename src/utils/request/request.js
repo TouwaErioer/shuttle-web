@@ -118,7 +118,12 @@ export const post = (url, data, config = {}) => {
 }
 
 export const del = (url, data, config = {}) => {
-    data = qs.stringify(data)
+    if(config.headers != null){
+        data = JSON.stringify(data)
+    }else {
+        // 注意：由于后端接受类型为 application/x-www-form-urlencoded axios默认请类型为application/json 所以post传参要使用this.$qs.stringify()
+        data = qs.stringify(data)
+    }
     return new Promise((resolve, reject) => {
         instance({
             method: 'delete',

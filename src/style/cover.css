@@ -46,3 +46,8 @@
 .el-upload-list{
     width: 100%;
 }
+
+.el-table .cell{
+    display: flex!important;
+    justify-content: center!important;
+}

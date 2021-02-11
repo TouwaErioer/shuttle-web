@@ -4,7 +4,9 @@
         <div class="simple-header-name">
             <slot/>
         </div>
-        <span class="el-icon-more icon_n"></span>
+        <slot name="icon">
+            <span class="el-icon-more icon_n"></span>
+        </slot>
     </header>
 </template>
 

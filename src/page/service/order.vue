@@ -3,6 +3,8 @@
         <template v-slot:headers>
             <Headers>
                 <span><i class="el-icon-tickets"></i> 订单</span>
+                <span :class="showSelect?'el-icon-more-outline icon_n':'el-icon-more icon_n'" slot="icon"
+                      @click="showSelect = !showSelect"></span>
             </Headers>
         </template>
         <template v-slot:center>
@@ -14,7 +16,14 @@
                                 :data="getTableData('已下单')"
                                 style="width: 100%"
                                 :stretch="true"
-                                @row-click="handleCurrentChange">
+                                @row-click="handleCurrentChange"
+                                @select="handleSelected"
+                                @select-all="handleSelectedAll">
+                            <el-table-column
+                                    type="selection"
+                                    width="50"
+                                    v-if="showSelect">
+                            </el-table-column>
                             <el-table-column
                                     prop="product"
                                     label="商品"
@@ -53,7 +62,14 @@
                                 :data="getTableData('配送中')"
                                 style="width: 100%"
                                 :stretch="true"
-                                @row-click="handleCurrentChange">
+                                @row-click="handleCurrentChange"
+                                @select="handleSelected"
+                                @select-all="handleSelectedAll">
+                            <el-table-column
+                                    type="selection"
+                                    width="50"
+                                    v-if="showSelect">
+                            </el-table-column>
                             <el-table-column
                                     prop="product"
                                     label="商品"
@@ -89,7 +105,14 @@
                                 :data="getTableData('已完成')"
                                 style="width: 100%"
                                 :stretch="true"
-                                @row-click="handleCurrentChange">
+                                @row-click="handleCurrentChange"
+                                @select="handleSelected"
+                                @select-all="handleSelectedAll">
+                            <el-table-column
+                                    type="selection"
+                                    width="50"
+                                    v-if="showSelect">
+                            </el-table-column>
                             <el-table-column
                                     prop="product"
                                     label="商品"
@@ -122,6 +145,11 @@
                 </el-tabs>
             </mescroll-vue>
         </template>
+        <div slot="footer" class="delete" v-if="showSelect">
+            <el-button class="delete-button" type="danger" :disabled="disabled" @click="deleteSelectedOrder">
+                删除
+            </el-button>
+        </div>
     </Page>
 </template>
 
@@ -150,7 +178,11 @@
                 mescrollUp: {
                     callback: this.upCallBack,
                     auto: false
-                }
+                },
+                showSelect: false,
+                timeOutEvent: 0,
+                selected: [],
+                disabled: true
             }
         },
         computed: {
@@ -165,7 +197,7 @@
                     }
                 }
             },
-            getService(){
+            getService() {
                 return (serviceId) => {
                     const serviceList = this.$store.getters.getService;
                     return serviceList.filter(service => service.id === serviceId)[0];
@@ -258,13 +290,49 @@
                 return new Date(date).toLocaleDateString()
             },
             deleteOrder(row) {
-                deleteOrder({
-                    id: row.id,
-                    cid: row.cid,
-                    status: row.status
-                }).then(res => {
+                deleteOrder([{
+                        id: row.id,
+                        cid: row.cid,
+                        status: row.status
+                    }],
+                    {
+                        'headers': {
+                            'Content-Type': 'application/json'
+                        }
+                    }).then(res => {
                     if (res.code === 1) {
                         this.$message.success('删除成功！');
+                        this.$router.go(0);
+                    }
+                })
+            },
+            handleSelected(selection) {
+                this.selected = selection;
+
+                this.disabled = false;
+            },
+            handleSelectedAll(selection) {
+                this.selected = selection;
+                this.disabled = false;
+            },
+            deleteSelectedOrder() {
+                let orders = [];
+                this.selected.forEach(order => {
+                    orders.push(
+                        {
+                            id: order.id,
+                            cid: order.cid,
+                            status: order.status
+                        }
+                    );
+                });
+                deleteOrder(orders, {
+                    'headers': {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(res => {
+                    if (res.code === 1) {
+                        this.$message.success('删除成功!');
                         this.$router.go(0);
                     }
                 })
@@ -274,4 +342,16 @@
 </script>
 
 <style scoped>
+    .delete {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        z-index: 10;
+        background-color: white;
+    }
+
+    .delete-button {
+        width: 99%;
+        margin: 5px;
+    }
 </style>

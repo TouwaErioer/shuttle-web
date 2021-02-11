@@ -6,7 +6,7 @@ const api = '/order/';
 export const insertOrder = (order, config, isExpired) => post(api + '/insert' + "?isExpired=" + isExpired, order, config);
 
 // 根据oderId删除订单
-export const deleteOrder = (oderId) => del(api + 'delete', oderId);
+export const deleteOrder = (oderId, config) => del(api + 'delete', oderId, config);
 
 // 修改订单
 export const updateOrder = (order) => post(api + 'update', order);
