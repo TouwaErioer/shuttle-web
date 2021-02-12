@@ -33,7 +33,7 @@
                     </div>
                 </cell>
             </cells>
-            <form action="http://127.0.0.1:8081/user/recharge" method="post" class="recharge-form">
+            <form action= "/api/user/recharge" method="post" class="recharge-form">
                 <input :value="getUserId()" name="userId" style="display: none"/>
                 <input :value="total" name="total" style="display: none" required/>
                 <button type="submit" class="btn" @click="check">充值</button>
