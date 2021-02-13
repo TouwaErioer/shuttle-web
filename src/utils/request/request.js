@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {Loading, Message} from 'element-ui'
-import router from 'vue-router'
+import router from '@/router/index'
 
 import qs from "qs"
 
@@ -19,7 +19,7 @@ instance.defaults.headers.delete['Content-Type'] = 'application/x-www-form-urlen
 
 let httpCode = {
     400: '请求参数错误',
-    401: '权限不足, 请重新登录',
+    401: 'token过期, 请重新登录',
     403: '服务器拒绝本次访问',
     404: '请求资源未找到',
     500: '内部服务器错误',
@@ -49,7 +49,7 @@ instance.interceptors.response.use(response => {
     //           -1 -> 系统错误
     if (response.data.code === 1) {
         return Promise.resolve(response.data)
-    }else{
+    } else {
         Message({
             message: response.data.message,
             type: 'error'
@@ -64,11 +64,12 @@ instance.interceptors.response.use(response => {
             message: tips,
             type: 'error'
         })
-        if (error.response.status === 401) {    // token或者登陆失效情况下跳转到登录页面，根据实际情况，在这里可以根据不同的响应错误结果，做对应的事。这里我以401判断为例
-            router.push({
-                path: `/login`
-            })
+
+        if (error.response.status === 401 && localStorage.getItem('token') !== null) {// token或者登陆失效情况下跳转到登录页面，根据实际情况，在这里可以根据不同的响应错误结果，做对应的事。这里我以401判断为例
+            localStorage.removeItem('token');
+            router.push('/login')
         }
+
         return Promise.reject(error)
     } else {
         Message({
@@ -97,9 +98,9 @@ export const get = (url, params, config = {}) => {
 
 /* 统一封装post请求  */
 export const post = (url, data, config = {}) => {
-    if(config.headers != null){
+    if (config.headers != null) {
         data = JSON.stringify(data)
-    }else {
+    } else {
         // 注意：由于后端接受类型为 application/x-www-form-urlencoded axios默认请类型为application/json 所以post传参要使用this.$qs.stringify()
         data = qs.stringify(data)
     }
@@ -118,9 +119,9 @@ export const post = (url, data, config = {}) => {
 }
 
 export const del = (url, data, config = {}) => {
-    if(config.headers != null){
+    if (config.headers != null) {
         data = JSON.stringify(data)
-    }else {
+    } else {
         // 注意：由于后端接受类型为 application/x-www-form-urlencoded axios默认请类型为application/json 所以post传参要使用this.$qs.stringify()
         data = qs.stringify(data)
     }
