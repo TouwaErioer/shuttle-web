@@ -60,7 +60,7 @@
             this.getOrder(this.pageNo);
             this.getReceived();
             if ("WebSocket" in window) {
-                this.ws = new WebSocket("ws://127.0.0.1:8081/ws");
+                this.ws = new WebSocket(process.env.VUE_APP_WS);
 
                 this.ws.onopen = function () {
                     console.log('已连接')

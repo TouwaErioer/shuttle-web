@@ -33,7 +33,7 @@ module.exports = {
         config.plugin('html').tap(args => {
             args[0].cdn = cdn;
             return args
-        })
+        });
         // 移除 prefetch 插件
         config.plugins.delete('prefetch');
         // 移除 preload 插件
@@ -71,4 +71,4 @@ module.exports = {
         },
     }
 
-}
+};
