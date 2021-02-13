@@ -48,7 +48,7 @@
                             <el-dialog title="提示" :visible.sync="dialogUploadVisible" width="80%" center>
                                 <div class="dialog">
                                     <el-upload class="upload dialog-control"
-                                               action="http://127.0.0.1:8081/file/upload"
+                                               action="/api/file/upload"
                                                multiple
                                                :limit="1"
                                                :on-success="handleResult"
@@ -114,7 +114,7 @@
                 } else if (product.store.serviceId === 2) {
                     this.dialogUploadVisible = true;
                 } else {
-                    this.toCart(product)
+                    this.toCart(product);
                 }
             },
             toCart(product) {

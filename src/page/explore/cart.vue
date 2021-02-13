@@ -43,16 +43,19 @@
                                  slot="button"/>
                 <div slot="tag">
                     <el-tag size="mini" v-text="item[1].storeName" effect="dark" class="tag" type="warning"/>
-                    <el-tag size="mini" effect="dark" @click="dialogExtendVisible = true"><i class="el-icon-link"></i>
+                    <el-tag size="mini" effect="dark" @click="dialogExtendVisible = true"
+                            v-if="item[1].extend.type != null"><i class="el-icon-link"></i>
                     </el-tag>
                     <el-dialog :title="item[1].extend.type === 'note'?'取件号':'文件'" :visible.sync="dialogExtendVisible"
                                width="80%" center>
                         <div class="dialog">
-                            <div class="dialog-control" v-if="item[1].extend.type === 'note'">
+                            <div class="dialog-control"
+                                 v-if="item[1].extend.type != null && item[1].extend.type === 'note'">
                                 <el-input v-model="item[1].extend.value" suffix-icon="el-icon-chat-line-square"
                                           placeholder="请输入订单号"/>
                             </div>
-                            <div class="dialog-control" v-if="item[1].extend.type !== 'note'">
+                            <div class="dialog-control"
+                                 v-if="item[1].extend.type != null && item[1].extend.type === 'file'">
                                 <el-upload class="upload dialog-control"
                                            action="http://127.0.0.1:8081/file/upload"
                                            multiple
@@ -157,13 +160,13 @@
                             note: note,
                             file: file,
                             status: -1,
-                            client:{
+                            client: {
                                 phone: userInfo.phone,
                                 address: userInfo.address,
                                 name: userInfo.name
                             },
                             serviceId: value.serviceId,
-                            product:{
+                            product: {
                                 name: value.name
                             },
                             storeName: value.storeName
