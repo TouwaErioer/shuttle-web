@@ -1,15 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-import service from "@/page/explore/stores"
-import store from "@/page/explore/store"
-import cart from '@/page/explore/cart'
-import order from '@/page/service/order'
-import receive from '@/page/service/receive'
-import HomeLayout from '@/layout/HomeLayout.vue'
-import entrance from '@/page/login'
 import {check} from "@/utils/api/user";
 
 const routes = [
@@ -19,33 +12,33 @@ const routes = [
     },
     {
         path: '/login',
-        component: entrance
+        component: () => import('@/page/login')
     },
     {
         path: '/home',
-        component: HomeLayout
+        component: () => import('@/layout/HomeLayout')
     },
     {
         path: '/service/:sid',
-        component: service,
+        component: () => import('@/page/explore/stores'),
         props: true
     },
     {
         path: '/store/:sid',
-        component: store,
+        component: () => import('@/page/explore/store'),
         props: true
     },
     {
         path: '/cart',
-        component: cart
+        component: () => import('@/page/explore/cart')
     },
     {
         path: '/order',
-        component: order
+        component: () => import('@/page/service/order')
     },
     {
         path: '/receive',
-        component: receive
+        component: () => import('@/page/service/receive')
     },
     {
         path: '/center/edit',
@@ -64,7 +57,7 @@ const routes = [
         component: () => import('@/page/center/result'),
         props: true
     }
-]
+];
 
 const routers = new VueRouter({
     mode: 'history',
