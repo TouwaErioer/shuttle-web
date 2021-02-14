@@ -133,6 +133,8 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
+                    this.$router.go(0);
+                    sessionStorage.removeItem('serviceList');
                 }).catch(() => {
                 });
             },
