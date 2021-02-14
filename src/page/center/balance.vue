@@ -47,7 +47,7 @@
     import Cells from "../../components/cells.vue";
     import Headers from "../../components/headers.vue";
     import page from "../../layout/page.vue";
-    import {findSore} from "@/utils/api/user";
+    import {findScore} from "@/utils/api/user";
 
     export default {
         components: {page, Headers, Cells, Cell},
@@ -69,7 +69,7 @@
                 if (this.total === null) this.$message.error("请输入或选择金额")
             },
             findScore(){
-                findSore(this.getUserId()).then(res => {
+                findScore(this.getUserId()).then(res => {
                     if(res.code === 1){
                         this.score = res.data;
                     }
