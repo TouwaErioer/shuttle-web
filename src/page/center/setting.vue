@@ -66,7 +66,8 @@
                     <el-switch
                             v-model="push"
                             active-color="#13ce66"
-                            inactive-color="#909399">
+                            inactive-color="#909399"
+                            @change="changePush">
                     </el-switch>
                 </div>
             </div>
@@ -118,7 +119,9 @@
             };
         },
         created() {
-            this.getUserInfo()
+            this.getUserInfo();
+            const push = JSON.parse(localStorage.getItem('push'));
+            this.push = push === null ? true : push;
         },
         methods: {
             getUserInfo() {
@@ -152,6 +155,9 @@
             getExpired() {
                 const expired = localStorage.getItem('expired');
                 return expired === null ? 60 : expired
+            },
+            changePush() {
+                localStorage.setItem('push', this.push);
             }
         }
     };

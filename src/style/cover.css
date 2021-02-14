@@ -51,3 +51,7 @@
     display: flex!important;
     justify-content: center!important;
 }
+
+.el-dialog__body{
+    padding: 10px 30px 30px!important;
+}

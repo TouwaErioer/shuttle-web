@@ -59,7 +59,8 @@
         created() {
             this.getOrder(this.pageNo);
             this.getReceived();
-            if ("WebSocket" in window) {
+            const push = JSON.parse(localStorage.getItem('push'));
+            if (("WebSocket" in window) && push === null?true:push) {
                 this.ws = new WebSocket(process.env.VUE_APP_WS);
 
                 this.ws.onopen = function () {
