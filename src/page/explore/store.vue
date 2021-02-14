@@ -109,7 +109,7 @@
         methods: {
             addToCart(product) {
                 this.product = product;
-                if (product.store.serviceId === 1) {
+                if (product.store.serviceId === 4) {
                     this.dialogInputVisible = true;
                 } else if (product.store.serviceId === 2) {
                     this.dialogUploadVisible = true;

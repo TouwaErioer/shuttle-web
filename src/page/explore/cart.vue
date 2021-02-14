@@ -57,7 +57,7 @@
                             <div class="dialog-control"
                                  v-if="item[1].extend.type != null && item[1].extend.type === 'file'">
                                 <el-upload class="upload dialog-control"
-                                           action="http://127.0.0.1:8081/file/upload"
+                                           action="/api/file/upload"
                                            multiple
                                            :limit="1"
                                            :on-success="handleResult"
