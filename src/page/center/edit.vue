@@ -4,6 +4,7 @@
 
             <headers>
                 <span><i class="el-icon-user"></i> 个人信息</span>
+                <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
             </headers>
         </template>
         <template #center>

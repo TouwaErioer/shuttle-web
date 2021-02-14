@@ -3,6 +3,7 @@
         <template v-slot:headers>
             <Headers>
                 <span><i class="el-icon-shopping-cart-1"></i> 购物车</span>
+                <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
             </Headers>
             <div class="address-wrap">
                 <div class="wrap">
@@ -39,7 +40,7 @@
             <Item v-for="(item, index) in cartList" :key="index" :item="item[1]" :price="true"
                   :count="item[1].count">
                 <el-input-number v-model="item[1].count" :min="0" size="mini" style="width: 90px;"
-                                 @change="(currentValue, oldValue) => {change(currentValue, oldValue, item[1].id)}"
+                                 @change="(currentValue, oldValue) => {change(currentValue, oldValue, item[1])}"
                                  slot="button"/>
                 <div slot="tag">
                     <el-tag size="mini" v-text="item[1].storeName" effect="dark" class="tag" type="warning"/>
@@ -134,9 +135,9 @@
             }
         },
         methods: {
-            change(currentValue, oldValue, id) {
+            change(currentValue, oldValue, order) {
                 this.$store.commit('changeCart',
-                    {'currentValue': currentValue, 'oldValue': oldValue, 'id': id});
+                    {'currentValue': currentValue, 'oldValue': oldValue, 'id': order.id});
             },
             getPrice(price) {
                 return common.changePrice(price);
@@ -173,7 +174,6 @@
                         })
                     }
                 });
-                console.log(orders);
                 insertOrder(orders, {
                     'headers': {
                         'Content-Type': 'application/json'

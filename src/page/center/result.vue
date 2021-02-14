@@ -3,6 +3,7 @@
         <Headers slot="headers">
 
             <span><i class="el-icon-wallet"></i> 支付结果</span>
+            <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
         </Headers>
         <div slot="center" class="container">
             <el-button :icon="status == 1?'el-icon-circle-check':'el-icon-circle-close'" @click="$router.push('/home')"

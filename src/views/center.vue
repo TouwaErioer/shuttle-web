@@ -92,7 +92,7 @@
 
             },
             help(){
-                this.$confirm('暂时无法提供帮助', '提示', {
+                this.$confirm('该功能后续推出', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'

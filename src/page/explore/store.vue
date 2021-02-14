@@ -3,6 +3,7 @@
         <template v-slot:headers>
             <Headers>
                 <span><i class="el-icon-shopping-bag-2"></i> 商店详情</span>
+                <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
             </Headers>
             <div style="overflow: hidden;" v-if="store != null">
                 <div class="info-background"

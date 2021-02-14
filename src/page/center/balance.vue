@@ -4,6 +4,7 @@
         <template #headers>
             <headers>
                 <i class="el-icon-bank-card"></i> 余额充值
+                <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
             </headers>
         </template>
 

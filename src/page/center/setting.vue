@@ -3,6 +3,7 @@
         <Headers>
 
             <span><i class="el-icon-setting"></i> 设置</span>
+            <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
         </Headers>
         <div class="features">
             <cells class="cells">

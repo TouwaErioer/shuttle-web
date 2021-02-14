@@ -3,6 +3,7 @@
         <template v-slot:headers>
             <Headers>
                 <span><i :class="icon"></i> {{title}}</span>
+                <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
             </Headers>
         </template>
         <template v-slot:center>
