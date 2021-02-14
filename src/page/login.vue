@@ -95,10 +95,11 @@
                 if (!Object.values(login_from).every(v => !!v)) {
                     this.$message.error('请输邮箱或密码')
                 } else {
+                    let expired = localStorage.getItem('expired');
                     let data = {
                         phone: login_from.user,
                         password: login_from.password,
-                        expired: 60
+                        expired: expired === null ? 60 : expired
                     }
                     Login(data).then(res => {
                         console.log(res)
@@ -134,7 +135,7 @@
                         'address': register_from.address,
                     }
                     register(data).then(res => {
-                        if(res.code === 1){
+                        if (res.code === 1) {
                             this.$message.success("注册成功！")
                             this.$router.push('/login')
                         }

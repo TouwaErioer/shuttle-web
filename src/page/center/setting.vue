@@ -26,6 +26,20 @@
                         @click="clear"
                 >
                 </cell>
+                <cell
+                        icon="el-icon-sold-out"
+                        text="定时推送"
+                        :access="true"
+                        @click="dialogPushVisible = true"
+                >
+                </cell>
+                <cell
+                        icon="el-icon-time"
+                        text="保持登录"
+                        :access="true"
+                        @click="dialogExpiredVisible = true"
+                >
+                </cell>
             </cells>
         </div>
         <el-dialog title="设置头部高度" :visible.sync="dialogHeaderVisible" width="80%">
@@ -42,6 +56,26 @@
                     </el-option>
                 </el-select>
                 <el-button @click="saveAnimation">保存</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="设置推送开关" :visible.sync="dialogPushVisible" width="80%">
+            <div>
+                <p>开启此功能，会自动推送最新订单</p>
+                <div class="switch">
+                    <p>当前状态：</p>
+                    <el-switch
+                            v-model="push"
+                            active-color="#13ce66"
+                            inactive-color="#909399">
+                    </el-switch>
+                </div>
+            </div>
+        </el-dialog>
+        <el-dialog title="设置登录过期时间" :visible.sync="dialogExpiredVisible" width="80%">
+            <div class="select">
+                <el-input placeholder="单位：分" v-model="expired" suffix-icon="el-icon-time" type="number"
+                          class="expired"/>
+                <el-button @click="setExpired">确定</el-button>
             </div>
         </el-dialog>
     </div>
@@ -76,7 +110,11 @@
                         value: 'slide-fade',
                     },
                 ],
-                animation: localStorage.getItem('animation')
+                animation: localStorage.getItem('animation'),
+                dialogPushVisible: false,
+                dialogExpiredVisible: false,
+                push: true,
+                expired: this.getExpired()
             };
         },
         created() {
@@ -103,6 +141,17 @@
             },
             getHeight() {
                 return parseInt(localStorage.getItem('height'));
+            },
+            setExpired() {
+                if (this.expired === '') this.$message.error('登录过期时间不能为空');
+                else {
+                    localStorage.setItem('expired', this.expired);
+                    this.$router.push('/login')
+                }
+            },
+            getExpired() {
+                const expired = localStorage.getItem('expired');
+                return expired === null ? 60 : expired
             }
         }
     };
@@ -139,6 +188,16 @@
     }
 
     .animation {
+        margin: 10px 0;
+    }
+
+    .switch {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .expired {
         margin: 10px 0;
     }
 </style>
