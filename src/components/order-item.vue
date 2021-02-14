@@ -26,8 +26,8 @@
                     label="状态"
                     align="center">
                 <template slot-scope="scope">
-                    <el-tag :type="scope.row.status == 1?'success':'warning'">
-                        <i :class="scope.row.status == 1?'el-icon-circle-check':'el-icon-loading'"></i>
+                    <el-tag :type="scope.row.status === 1?'success':'warning'">
+                        <i :class="scope.row.status === 1?'el-icon-circle-check':'el-icon-loading'"></i>
                         {{getStatus}}
                     </el-tag>
                 </template>
@@ -37,9 +37,6 @@
 </template>
 
 <script>
-
-    import {Receive} from "@/utils/api/order";
-
     export default {
         name: "order-item",
         props: ['type', 'name'],
@@ -50,14 +47,14 @@
         },
         computed: {
             getOrder() {
-                if (this.type == 'receive') return this.$store.getters.getOrders(this.name)
-                else if (this.type == 'received') return this.$store.getters.getReceive
+                if (this.type === 'receive') return this.$store.getters.getOrders(this.name);
+                else if (this.type === 'received') return this.$store.getters.getReceive;
                 else return this.$store.getters.getCompleted
             },
             getStatus() {
-                if (this.type == 'receive') return '待接单'
-                else if (this.type == 'received') return '待确认'
-                else return '已完成'
+                if (this.type === 'receive') return '待接单';
+                else if (this.type === 'received') return '待确认';
+                else return '已完成';
             },
             getService() {
                 return (serviceId) => {
@@ -68,50 +65,11 @@
         },
         methods: {
             handleCurrentChange(order) {
-                let html =
-                    "<div><i class='el-icon-user'></i><span> 用户：" + this.userInfo.name + "</span></div>" +
-                    "<div><i class='el-icon-school'></i><span> 地址：" + this.userInfo.address + "</span></div>" +
-                    "<div><i class='el-icon-collection-tag'></i><span> 商品：" + order.product.name + "</span></div>" +
-                    "<div><i class='el-icon-folder'></i><span> 服务：" + this.getService(order.serviceId).name
-                    + "</span></div>" +
-                    "<div><i class='el-icon-goods'></i><span> 商店：" + order.storeName + "</span></div>"
-                let confirm = ''
-                if (this.type == 'receive') {
-                    confirm = '接单'
-                } else if (this.type == 'completed') {
-                    confirm = '删除'
-                }
-                this.$confirm(html, '详情', {
-                    dangerouslyUseHTMLString: true,
-                    confirmButtonText: confirm,
-                    cancelButtonText: '取消',
-                }).then(() => {
-                    if (this.type == 'receive') {
-                        Receive({
-                            orderId: order.id,
-                            userId: this.userInfo.id
-                        }).then(res => {
-                            if (res.code === 1) {
-                                this.$message({
-                                    type: 'success',
-                                    message: '接单成功',
-                                    duration: 500
-                                });
-                                this.$router.go(0)
-                            }
-                        })
 
-                    } else if (this.type == 'completed') {
-                        this.$store.commit('removeReceive', order)
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功',
-                            duration: 500
-                        });
-                    }
-                }).catch(() => {
 
-                });
+                order.path = '/receive';
+                this.$store.commit('setCurrent', order);
+                this.$router.push('/detail');
             }
         }
     }

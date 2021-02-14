@@ -264,28 +264,11 @@
                 }
             },
             handleCurrentChange(row) {
-                const serviceName = this.getService(row.serviceId).name;
-                let confirmButton = '确定';
-                if (this.type !== '配送中') {
-                    confirmButton = '删除'
-                }
-                let html =
-                    "<div><i class='el-icon-user'></i><span> 用户：" + row.client.name + "</span></div>" +
-                    "<div><i class='el-icon-school'></i><span> 地址：" + row.client.address + "</span></div>" +
-                    "<div><i class='el-icon-collection-tag'></i><span> 商品：" + row.product.name + "</span></div>" +
-                    "<div><i class='el-icon-folder'></i><span> 服务：" + serviceName + "</span></div>" +
-                    "<div><i class='el-icon-goods'></i><span> 商店：" + row.storeName + "</span></div>" +
-                    "<div><i class='el-icon-time'></i><span> 时间：" + row.date + "</span></div>" +
-                    "<div><i class='el-icon-link'></i><span> 附件：" + this.getExtend(row) + "</span></div>";
-                this.$confirm(html, '详情', {
-                    confirmButtonText: confirmButton,
-                    cancelButtonText: '返回',
-                    dangerouslyUseHTMLString: true,
-                }).then(() => {
-                    this.deleteOrder(row)
-                }).catch(() => {
 
-                });
+
+                row.path = '/order';
+                this.$store.commit('setCurrent', row);
+                this.$router.push('/detail');
             },
             changeDate(date) {
                 return new Date(date).toLocaleDateString()
@@ -334,14 +317,9 @@
                 }).then(res => {
                     if (res.code === 1) {
                         this.$message.success('删除成功!');
-                        this.$router.go(0);
+                        this.getOrder();
                     }
                 })
-            },
-            getExtend(order) {
-                if ((order.note === '' || order.note === null) && (order.file === '' || order.file === null)) return '无';
-                else if (order.note !== '' && order.note !== null) return order.note;
-                else if (order.file !== '' && order.file === null) return order.file
             }
         }
     }

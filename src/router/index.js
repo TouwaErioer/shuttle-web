@@ -55,6 +55,10 @@ const routes = [
         path: '/result/:status',
         component: () => import('@/page/center/result'),
         props: true
+    },
+    {
+        path: '/detail',
+        component: () => import('@/page/service/detail')
     }
 ];
 
