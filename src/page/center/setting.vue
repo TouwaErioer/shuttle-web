@@ -42,7 +42,7 @@
                 </cell>
             </cells>
         </div>
-        <el-dialog title="设置头部高度" :visible.sync="dialogHeaderVisible" width="80%">
+        <el-dialog title="设置头部高度" :visible.sync="dialogHeaderVisible" width="80%" center>
             <el-slider v-model="height" :show-tooltip="false" @change="saveHeight" @input="setHeight"></el-slider>
             <div class="dialog">
                 <el-input-number v-model="height" @change="changeHeight" :min="1" label="描述文字"></el-input-number>
@@ -51,7 +51,7 @@
                 </el-button>
             </div>
         </el-dialog>
-        <el-dialog title="设置动画效果" :visible.sync="dialogAnimationVisible" width="80%">
+        <el-dialog title="设置动画效果" :visible.sync="dialogAnimationVisible" width="80%" center>
             <div class="select">
                 <el-select v-model="animation" placeholder="请选择" class="animation" @change="changeAnimation">
                     <el-option
@@ -63,7 +63,7 @@
                 </el-select>
             </div>
         </el-dialog>
-        <el-dialog title="设置推送开关" :visible.sync="dialogPushVisible" width="80%">
+        <el-dialog title="设置推送开关" :visible.sync="dialogPushVisible" width="80%" center>
             <div>
                 <p>开启此功能，会自动推送最新订单</p>
                 <div class="switch">
@@ -77,7 +77,7 @@
                 </div>
             </div>
         </el-dialog>
-        <el-dialog title="设置登录过期时间" :visible.sync="dialogExpiredVisible" width="80%">
+        <el-dialog title="设置登录过期时间" :visible.sync="dialogExpiredVisible" width="80%" center>
             <div class="select">
                 <el-input placeholder="单位：分" v-model="expired" suffix-icon="el-icon-time" type="number"
                           class="expired"/>
