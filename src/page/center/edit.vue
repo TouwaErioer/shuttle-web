@@ -9,7 +9,7 @@
         </template>
         <template #center>
             <cells :tidy-header="true">
-                <cell icon="el-icon-user" title="头像">
+                <cell icon="el-icon-user-solid" title="头像">
                     <template v-slot:footer>
                         <el-avatar :src="avatarUrl" @click.native="clickAvatar"/>
                     </template>
@@ -19,7 +19,8 @@
                 <cell icon="el-icon-user" title="昵称">
                     <div v-text="userInfo.name"/>
                     <template v-slot:footer>
-                        <edit-dialog :value="userInfo.name" @save="setName"/>
+                        <edit-dialog :value="userInfo.name" @save="setName" type="name" icon="el-icon-user"
+                                     title="昵称修改"/>
                     </template>
                 </cell>
                 <cell icon="el-icon-mobile-phone" title="电话">
@@ -31,8 +32,11 @@
                                 :max-length="11"
                                 show-word-limit
                                 @save="setPhone"
-                                regex="^1[3-9][0-9]{9}$"
+                                regex="^1(3|4|5|6|7|8|9)\d{9}$"
                                 errorMsg="长度11位"
+                                type="phone"
+                                icon="el-icon-phone"
+                                title="电话修改"
                         />
                     </template>
                 </cell>
@@ -40,9 +44,11 @@
                     <div v-text="userInfo.address"/>
                     <template v-slot:footer>
                         <edit-dialog
-                                type="textarea"
                                 :value="userInfo.address"
                                 @save="setLocal"
+                                icon="el-icon-school"
+                                title="地址修改"
+                                type="address"
                         />
                     </template>
                 </cell>
@@ -53,10 +59,10 @@
             <el-dialog title="修改密码" :visible.sync="dialogResetPasswordVisible" width="80%" center>
                 <div class="reset-password">
                     <el-input placeholder="请输入新密码" v-model="resetPassword" suffix-icon="el-icon-key"
-                              class="reset"/>
+                              class="reset" @input="changeInput"/>
                     <el-input placeholder="请重复输入新密码" v-model="reResetPassword" suffix-icon="el-icon-key"
                               class="reset"/>
-                    <el-button v-text="'修改密码'" @click="reset" class="reset"/>
+                    <el-button v-text="'保存'" @click="reset" class="reset" type="primary" :disabled="disabled"/>
                 </div>
             </el-dialog>
         </template>
@@ -83,7 +89,8 @@
                 },
                 dialogResetPasswordVisible: false,
                 resetPassword: null,
-                reResetPassword: null
+                reResetPassword: null,
+                disabled: true
             };
         },
         created() {
@@ -132,12 +139,16 @@
                     })
                 } else this.$message.error('两次密码不一致')
             },
-            clickAvatar(){
+            clickAvatar() {
                 this.$confirm('头像根据昵称改变', '提示', {
                     type: 'info'
                 }).then(() => {
                 }).catch(() => {
                 });
+            },
+            changeInput(value){
+                if(value === '') this.disabled = true;
+                else this.disabled = false;
             }
         },
         computed: {

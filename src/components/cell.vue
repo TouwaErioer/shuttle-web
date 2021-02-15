@@ -60,6 +60,6 @@ export default {
 }
 
 .cells.tidy-header > .cell > .header {
-    min-width: 6em;
+    min-width: 3em;
 }
 </style>

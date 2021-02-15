@@ -34,10 +34,12 @@
                     </div>
                 </cell>
             </cells>
-            <form action= "/api/user/recharge" method="post" class="recharge-form">
+            <form action="/api/user/recharge" method="post" class="recharge-form">
                 <input :value="getUserId()" name="userId" style="display: none"/>
                 <input :value="total" name="total" style="display: none" required/>
-                <button type="submit" class="btn" @click="check">充值</button>
+                <button type="submit" class="btn" @click="check" :style="total === ''?'background-color: #a0cfff':''">
+                    充值
+                </button>
             </form>
         </div>
     </page>
@@ -55,11 +57,11 @@
         data() {
             return {
                 options: [5, 10, 20, 30, 50, 100, 200, 300, 500],
-                total: null,
+                total: '',
                 score: 0
             };
         },
-        created(){
+        created() {
             this.findScore();
         },
         methods: {
@@ -69,9 +71,9 @@
             check() {
                 if (this.total === null) this.$message.error("请输入或选择金额")
             },
-            findScore(){
+            findScore() {
                 findScore(this.getUserId()).then(res => {
-                    if(res.code === 1){
+                    if (res.code === 1) {
                         this.score = res.data;
                     }
                 })
@@ -135,7 +137,7 @@
         padding: 0 30px;
     }
 
-    .balance{
+    .balance {
         display: flex;
         justify-content: space-between;
     }
