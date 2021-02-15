@@ -1,11 +1,9 @@
 <template>
     <div class="center">
         <div class="user-info-area">
-            <cell
-                    :access="true"
-                    :access-light="true"
-                    @click="$router.push('/center/edit')"
-            >
+            <cell :access="true"
+                  :access-light="true"
+                  @click="$router.push('/center/edit')">
                 <template v-slot:header>
                     <el-avatar :src="avatarUrl"/>
                 </template>
@@ -17,24 +15,18 @@
         </div>
         <div class="features">
             <cells class="cells">
-                <cell
-                        icon="el-icon-user"
-                        text="个人信息"
-                        :access="true"
-                        @click="$router.push('/center/edit')"
-                />
-                <cell
-                        icon="el-icon-setting"
-                        text="设置"
-                        :access="true"
-                        @click="$router.push('/center/setting')"
-                />
-                <cell
-                        icon="el-icon-bank-card"
-                        text="充值"
-                        :access="true"
-                        @click="$router.push('/center/balance')"
-                >
+                <cell icon="el-icon-user"
+                      text="个人信息"
+                      :access="true"
+                      @click="$router.push('/center/edit')"/>
+                <cell icon="el-icon-setting"
+                      text="设置"
+                      :access="true"
+                      @click="$router.push('/center/setting')"/>
+                <cell icon="el-icon-bank-card"
+                      text="充值"
+                      :access="true"
+                      @click="$router.push('/center/balance')">
                     <template v-slot:footer>
                         <div v-text="'￥ ' + score" style="color: #909399"/>
                     </template>
@@ -78,7 +70,7 @@
             getUserInfo() {
                 this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
             },
-            exit(){
+            exit() {
                 this.$confirm('确定退出当前账户？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -86,12 +78,12 @@
                 }).then(() => {
                     localStorage.removeItem('userInfo');
                     localStorage.removeItem('token');
-                    this.$router.push('/login')
+                    this.$router.push('/login');
                 }).catch(() => {
                 });
 
             },
-            help(){
+            help() {
                 this.$confirm('该功能后续推出', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -100,9 +92,9 @@
                 }).catch(() => {
                 });
             },
-            getScore(){
+            getScore() {
                 findScore(this.userInfo.id).then(res => {
-                    if(res.code === 1) this.score = res.data;
+                    if (res.code === 1) this.score = res.data;
                 })
             }
         },

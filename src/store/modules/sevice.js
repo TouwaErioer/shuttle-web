@@ -5,10 +5,16 @@ const state = () => ({
 const getters = {
     getService: (state) => {
         return state.services
+    },
+    getServiceById: (state) => (serviceId) =>{
+        return state.services.find(service => service.id === serviceId);
     }
 };
 
 const mutations = {
+    setServices(state, services) {
+        state.services = services;
+    }
 };
 
 export default {

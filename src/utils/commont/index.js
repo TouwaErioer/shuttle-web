@@ -26,7 +26,12 @@ common.getUserInfo = function () {
     return JSON.parse(localStorage.getItem('userInfo'))
 };
 
-common.getService =  function () {
+common.getService = function () {
     return JSON.parse(sessionStorage.getItem('serviceList'))
+};
+
+common.getServiceById = function (serviceId) {
+    const services = JSON.parse(sessionStorage.getItem('serviceList'));
+    return services.find(service => service.id === serviceId);
 }
 export default common

@@ -16,12 +16,12 @@
         </div>
         <div style="overflow: scroll">
             <el-divider>
-                <li class="el-icon-sort" @click="switchTop" v-text="top_switch?' 热门产品':' 热门商店'"> 热门服务
+                <li class="el-icon-sort" @click="clickSwitch" v-text="switchButton?' 热门产品':' 热门商店'"> 热门服务
                 </li>
             </el-divider>
             <!--热门商店-->
             <transition name="el-fade-in-linear">
-                <div class="top-store" v-if="!top_switch">
+                <div class="top-store" v-if="!switchButton">
                     <Item :item="item" v-for="item in popularStore" :key="item.id"
                           @click.native="$router.push('/store/' + item.id)">
                         <el-tag size="mini" v-text="item.services.name" effect="dark" class="item-tag"
@@ -34,7 +34,7 @@
             </transition>
             <!--热门产品-->
             <transition name="el-fade-in-linear">
-                <div class="top-product" v-if="top_switch">
+                <div class="top-product" v-if="switchButton">
                     <Item :item="item" v-for="item in popularProduct" :key="item.id" :price="true">
                         <el-tag size="mini" v-text="item.store.name" effect="dark" class="tag" type="warning"
                                 slot="tag" @click="$router.push('/store/' + item.storeId)"/>
@@ -67,36 +67,38 @@
         data() {
             return {
                 services: [],
-                top_switch: false,
+                switchButton: false,
                 popularStore: [],
-                popularProduct: [],
-                value: null,
-                product: null,
-                type: null
+                popularProduct: []
             }
         },
         created() {
             this.getService();
             this.getRankStores();
-            this.getRankProduct();
         },
         computed: {
-            getStores() {
-                return mock.stores(1)
-            },
             ads() {
                 return mock.carouselImage()
+            },
+            getPrice() {
+                return (price) => {
+                    return common.changePrice(price);
+                }
             }
         },
         methods: {
             getService() {
-                findAllService().then(res => {
-                    if (res.code === 1) {
-                        let services = res.data.list;
-                        this.services = services;
-                        sessionStorage.setItem('serviceList', JSON.stringify(services))
-                    }
-                });
+                const services = sessionStorage.getItem('serviceList');
+                if (services === null) {
+                    findAllService().then(res => {
+                        if (res.code === 1) {
+                            let services = res.data.list;
+                            this.services = services;
+                            this.$store.commit('setServices', services);
+                            sessionStorage.setItem('serviceList', JSON.stringify(services));
+                        }
+                    });
+                } else this.services = JSON.parse(services);
             },
             getRankStores() {
                 findPopularStore().then(res => {
@@ -112,17 +114,16 @@
                     }
                 })
             },
-            switchTop() {
-                this.top_switch = !this.top_switch;
-                let text = this.top_switch ? '热门商品' : '热门服务';
+            clickSwitch() {
+                this.switchButton = !this.switchButton;
+                let text = this.switchButton ? '热门商品' : '热门服务';
                 this.$message({
                     message: '切换为' + text,
                     type: 'info',
                     duration: 800
                 });
-            },
-            getPrice(price) {
-                return common.changePrice(price)
+                if (this.switchButton)
+                    this.getRankProduct();
             }
         }
     };

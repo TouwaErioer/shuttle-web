@@ -110,19 +110,18 @@
             }
         },
         created() {
-            let serviceList = JSON.parse(sessionStorage.getItem('serviceList'))
-            let serviceInfo = serviceList.filter(service => service.id == this.sid)[0]
-            this.filter = this.categories[0]
-            this.title = serviceInfo.name
-            this.icon = serviceInfo.icon
-            this.color = serviceInfo.color
-            this.getStores()
+            let serviceInfo = this.$store.getters.getServiceById(parseInt(this.sid));
+            this.filter = this.categories[0];
+            this.title = serviceInfo.name;
+            this.icon = serviceInfo.icon;
+            this.color = serviceInfo.color;
+            this.getStores();
             this.getCategories()
         },
         methods: {
             getStores() {
                 if (this.$store.getters.storesCache(parseInt(this.sid))) {
-                    this.stores = this.$store.getters.getStoresBySid(this.sid)
+                    this.stores = this.$store.getters.getStoresBySid(this.sid);
                     console.log('缓存id为' + this.sid + '的stores')
                 }
                 else {
@@ -145,8 +144,7 @@
                     console.log('获取id为' + this.sid + '的categories');
                     findCategoryByServiceId(this.sid).then(res => {
                         if(res.code === 1){
-                            let categories = res.data;
-                            this.categories = categories;
+                            this.categories = res.data;
                             this.$store.commit('setCategories', this.categories)
                         }
                     })
@@ -154,19 +152,19 @@
                 }
             },
             sortStores() {
-                if (this.sort == '1') {
+                if (this.sort === '1') {
                     this.stores = mock.stores()
-                } else if (this.sort == '2') {
+                } else if (this.sort === '2') {
                     this.stores.sort((a, b) => b.rate - a.rate)
-                } else if (this.sort == '3') {
+                } else if (this.sort === '3') {
                     this.stores.sort((a, b) => b.sales - a.sales)
                 }
             },
             filterStores() {
-                this.stores = this.stores.filter(store => store.category == this.filter)
+                this.stores = this.stores.filter(store => store.category === this.filter)
             },
             advancedStores() {
-                if (this.advanced == '2') {
+                if (this.advanced === '2') {
                     this.stores = mock.stores(this.sid)
                 }
             },
@@ -174,7 +172,7 @@
                 this.mescroll = mescroll
             },
             downCallBack(mescroll) {
-                this.stores = mock.stores(this.sid)
+                this.stores = mock.stores(this.sid);
                 this.$nextTick(() => {
                     mescroll.endSuccess(this.stores.length)
                 })
