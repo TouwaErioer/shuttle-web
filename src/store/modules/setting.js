@@ -1,6 +1,6 @@
 const state = () => ({
-    animation: localStorage.getItem('animation'),
-    height: 50
+    animation: null,
+    height: null
 })
 
 const getters = {
@@ -14,7 +14,7 @@ const getters = {
 
 const mutations = {
     setAnimation(state, animation) {
-        this.animation = animation
+        state.animation = animation
     },
     setHeight(state, height) {
         state.height = height;

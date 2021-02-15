@@ -1,5 +1,5 @@
 <template>
-    <transition name="slide-fade">
+    <transition :name="$store.getters.getAnimation">
         <keep-alive include="home_layout">
             <router-view></router-view>
         </keep-alive>
@@ -15,6 +15,8 @@
             const height = localStorage.getItem('height');
             const value = height === null ? 50 : parseInt(height);
             this.$store.commit('setHeight', value);
+            const animation = localStorage.getItem('animation');
+            this.$store.commit('setAnimation', animation === null ? 'slide' : animation);
         },
         methods: {
             // 刷新或关闭调用

@@ -20,13 +20,6 @@
                         @click="dialogHeaderVisible = true"
                 />
                 <cell
-                        icon="el-icon-refresh"
-                        text="清空缓存"
-                        :access="true"
-                        @click="clear"
-                >
-                </cell>
-                <cell
                         icon="el-icon-sold-out"
                         text="定时推送"
                         :access="true"
@@ -38,6 +31,13 @@
                         text="保持登录"
                         :access="true"
                         @click="dialogExpiredVisible = true"
+                >
+                </cell>
+                <cell
+                        icon="el-icon-refresh"
+                        text="清空缓存"
+                        :access="true"
+                        @click="clear"
                 >
                 </cell>
             </cells>
@@ -53,7 +53,7 @@
         </el-dialog>
         <el-dialog title="设置动画效果" :visible.sync="dialogAnimationVisible" width="80%">
             <div class="select">
-                <el-select v-model="animation" placeholder="请选择" class="animation">
+                <el-select v-model="animation" placeholder="请选择" class="animation" @change="changeAnimation">
                     <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -61,7 +61,6 @@
                             :value="item.value">
                     </el-option>
                 </el-select>
-                <el-button @click="saveAnimation">保存</el-button>
             </div>
         </el-dialog>
         <el-dialog title="设置推送开关" :visible.sync="dialogPushVisible" width="80%">
@@ -116,6 +115,10 @@
                         label: '淡入淡出',
                         value: 'slide-fade',
                     },
+                    {
+                        label: '无',
+                        value: 'null'
+                    }
                 ],
                 animation: localStorage.getItem('animation'),
                 dialogPushVisible: false,
@@ -128,11 +131,15 @@
             this.getUserInfo();
             const push = JSON.parse(localStorage.getItem('push'));
             this.push = push === null ? true : push;
+
             const height = localStorage.getItem('height');
-            const value = height === null ? 50 : parseInt(height);
-            this.height = value;
+            this.height = height === null ? 50 : parseInt(height);
+
             const expired = localStorage.getItem('expired');
             this.expired = expired === null ? 60 : expired;
+
+            const animation = localStorage.getItem('animation');
+            this.animation = animation === null ? 'slide-fade' : animation;
         },
         methods: {
             getUserInfo() {
@@ -148,9 +155,6 @@
                     sessionStorage.removeItem('serviceList');
                 }).catch(() => {
                 });
-            },
-            saveAnimation() {
-                localStorage.setItem('animation', this.animation)
             },
             saveHeight(value) {
                 localStorage.setItem('height', value);
@@ -176,6 +180,10 @@
                 this.$store.commit('setHeight', 50);
                 localStorage.setItem('height', '50');
                 this.height = 50;
+            },
+            changeAnimation(value) {
+                this.$store.commit('setAnimation', value);
+                localStorage.setItem('animation', value);
             }
         }
     };
