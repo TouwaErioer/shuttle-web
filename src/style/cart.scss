@@ -40,8 +40,11 @@
 }
 
 
-.email, .address {
+.name, .address {
   margin: 10px 0;
+
+  display: flex;
+  justify-content: space-between;
 }
 
 .address-wrap::after {

@@ -3,24 +3,24 @@
         <template v-slot:headers>
             <Headers>
                 <span><i class="el-icon-shopping-cart-1"></i> 购物车</span>
-                <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
+                <span :class="more?'el-icon-more-outline icon_n':'el-icon-more icon_n'" @click="more = !more"
+                      slot="icon"></span>
             </Headers>
             <div class="address-wrap">
                 <div class="wrap">
-                    <div>
-                        <div class="email">
-                            <i class="el-icon-user"></i>
-                            <span v-text="' ' + userInfo.name"></span>
+                    <div class="info">
+                        <div class="name">
+                            <span><i class="el-icon-user"></i> 昵称</span>
+                            <span v-text="userInfo.name"></span>
                         </div>
                         <div class="address">
-                            <i class="el-icon-school"></i>
-                            <span v-text="' ' + userInfo.address"></span>
+                            <span><i class="el-icon-school"></i> 地址</span>
+                            <span v-text="userInfo.address"></span>
                         </div>
                     </div>
-                    <i :class="more? 'el-icon-arrow-up':'el-icon-arrow-down'" class="arrow" @click="more = !more"></i>
                 </div>
-                <transition name="slide-fade">
-                    <div class="options">
+                <div class="options">
+                    <el-collapse-transition>
                         <el-form status-icon ref="ruleForm" v-if="more">
                             <el-form-item>
                                 <el-input placeholder="备注" type="textarea" :rows="3"></el-input>
@@ -32,8 +32,9 @@
                                 </el-switch>
                             </el-form-item>
                         </el-form>
-                    </div>
-                </transition>
+                    </el-collapse-transition>
+                </div>
+
             </div>
         </template>
         <template v-slot:center>
@@ -258,5 +259,9 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    .info {
+        width: 100%;
     }
 </style>
