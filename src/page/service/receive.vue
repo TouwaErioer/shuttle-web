@@ -14,13 +14,15 @@
                 </el-tab-pane>
                 <el-tab-pane name="second">
                     <span slot="label"><i class="el-icon-sell"></i> 已接单</span>
-                    <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+                    <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit"
+                                  :style="'top:'+ $store.getters.getHeight">
                         <order-item :type="'received'"/>
                     </mescroll-vue>
                 </el-tab-pane>
                 <el-tab-pane name="third">
                     <span slot="label"><i class="el-icon-circle-check"></i> 已完成</span>
-                    <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+                    <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit"
+                                  :style="'top:'+ $store.getters.getHeight">
                         <order-item :type="'completed'"/>
                     </mescroll-vue>
                 </el-tab-pane>
@@ -60,7 +62,7 @@
             this.getOrder(this.pageNo);
             this.getReceived();
             const push = JSON.parse(localStorage.getItem('push'));
-            if (("WebSocket" in window) && push === null?true:push) {
+            if (("WebSocket" in window) && push === null ? true : push) {
                 this.ws = new WebSocket(process.env.VUE_APP_WS);
 
                 this.ws.onopen = function () {

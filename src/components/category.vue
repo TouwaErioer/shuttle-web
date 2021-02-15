@@ -1,5 +1,5 @@
 <template>
-    <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+    <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit" :style="'top:'+ $store.getters.getHeight">
         <el-tabs v-model="activeName" type="card" :stretch="true" :tabPosition="position">
             <el-tab-pane :name="category.name" v-for="(category,index) in categories" :key="index"
                          :label="category.name">

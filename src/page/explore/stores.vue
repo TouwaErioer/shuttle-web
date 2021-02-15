@@ -7,7 +7,7 @@
             </Headers>
         </template>
         <template v-slot:center>
-            <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit">
+            <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit" :style="'top:'+ $store.getters.getHeight">
                 <div>
                     <div class="filters">
                         <div class="filter">

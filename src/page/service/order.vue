@@ -8,7 +8,8 @@
             </Headers>
         </template>
         <template v-slot:center>
-            <mescroll-vue ref="mescroll" :down="mescrollDown" :up="mescrollUp" @init="mescrollInit">
+            <mescroll-vue ref="mescroll" :down="mescrollDown" :up="mescrollUp" @init="mescrollInit"
+                          :style="'top:'+ $store.getters.getHeight">
                 <el-tabs v-model="activeName" type="card" :stretch="true" v-if="tableData != null">
                     <el-tab-pane label="已下单" name="first">
                         <span slot="label"><i class="el-icon-sold-out"></i> 已下单</span>

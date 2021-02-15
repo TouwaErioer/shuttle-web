@@ -1,5 +1,5 @@
 <template>
-    <header class="simple-header" :style="color != null?'background:' + color + ';color:white':null">
+    <header class="simple-header" :style="'line-height:' + $store.getters.getHeight">
         <span class="el-icon-arrow-left icon" @click="back()"></span>
         <div class="simple-header-name">
             <slot/>
@@ -13,7 +13,6 @@
 <script>
     export default {
         name: "headers",
-        props: ['color'],
         methods: {
             back() {
                 this.$router.back()

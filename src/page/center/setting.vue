@@ -43,7 +43,13 @@
             </cells>
         </div>
         <el-dialog title="设置头部高度" :visible.sync="dialogHeaderVisible" width="80%">
-            <el-slider v-model="height" :show-tooltip="false" @change="saveHeight"></el-slider>
+            <el-slider v-model="height" :show-tooltip="false" @change="saveHeight" @input="setHeight"></el-slider>
+            <div class="dialog">
+                <el-input-number v-model="height" @change="changeHeight" :min="1" label="描述文字"></el-input-number>
+                <el-button type="warning" size="medium" @click="defaultHeight" :disabled="height === 50"><i
+                        class="el-icon-refresh"></i>默认
+                </el-button>
+            </div>
         </el-dialog>
         <el-dialog title="设置动画效果" :visible.sync="dialogAnimationVisible" width="80%">
             <div class="select">
@@ -103,7 +109,7 @@
                     score: null,
                 },
                 dialogHeaderVisible: false,
-                height: this.getHeight(),
+                height: null,
                 dialogAnimationVisible: false,
                 options: [
                     {
@@ -115,13 +121,18 @@
                 dialogPushVisible: false,
                 dialogExpiredVisible: false,
                 push: true,
-                expired: this.getExpired()
+                expired: null
             };
         },
         created() {
             this.getUserInfo();
             const push = JSON.parse(localStorage.getItem('push'));
             this.push = push === null ? true : push;
+            const height = localStorage.getItem('height');
+            const value = height === null ? 50 : parseInt(height);
+            this.height = value;
+            const expired = localStorage.getItem('expired');
+            this.expired = expired === null ? 60 : expired;
         },
         methods: {
             getUserInfo() {
@@ -141,11 +152,11 @@
             saveAnimation() {
                 localStorage.setItem('animation', this.animation)
             },
-            saveHeight() {
-                localStorage.setItem('height', this.height)
+            saveHeight(value) {
+                localStorage.setItem('height', value);
             },
-            getHeight() {
-                return parseInt(localStorage.getItem('height'));
+            setHeight() {
+                this.$store.commit('setHeight', this.height);
             },
             setExpired() {
                 if (this.expired === '') this.$message.error('登录过期时间不能为空');
@@ -154,12 +165,17 @@
                     this.$router.push('/login')
                 }
             },
-            getExpired() {
-                const expired = localStorage.getItem('expired');
-                return expired === null ? 60 : expired
-            },
             changePush() {
                 localStorage.setItem('push', this.push);
+            },
+            changeHeight(value) {
+                this.$store.commit('setHeight', value);
+                localStorage.setItem('height', value);
+            },
+            defaultHeight() {
+                this.$store.commit('setHeight', 50);
+                localStorage.setItem('height', '50');
+                this.height = 50;
             }
         }
     };
@@ -207,5 +223,17 @@
 
     .expired {
         margin: 10px 0;
+    }
+
+    .dialog {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .dialog .el-button {
+        margin-top: 10px;
     }
 </style>

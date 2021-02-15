@@ -8,7 +8,7 @@
             <div style="overflow: hidden;" v-if="store != null">
                 <div class="info-background"
                      :style="'background:url(' + store.image + ');background-size: cover'"></div>
-                <div class="info">
+                <div class="info" :style="'top:' + $store.getters.getHeight">
                     <item :item="store" :color="false">
                         <el-tag size="mini" v-text="'外卖'" effect="dark" class="item-tag" type="warning"
                                 style="font-size:2vh;height: unset"></el-tag>
