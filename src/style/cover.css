@@ -60,3 +60,7 @@
 .el-dialog__footer{
     padding: 5px 20px 20px!important;
 }
+
+.el-tag__close{
+    color: white!important;
+}
