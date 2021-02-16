@@ -6,9 +6,10 @@
             <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
         </Headers>
         <div slot="center" class="container">
-            <el-button :icon="status == 1?'el-icon-circle-check':'el-icon-circle-close'" @click="$router.push('/home')"
-                       :type="status == 1?'success':'danger'" plain>
-                {{status == 1?'成功':'失败'}}
+            <el-button :icon="status > 0?'el-icon-circle-check':'el-icon-circle-close'"
+                       @click="$router.replace('/center/balance')"
+                       :type="status > 0?'success':'danger'" plain>
+                {{status > 0?'成功':'失败'}}
             </el-button>
         </div>
     </Page>

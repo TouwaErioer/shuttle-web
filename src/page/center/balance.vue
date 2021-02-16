@@ -75,6 +75,7 @@
                 findScore(this.getUserId()).then(res => {
                     if (res.code === 1) {
                         this.score = res.data;
+                        this.$store.commit('changeScore', this.score);
                     }
                 })
             }

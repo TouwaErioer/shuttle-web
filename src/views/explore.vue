@@ -72,7 +72,7 @@
                 popularProduct: []
             }
         },
-        created() {
+        mounted() {
             this.getService();
             this.getRankStores();
         },

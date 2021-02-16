@@ -28,7 +28,7 @@
                       :access="true"
                       @click="$router.push('/center/balance')">
                     <template v-slot:footer>
-                        <div v-text="'￥ ' + score" style="color: #909399"/>
+                        <div v-text="'￥ ' + $store.getters.getUserInfo.score" style="color: #909399"/>
                     </template>
                 </cell>
             </cells>
@@ -43,7 +43,6 @@
 <script>
     import cell from "@/components/cell.vue";
     import cells from "@/components/cells.vue";
-    import {findScore} from "@/utils/api/user";
 
     export default {
         name: "center",
@@ -64,7 +63,6 @@
         },
         created() {
             this.getUserInfo();
-            this.getScore();
         },
         methods: {
             getUserInfo() {
@@ -91,11 +89,6 @@
                 }).then(() => {
                 }).catch(() => {
                 });
-            },
-            getScore() {
-                findScore(this.userInfo.id).then(res => {
-                    if (res.code === 1) this.score = res.data;
-                })
             }
         },
         computed: {
