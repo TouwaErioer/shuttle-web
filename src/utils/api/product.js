@@ -1,4 +1,4 @@
-import {get} from '@/utils/request/request'
+import {get, post} from '@/utils/request/request'
 
 const API = '/product/';
 
@@ -10,3 +10,4 @@ export const findPopularProduct = () => get(API + 'rank');
 
 // 搜索
 export const searchProduct = (keywords) => get(API + 'search/' + keywords);
+export const review = (params) => post(API + 'review', params);

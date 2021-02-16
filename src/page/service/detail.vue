@@ -104,6 +104,15 @@
 
                 <div class="tip" v-if="order.status === -1">暂无服务者</div>
             </div>
+            <el-dialog title="请评价该产品" :visible.sync="dialogEvaluateVisible" width="80%" center>
+                <div class="rate">
+                    <el-rate v-model="rate" show-text/>
+                    <div class="rate-button">
+                        <el-button type="primary" size="mini" :disabled="rate === 0" @click="changeRate">确认</el-button>
+                        <el-button type="info" size="mini" @click="completeOrder">跳过</el-button>
+                    </div>
+                </div>
+            </el-dialog>
         </div>
         <div slot="footer" class="operate">
             <el-button :type="operateType" v-text="operateName"
@@ -118,6 +127,7 @@
     import Item from "@/components/item"
     import common from "@/utils/commont";
     import {complete, deleteOrder, Receive} from "@/utils/api/order";
+    import {review} from "@/utils/api/product";
 
     export default {
         name: "detail",
@@ -129,7 +139,9 @@
                 path: null,
                 operateName: null,
                 operateType: null,
-                disabled: false
+                disabled: false,
+                dialogEvaluateVisible: false,
+                rate: 0
             }
         },
         created() {
@@ -187,7 +199,7 @@
                 const status = this.order.status;
                 if (this.path === '/order') {
                     if (status === -1 || status === 1) this.deleteOrder();
-                    else this.completeOrder();
+                    else this.dialogEvaluateVisible = true;
                 } else if (this.path === '/receive') {
                     if (status === -1) this.receive();
                     else if (status === 1) this.deleteOrder();
@@ -218,29 +230,22 @@
                 });
             },
             completeOrder() {
-                this.$confirm('确定签收该订单？', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    const order = {
-                        id: this.order.id,
-                        cid: this.order.cid,
-                        sid: this.order.sid,
-                        pid: this.order.pid,
-                        file: this.order.file
-                    };
-                    complete(order).then(res => {
-                        if (res.code === 1) {
-                            this.$message.success('签收成功！');
-                            this.$router.replace('/order');
-                        }
-                    })
-                }).catch(() => {
-                });
+                const order = {
+                    id: this.order.id,
+                    cid: this.order.cid,
+                    sid: this.order.sid,
+                    pid: this.order.pid,
+                    file: this.order.file
+                };
+                complete(order).then(res => {
+                    if (res.code === 1) {
+                        this.$message.success('签收成功！');
+                        this.$router.replace('/order');
+                    }
+                })
             },
             receive() {
-                this.$confirm('确定接受该订单？', '提示', {
+                this.$confirm('接单会消耗1积分，确定接受该订单？', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -260,6 +265,21 @@
                     })
                 }).catch(() => {
                 });
+            },
+            changeRate() {
+                review({
+                    product: {
+                        id: this.order.pid,
+                        storeId: this.order.storeId
+                    },
+                    rate: this.rate
+                }).then(res => {
+                    if (res.code === 1) {
+                        this.$message.success('评分成功！');
+                        this.completeOrder();
+                        this.dialogEvaluateVisible = false;
+                    }
+                })
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -357,7 +377,7 @@
         font-size: 12px;
     }
 
-    .tip{
+    .tip {
         width: 100%;
         height: 100%;
         display: flex;
@@ -366,7 +386,20 @@
         color: #909399;
     }
 
-    .null{
+    .null {
         color: #909399;
+    }
+
+    .rate {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .rate-button {
+        margin-top: 30px;
     }
 </style>
