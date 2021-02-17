@@ -20,11 +20,11 @@
             </div>
         </template>
         <template v-slot:center>
-            <div>
-                <el-tabs v-model="activeName" type="card" :stretch="true">
-                    <el-tab-pane name="product">
+            <div style="height: 100%;">
+                <el-tabs v-model="activeName" type="card" :stretch="true" style="height: 100%;">
+                    <el-tab-pane name="product" style="height: 100%;">
                         <span slot="label"><i class="el-icon-goods"></i> 商品</span>
-                        <div class="content">
+                        <div class="content" v-if="products.length !== 0">
                             <div class="products">
                                 <Item v-for="product in products" :key="product.id" :item="product" :price="true">
                                     <ProductDialog slot="button" :product="product"/>
@@ -37,18 +37,33 @@
                                 </Item>
                             </div>
                         </div>
+                        <div class="empty" v-if="products.length === 0">
+                            该商店暂时没有产品
+                        </div>
                     </el-tab-pane>
                     <el-tab-pane name="comment">
                         <span slot="label"><i class="el-icon-chat-line-square"></i> 评论</span>
+                        <div v-if="comments.length !== 0">
+                            <Comment v-for="(comment,index) in comments" :key="index" :comment="comment"
+                                     @getComment="getComment"/>
+                        </div>
+                        <div class="empty" v-if="comments.length === 0">
+                            该商店当前没有评论
+                        </div>
                     </el-tab-pane>
                 </el-tabs>
             </div>
         </template>
         <template v-slot:footer>
-            <div class="cart">
+            <div class="cart" v-if="activeName === 'product'">
                 <div class="car-button" @click="$router.push('/cart')">
                     <span><i class="el-icon-shopping-cart-1"></i> 购物车 {{getCount}}</span>
                 </div>
+            </div>
+            <div class="comment" v-if="activeName !== 'product'">
+                <el-input placeholder="请输入对商店的评论" v-model="content" @change="send">
+                    <el-button slot="append" @click="send">发送</el-button>
+                </el-input>
             </div>
         </template>
     </Page>
@@ -62,10 +77,12 @@
     import {findProductsByStoreId} from "@/utils/api/product";
     import {findStoreById} from "@/utils/api/store";
     import ProductDialog from "@/components/product-dialog";
+    import Comment from "@/components/comment";
+    import {findByStoreId, insertComments} from "@/utils/api/comments";
 
     export default {
         name: "store",
-        components: {Page, Headers, Item, ProductDialog},
+        components: {Comment, Page, Headers, Item, ProductDialog},
         props: ['sid'],
         data() {
             return {
@@ -74,12 +91,15 @@
                 activeName: 'product',
                 value: null,
                 product: null,
-                type: null
+                type: null,
+                content: null,
+                comments: []
             }
         },
         created() {
             this.getProducts();
             this.getStore();
+            this.getComment();
         },
         methods: {
             getPrice(price) {
@@ -108,6 +128,32 @@
                         }
                     });
                 } else this.store = storeList[0];
+            },
+            send() {
+                const userInfo = this.$store.getters.getUserInfo;
+                insertComments({
+                    content: this.content,
+                    name: userInfo.name,
+                    date: this.changeDate(new Date()),
+                    storeId: this.sid,
+                    userId: userInfo.id
+                }).then(res => {
+                    if (res.code === 1) {
+                        this.$message.success('发送成功！');
+
+                        this.getComment();
+                    }
+                })
+            },
+            changeDate(date) {
+                return date.toISOString().split('T')[0] + ' ' + date.toTimeString().split(' ')[0]
+            },
+            getComment() {
+                findByStoreId(this.sid).then(res => {
+                    if (res.code === 1) {
+                        this.comments = res.data.list;
+                    }
+                })
             }
         },
         computed: {
@@ -148,7 +194,7 @@
         width: 100%;
         height: 80%;
         background: #409EFF;
-        border-radius: 15px;
+        border-radius: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -162,4 +208,20 @@
         filter: blur(3px);
     }
 
+    .comment {
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px;
+    }
+
+    .empty {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #909399;
+    }
 </style>

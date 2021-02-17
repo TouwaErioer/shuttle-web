@@ -11,15 +11,15 @@
 }
 
 .el-message-box__btns {
-    text-align: center!important;
+    text-align: center !important;
 }
 
-.el-message-box__title{
+.el-message-box__title {
     text-align: center;
 }
 
-.el-message-box__close{
-    display: none!important;
+.el-message-box__close {
+    display: none !important;
 }
 
 .el-tabs__header {
@@ -29,38 +29,46 @@
 .mescroll {
     position: fixed;
     bottom: 0;
-    height: auto!important;
+    height: auto !important;
 }
 
-.el-message{
-    top: 0px!important;
+.el-message {
+    top: 0px !important;
 }
 
-.is-bottom{
+.is-bottom {
     background: white;
 }
 
-.el-upload-list{
+.el-upload-list {
     width: 100%;
 }
 
-.el-table .cell{
-    display: flex!important;
-    justify-content: center!important;
+.el-table .cell {
+    display: flex !important;
+    justify-content: center !important;
 }
 
-.el-dialog__body{
-    padding: 10px 30px 10px!important;
+.el-dialog__body {
+    padding: 10px 30px 10px !important;
 }
 
-.el-dialog__close{
-    display: none!important;
+.el-dialog__close {
+    display: none !important;
 }
 
-.el-dialog__footer{
-    padding: 5px 20px 20px!important;
+.el-dialog__footer {
+    padding: 5px 20px 20px !important;
 }
 
-.el-tag__close{
-    color: white!important;
+.el-tag__close {
+    color: white !important;
+}
+
+.el-tabs__content {
+    height: 89% !important;
+}
+
+.el-tab-pane {
+    height: 100% !important;
 }

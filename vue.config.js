@@ -6,6 +6,7 @@ const externals = {
     'element-ui':'ELEMENT',
     'mescroll':'mescroll',
     'qs.js':'qs',
+    'moment':'moment'
 };
 const cdn = {
     css: [
@@ -18,7 +19,8 @@ const cdn = {
         'https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js',
         'https://unpkg.com/element-ui/lib/index.js',
         'https://unpkg.com/mescroll.js@1.4.1/mescroll.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.6/qs.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.6/qs.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js'
     ]
 };
 

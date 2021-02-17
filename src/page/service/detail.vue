@@ -268,10 +268,8 @@
             },
             changeRate() {
                 review({
-                    product: {
-                        id: this.order.pid,
-                        storeId: this.order.storeId
-                    },
+                    id: this.order.pid,
+                    storeId: this.order.storeId,
                     rate: this.rate
                 }).then(res => {
                     if (res.code === 1) {

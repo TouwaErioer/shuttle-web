@@ -13,9 +13,11 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.15.0",
     "mescroll.js": "^1.4.2",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "qs": "^6.9.6",
     "sass-loader": "^10.1.1",
+    "valine": "^1.4.14",
     "vue": "^2.6.11",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
