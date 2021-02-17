@@ -42,6 +42,9 @@ const mutations = {
     },
     setCurrent(state, order) {
         state.current = order;
+    },
+    clearOrders(state){
+        state.orders = []
     }
 };
 

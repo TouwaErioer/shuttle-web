@@ -115,8 +115,7 @@
             </el-dialog>
         </div>
         <div slot="footer" class="operate">
-            <el-button :type="operateType" v-text="operateName"
-                       @click="operate" :disabled="disabled"/>
+            <el-button :type="operateType" v-text="operateName" @click="operate" :disabled="disabled"/>
         </div>
     </page>
 </template>
@@ -241,6 +240,9 @@
                     if (res.code === 1) {
                         this.$message.success('签收成功！');
                         this.$router.replace('/order');
+                    } else {
+                        this.$message.error('订单已取消');
+                        this.$router.replace('/receive')
                     }
                 })
             },

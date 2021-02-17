@@ -70,8 +70,7 @@
                 };
                 let self = this;
                 this.ws.onmessage = function (evt) {
-                    self.$store.commit('updateOrders', JSON.parse(evt.data));
-                    console.log(JSON.parse(evt.data));
+                    self.$store.commit('updateOrders',JSON.parse(evt.data));
                 };
 
                 this.ws.onclose = function () {
@@ -111,6 +110,9 @@
                 this.pageNo += 1;
                 this.getOrder(this.pageNo)
             }
+        },
+        destroyed() {
+            this.$store.commit('clearOrders');
         }
     }
 </script>
