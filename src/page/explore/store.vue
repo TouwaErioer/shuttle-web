@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="empty" v-if="products.length === 0">
-                            该商店暂时没有产品
+                            <Empty :description="'该商店暂时没有产品'"/>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane name="comment">
@@ -48,7 +48,7 @@
                                      @getComment="getComment"/>
                         </div>
                         <div class="empty" v-if="comments.length === 0">
-                            该商店当前没有评论
+                            <Empty :description="'该商店当前没有评论'"/>
                         </div>
                     </el-tab-pane>
                 </el-tabs>
@@ -79,10 +79,11 @@
     import ProductDialog from "@/components/product-dialog";
     import Comment from "@/components/comment";
     import {findByStoreId, insertComments} from "@/utils/api/comments";
+    import Empty from "@/components/empty";
 
     export default {
         name: "store",
-        components: {Comment, Page, Headers, Item, ProductDialog},
+        components: {Empty, Comment, Page, Headers, Item, ProductDialog},
         props: ['sid'],
         data() {
             return {
