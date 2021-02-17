@@ -91,7 +91,7 @@
                 const login_from = {
                     user: document.getElementById('login-user').value,
                     password: document.getElementById('login-password').value
-                }
+                };
                 if (!Object.values(login_from).every(v => !!v)) {
                     this.$message.error('请输邮箱或密码')
                 } else {
@@ -100,13 +100,12 @@
                         phone: login_from.user,
                         password: login_from.password,
                         expired: expired === null ? 60 : expired
-                    }
+                    };
                     Login(data).then(res => {
-                        console.log(res)
                         if (res.code === 1) {
-                            let user = res.data.user
-                            localStorage.setItem('token', res.data.token)
-                            localStorage.setItem('userInfo', JSON.stringify(user))
+                            let user = res.data.user;
+                            localStorage.setItem('token', res.data.token);
+                            localStorage.setItem('userInfo', JSON.stringify(user));
                             this.$router.push('/home')
                         }
                     })
@@ -120,10 +119,10 @@
                     rePassword: document.getElementById('register-rePassword').value,
                     address: document.getElementById('register-address').value,
                     name: document.getElementById('register-name').value,
-                }
+                };
                 if (!Object.values(register_from).every(v => !!v)) {
                     this.$message.error('请输入 邮箱 或 密码 或 寝室号 或 昵称')
-                } else if (register_from.password != register_from.rePassword) {
+                } else if (register_from.password !== register_from.rePassword) {
                     this.$message.error('两次输入密码不一致')
                 } else if (!phoneRegEx.test(register_from.phone)) {
                     this.$message.error('号码格式错误')
@@ -133,11 +132,24 @@
                         'name': register_from.name,
                         'password': register_from.password,
                         'address': register_from.address,
-                    }
+                    };
                     register(data).then(res => {
                         if (res.code === 1) {
-                            this.$message.success("注册成功！")
-                            this.$router.push('/login')
+                            this.$message.success("注册成功！");
+                            let expired = localStorage.getItem('expired');
+                            let data = {
+                                phone: register_from.phone,
+                                password: register_from.password,
+                                expired: expired === null ? 60 : expired
+                            };
+                            Login(data).then(res => {
+                                if (res.code === 1) {
+                                    let user = res.data.user;
+                                    localStorage.setItem('token', res.data.token);
+                                    localStorage.setItem('userInfo', JSON.stringify(user));
+                                    this.$router.push('/home')
+                                }
+                            })
                         }
                     })
                 }
