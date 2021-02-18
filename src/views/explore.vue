@@ -88,7 +88,6 @@
         },
         methods: {
             getService() {
-                console.log('getService');
                 const services = sessionStorage.getItem('serviceList');
                 if (services === null) {
                     findAllService().then(res => {
@@ -102,18 +101,28 @@
                 } else this.services = JSON.parse(services);
             },
             getRankStores() {
-                findPopularStore().then(res => {
-                    if (res.code === 1) {
-                        this.popularStore = res.data;
-                    }
-                })
+                const poplarStore = this.$store.getters.getPopularStores;
+                if (poplarStore.length === 0) {
+                    findPopularStore().then(res => {
+                        if (res.code === 1) {
+                            const data = res.data;
+                            this.popularStore = data;
+                            this.$store.commit('setPopularStores', data);
+                        }
+                    })
+                } else this.popularStore = poplarStore;
             },
             getRankProduct() {
-                findPopularProduct().then(res => {
-                    if (res.code === 1) {
-                        this.popularProduct = res.data;
-                    }
-                })
+                const popularProduct = this.$store.getters.getPopularProducts;
+                if (popularProduct.length === 0) {
+                    findPopularProduct().then(res => {
+                        if (res.code === 1) {
+                            const data = res.data;
+                            this.popularProduct = data;
+                            this.$store.commit('setPopularProducts', data)
+                        }
+                    })
+                } else this.popularProduct = popularProduct;
             },
             clickSwitch() {
                 this.switchButton = !this.switchButton;

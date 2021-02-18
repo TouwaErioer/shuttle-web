@@ -10,6 +10,8 @@ import categories from '@/store/modules/categories'
 import products from '@/store/modules/product'
 import setting from '@/store/modules/setting'
 import user from "@/store/modules/user";
+import popular from "@/store/modules/popular";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -21,6 +23,7 @@ export default new Vuex.Store({
         categories,
         products,
         setting,
-        user
+        user,
+        popular
     },
 })
