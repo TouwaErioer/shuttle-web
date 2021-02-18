@@ -130,7 +130,7 @@
 <style scoped>
 
     .history {
-        margin: 0 5px;
+        margin: 5px 5px;
         color: white;
     }
 
