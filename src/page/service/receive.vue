@@ -21,7 +21,7 @@
                 </el-tab-pane>
                 <el-tab-pane name="third">
                     <span slot="label"><i class="el-icon-circle-check"></i> 已完成</span>
-                    <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit"
+                    <mescroll-vue ref="mescroll" :down="mescrollDown" :up="mescrollUp" @init="mescrollInit"
                                   :style="'top:'+ $store.getters.getHeight">
                         <order-item :type="'completed'"/>
                     </mescroll-vue>
@@ -70,7 +70,7 @@
                 };
                 let self = this;
                 this.ws.onmessage = function (evt) {
-                    self.$store.commit('updateOrders',JSON.parse(evt.data));
+                    self.$store.commit('updateOrders', JSON.parse(evt.data));
                 };
 
                 this.ws.onclose = function () {
@@ -102,13 +102,22 @@
                 this.mescroll = mescroll
             },
             downCallBack() {
+                this.getReceived();
                 this.$nextTick(() => {
                     this.mescroll.endSuccess()
-                })
+                });
             },
             upCallBack() {
                 this.pageNo += 1;
-                this.getOrder(this.pageNo)
+                findBySid(this.userInfo.id, this.pageNo).then(res => {
+                    if (res.code === 1) {
+                        const data = res.data.list;
+                        this.$store.commit('loadReceive', data);
+                        this.$nextTick(() => {
+                            this.mescroll.endSuccess(data.length);
+                        })
+                    }
+                })
             }
         },
         destroyed() {

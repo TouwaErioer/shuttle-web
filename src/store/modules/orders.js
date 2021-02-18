@@ -43,8 +43,11 @@ const mutations = {
     setCurrent(state, order) {
         state.current = order;
     },
-    clearOrders(state){
+    clearOrders(state) {
         state.orders = []
+    },
+    loadReceive(state, receive) {
+        state.receive.push(...receive);
     }
 };
 
