@@ -4,15 +4,17 @@
                 :data="getOrder"
                 style="width: 100%;height: 100%;"
                 :stretch="true"
-                @row-click="handleCurrentChange">
+                @row-click="handleCurrentChange"
+                height="100%">
             <el-table-column
                     prop="id"
-                    label="单号"
+                    label="商品"
                     align="center">
+                <template slot="header"><span><i class="el-icon-shopping-bag-1"></i> 商品</span></template>
                 <template slot-scope="scope" v-if="getService(scope.row.serviceId) != null">
                     <el-tag effect="dark" :color="getService(scope.row.serviceId).color"
                             :style="'border-color:' + getService(scope.row.serviceId).color"
-                            v-text="'No.' + scope.row.id">
+                            v-text="scope.row.product.name">
                     </el-tag>
                 </template>
             </el-table-column>
@@ -20,11 +22,13 @@
                     prop="address"
                     label="地址"
                     align="center">
+                <template slot="header"><span><i class="el-icon-school"></i> 地址</span></template>
             </el-table-column>
             <el-table-column
                     prop="status"
                     label="状态"
                     align="center">
+                <template slot="header"><span><i class="el-icon-time"></i> 状态</span></template>
                 <template slot-scope="scope">
                     <el-tag :type="scope.row.status === 1?'success':'warning'">
                         <i :class="scope.row.status === 1?'el-icon-circle-check':'el-icon-loading'"></i>
