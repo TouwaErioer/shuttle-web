@@ -11,7 +11,7 @@
                 v-for="(item, i) in sectionList"
                 :key="item.name"
                 class="menu-item flex"
-                :class="{ active: activeIndex == i }"
+                :class="{ active: activeIndex === i }"
                 flex="1 column"
                 @click="activeIndex = i"
             >
@@ -63,7 +63,6 @@ export default {
             ],
         };
     },
-
     methods: {
         menuSelect(current) {
             console.log(current);
@@ -76,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 .tabs-menu-area {
     height: 50px;
-    box-shadow: 0px 7px 8px 4px #888888;
+    box-shadow: 0 7px 8px 4px #888888;
     z-index: 10000;
     position: relative;
 

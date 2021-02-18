@@ -72,7 +72,7 @@
                 popularProduct: []
             }
         },
-        mounted() {
+        activated() {
             this.getService();
             this.getRankStores();
         },
@@ -88,6 +88,7 @@
         },
         methods: {
             getService() {
+                console.log('getService');
                 const services = sessionStorage.getItem('serviceList');
                 if (services === null) {
                     findAllService().then(res => {
