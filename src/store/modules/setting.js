@@ -1,7 +1,7 @@
 const state = () => ({
     animation: null,
     height: null,
-})
+});
 
 const getters = {
     getAnimation: (state) => {
@@ -18,7 +18,7 @@ const mutations = {
     },
     setHeight(state, height) {
         state.height = height;
-    }
+    },
 };
 
 export default {

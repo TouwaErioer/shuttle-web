@@ -16,7 +16,7 @@
             const value = height === null ? 50 : parseInt(height);
             this.$store.commit('setHeight', value);
             const animation = localStorage.getItem('animation');
-            this.$store.commit('setAnimation', animation === null ? 'slide' : animation);
+            this.$store.commit('setAnimation', animation === null ? 'slide-fade' : animation);
         },
         methods: {
             // 刷新或关闭调用
