@@ -34,6 +34,13 @@
                 >
                 </cell>
                 <cell
+                        icon="el-icon-position"
+                        text="启动页面"
+                        :access="true"
+                        @click="dialogHouseVisible = true"
+                >
+                </cell>
+                <cell
                         icon="el-icon-refresh"
                         text="清空缓存"
                         :access="true"
@@ -84,6 +91,18 @@
                 <el-button @click="setExpired">确定</el-button>
             </div>
         </el-dialog>
+        <el-dialog title="设置启动页面" :visible.sync="dialogHouseVisible" width="80%" center>
+            <div class="select">
+                <el-select v-model="house" placeholder="请选择" class="animation" @change="changeHouse">
+                    <el-option
+                            v-for="view in views"
+                            :key="view.value"
+                            :label="view.label"
+                            :value="view.value">
+                    </el-option>
+                </el-select>
+            </div>
+        </el-dialog>
     </div>
 </template>
 
@@ -124,7 +143,29 @@
                 dialogPushVisible: false,
                 dialogExpiredVisible: false,
                 push: true,
-                expired: null
+                expired: null,
+                dialogHouseVisible: false,
+                views: [
+                    {
+                        label: '发现',
+                        value: '0'
+                    }, {
+                        label: '服务',
+                        value: '1'
+                    },
+                    {
+                        label: '搜索',
+                        value: '2'
+                    }, {
+                        label: '中心',
+                        value: '3'
+                    },
+                    {
+                        label: '接单',
+                        value: 'receive'
+                    }
+                ],
+                house: '0'
             };
         },
         created() {
@@ -184,6 +225,17 @@
             changeAnimation(value) {
                 this.$store.commit('setAnimation', value);
                 localStorage.setItem('animation', value);
+                this.$message.success('设置成功！');
+                this.dialogAnimationVisible = false;
+            },
+            changeHouse(value) {
+                if (value === 'receive') localStorage.setItem('house', value);
+                else {
+                    localStorage.removeItem('house');
+                    localStorage.setItem('home', value);
+                }
+                this.$message.success('设置成功！');
+                this.dialogHouseVisible = false;
             }
         }
     };

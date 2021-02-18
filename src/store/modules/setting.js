@@ -1,6 +1,6 @@
 const state = () => ({
     animation: null,
-    height: null
+    height: null,
 })
 
 const getters = {
@@ -9,9 +9,6 @@ const getters = {
     },
     getHeight: (state) => {
         return state.height.toString() + 'px';
-    },
-    getRealHeight: (state) => {
-        return state.height
     }
 };
 

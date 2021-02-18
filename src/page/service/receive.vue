@@ -3,6 +3,7 @@
         <template v-slot:headers>
             <Headers>
                 <span><i class="el-icon-sell"></i> 接单</span>
+                <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
             </Headers>
         </template>
         <template v-slot:center>

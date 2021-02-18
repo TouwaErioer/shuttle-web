@@ -4,10 +4,13 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter);
 
+
+const house = localStorage.getItem('house');
+
 const routes = [
     {
         path: '/',
-        redirect: '/home'
+        redirect: '/' + (house === null ? 'home' : house)
     },
     {
         path: '/login',

@@ -106,7 +106,7 @@
                             let user = res.data.user;
                             localStorage.setItem('token', res.data.token);
                             localStorage.setItem('userInfo', JSON.stringify(user));
-                            this.$router.push('/home')
+                            this.$router.push('/')
                         }
                     })
                 }
@@ -147,7 +147,7 @@
                                     let user = res.data.user;
                                     localStorage.setItem('token', res.data.token);
                                     localStorage.setItem('userInfo', JSON.stringify(user));
-                                    this.$router.push('/home')
+                                    this.$router.push('/')
                                 }
                             })
                         }
