@@ -8,7 +8,7 @@
             </div>
             <div class="content message" v-text="comment.content" @click="clickContent"/>
         </div>
-        <el-dialog title="修改评论内容" :visible.sync="dialogUpdateVisible" width="80%" style="margin-top: 10vh" center>
+        <el-dialog title="修改评论内容" :visible.sync="dialogUpdateVisible" width="80%" center>
             <el-input placeholder="请输入内容" v-model="updateContent" @input="changeInput"
                       suffix-icon="el-icon-edit-outline"/>
             <el-button class="updateCommentButton" size="medium" type="primary" :disabled="disabled" @click="update">
@@ -113,7 +113,7 @@
     }
 
     .content {
-        margin-left: 20px;
+        margin-left: 15px;
         display: flex;
         align-items: center;
         color: #606266;
@@ -122,7 +122,7 @@
     .message {
         float: left;
         width: 200px;
-        background-color: #909399;
+        background-color: #c0c3cc;
         color: #fff;
         font-size: 12px;
         line-height: 25px;
