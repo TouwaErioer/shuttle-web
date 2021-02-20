@@ -4,8 +4,7 @@
                 :data="getOrder"
                 style="width: 100%;height: 100%;"
                 :stretch="true"
-                @row-click="handleCurrentChange"
-                height="100%">
+                @row-click="handleCurrentChange">
             <el-table-column
                     prop="id"
                     label="商品"

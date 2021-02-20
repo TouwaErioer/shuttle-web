@@ -85,7 +85,7 @@
                     if (res.code === 1) {
                         this.$store.commit('setOrders', res.data.list)
                     }
-                })
+                });
             },
             getReceived() {
                 findBySid(this.userInfo.id, 1).then(res => {
