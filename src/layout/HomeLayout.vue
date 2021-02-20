@@ -56,18 +56,32 @@
                         icon: "user",
                     },
                 ],
+
+                scrollTop: 0
             };
         },
-        created() {
-            const home = localStorage.getItem('home');
-            this.activeIndex = home === null ? 0 : parseInt(home);
+        mounted () {
+            window.addEventListener('scroll', this.handleScroll, true)
+            console.log(this.scrollTop);
         },
         methods: {
             menuSelect(current) {
                 console.log(current);
                 this.activeIndex = current;
             },
+            handleScroll () {
+                this.scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            },
         },
+        destroyed () {
+            // 离开该页面需要移除这个监听的事件，不然会报错
+            window.removeEventListener('scroll', this.handleScroll)
+        },
+        watch:{
+            scrollTop(){
+                console.log(this.scrollTop);
+            }
+        }
     };
 </script>
 

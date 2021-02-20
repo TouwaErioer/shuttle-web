@@ -4,6 +4,7 @@ const state = () => ({
 
 const getters = {
     getService: (state) => {
+        if(state.services === null) return [];
         return state.services
     },
     getServiceById: (state) => (serviceId) =>{

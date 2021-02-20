@@ -3,7 +3,7 @@
         <!--轮播图-->
         <el-carousel height="150px" class="carousel" indicator-position="none">
             <el-carousel-item v-for="(ad,index) in ads" :key="index">
-                <el-image :src="ad"></el-image>
+                <el-image :src="ad.image" @click="$router.push('/store/' + ad.storeId)"></el-image>
             </el-carousel-item>
         </el-carousel>
         <!--服务区-->
@@ -53,13 +53,13 @@
 </template>
 
 <script>
-    import mock from "@/mock";
     import Item from "@/components/item";
     import common from "@/utils/commont";
     import {findAllService} from "@/utils/api/service";
     import {findPopularStore} from "@/utils/api/store";
     import {findPopularProduct} from "@/utils/api/product";
     import ProductDialog from "@/components/product-dialog";
+    import {findAllAds} from "@/utils/api/ads";
 
     export default {
         name: "Explore",
@@ -69,17 +69,16 @@
                 services: [],
                 switchButton: false,
                 popularStore: [],
-                popularProduct: []
+                popularProduct: [],
+                ads: []
             }
         },
         activated() {
             this.getService();
             this.getRankStores();
+            this.getAds()
         },
         computed: {
-            ads() {
-                return mock.carouselImage()
-            },
             getPrice() {
                 return (price) => {
                     return common.changePrice(price);
@@ -134,6 +133,11 @@
                 });
                 if (this.switchButton)
                     this.getRankProduct();
+            },
+            getAds() {
+                findAllAds().then(res => {
+                    if (res.code === 1) this.ads = res.data;
+                })
             }
         }
     };
@@ -153,5 +157,4 @@
     .el-carousel {
         border-radius: 15px !important;
     }
-
 </style>
