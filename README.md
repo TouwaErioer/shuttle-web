@@ -12,14 +12,23 @@
 
 ## 效果
 
+### 首页
 ![explore.png](https://img.loli.bj/images/2021/02/22/explore.png)
+### 商店列表
 ![stores.png](https://img.loli.bj/images/2021/02/22/stores.png)
+### 商店详情
 ![store.png](https://img.loli.bj/images/2021/02/22/store.png)
+### 商店评论
 ![comment.png](https://img.loli.bj/images/2021/02/22/comment.png)
+### 购物车
 ![cart.png](https://img.loli.bj/images/2021/02/22/cart.png)
+### 订单
 ![order.png](https://img.loli.bj/images/2021/02/22/order.png)
+### 接单
 ![receive.png](https://img.loli.bj/images/2021/02/22/recevie.png)
+### 订单详情
 ![detail.png](https://img.loli.bj/images/2021/02/22/detail.png)
+### 个人中心
 ![center.png](https://img.loli.bj/images/2021/02/22/center.png)
 
 ## Project setup
