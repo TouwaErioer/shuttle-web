@@ -121,4 +121,8 @@
     .el-message{
         min-width: 23% !important;
     }
+
+    .el-loading{
+        width: 23%!important;
+    }
 }
