@@ -1,7 +1,7 @@
 <template>
     <transition :name="$store.getters.getAnimation">
         <keep-alive include="home_layout">
-            <router-view></router-view>
+            <router-view class="app"></router-view>
         </keep-alive>
     </transition>
 </template>

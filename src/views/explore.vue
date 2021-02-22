@@ -1,5 +1,5 @@
 <template>
-    <div class="body" index>
+    <div class="body scroll" index>
         <!--轮播图-->
         <el-carousel height="150px" class="carousel" indicator-position="none">
             <el-carousel-item v-for="(ad,index) in ads" :key="index">
@@ -14,7 +14,7 @@
                 <p v-text="service.name"></p>
             </div>
         </div>
-        <div style="overflow: scroll">
+        <div class="popular scroll">
             <el-divider>
                 <li class="el-icon-sort" @click="clickSwitch" v-text="switchButton?' 热门产品':' 热门商店'"> 热门服务
                 </li>

@@ -2,7 +2,7 @@
     <div class="container">
         <slot name="headers"/>
 
-        <div class="center">
+        <div class="center scroll">
             <slot name="center"/>
         </div>
 

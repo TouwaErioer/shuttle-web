@@ -75,3 +75,50 @@
 .el-dialog{
     margin-top: 25vh!important;
 }
+
+@media screen and (min-width: 1080px) {
+    .all{
+        margin:0 38.5%!important;
+        background-color: #606266;
+    }
+
+    .scroll::-webkit-scrollbar {
+        width: 0 !important
+    }
+
+    .cover-item{
+        width: 98px!important;
+        height: 98px!important;
+    }
+
+    .app{
+        background-color: white;
+    }
+
+    .mescroll{
+        position: unset!important;
+    }
+
+
+    .el-tabs{
+        position: unset!important;
+    }
+
+    .receive > .el-tabs__header{
+        position: fixed!important;
+        bottom: 0!important;
+        width: 23%;
+    }
+
+    .el-dialog{
+        width: 19%!important;
+    }
+
+    .el-message-box{
+        width: 230px!important;
+    }
+
+    .el-message{
+        min-width: 23% !important;
+    }
+}
