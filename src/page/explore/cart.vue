@@ -80,7 +80,7 @@
                     <span>{{ + item[1].sales}}</span>
                 </div>
             </Item>
-            <Empty description="购物车暂无商品" v-if="getCount === 0"/>
+            <Empty description="购物车暂无商品" :svg="require('@/assets/undraw_empty_cart_co35.svg')" v-if="getCount === 0"/>
         </template>
         <template v-slot:footer>
             <div class="pay-wrap">

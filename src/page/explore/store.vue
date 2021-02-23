@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="empty" v-if="products.length === 0">
-                            <Empty :description="'该商店暂时没有产品'"/>
+                            <Empty :description="'该商店暂时没有产品'" :svg="require('@/assets/undraw_empty_xct9.svg')"/>
                         </div>
                     </el-tab-pane>
                     <el-tab-pane name="comment">
@@ -48,7 +48,7 @@
                                      @getComment="getComment"/>
                         </div>
                         <div class="empty" v-if="comments.length === 0">
-                            <Empty :description="'该商店当前没有评论'"/>
+                            <Empty :description="'该商店当前没有评论'" :svg="require('@/assets/undraw_Short_bio_re_fmx0.svg')"/>
                         </div>
                     </el-tab-pane>
                 </el-tabs>

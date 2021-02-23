@@ -74,6 +74,9 @@
                     </Item>
                 </div>
             </mescroll-vue>
+            <div class="empty" v-if="stores.length === 0">
+                <Empty :description="'该服务暂无商店'" :svg="require('@/assets/undraw_mpty_street.svg')"></Empty>
+            </div>
         </template>
     </Page>
 </template>
@@ -85,11 +88,12 @@
     import MescrollVue from 'mescroll.js/mescroll.vue'
     import {findStoreByServiceId} from "@/utils/api/store";
     import {findCategoryByServiceId} from "@/utils/api/category";
+    import Empty from "@/components/empty";
 
     export default {
         name: "stores",
         props: ['sid'],
-        components: {Page, Item, Headers, MescrollVue},
+        components: {Empty, Page, Item, Headers, MescrollVue},
         data() {
             return {
                 title: null,
@@ -186,7 +190,7 @@
                         this.$nextTick(() => {
                             mescroll.endSuccess(data.length);
                         })
-                    }else mescroll.endErr();
+                    } else mescroll.endErr();
                 })
             }
         }
@@ -223,5 +227,10 @@
 
     .stores {
         margin: 0 10px;
+    }
+
+    .empty {
+        height: 100%;
+        width: 100%;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div style="padding: 20px 20px">
+    <div class="search">
         <el-input
                 placeholder="请输入产品"
                 prefix-icon="el-icon-search"
@@ -9,7 +9,8 @@
         >
         </el-input>
         <div class="history" v-if="show_history || keywords.length === 0">
-            <Empty description="暂无搜索历史" v-if="history_words.length === 0"/>
+            <Empty description="暂无搜索历史" :svg="require('@/assets/undraw_Location_search_re_ttoj.svg')"
+                   v-if="history_words.length === 0"/>
             <div v-if="history_words.length !== 0">
                 <el-divider>
                     <li class="el-icon-time divider"> 搜索历史</li>
@@ -28,7 +29,7 @@
                 </el-tag>
             </div>
         </div>
-        <div class="results" v-if="show_search">
+        <div style="flex: 1" v-if="show_search">
             <StoreItem v-for="result in results" :key="result.name" :item="result">
                 <ProductDialog slot="button" :product="result"/>
                 <el-tag size="mini" v-text="result.store.name" effect="dark" class="tag" type="warning"
@@ -40,7 +41,7 @@
                     <span>{{ + result.sales}}</span>
                 </div>
             </StoreItem>
-            <empty description="没有找到相关结果" v-if="results.length === 0"/>
+            <empty description="没有找到相关结果" :svg="require('@/assets/undraw_searching_p5ux.svg')" v-if="results.length === 0"/>
         </div>
     </div>
 </template>
@@ -132,10 +133,17 @@
     .history {
         margin: 5px 5px;
         color: white;
+        flex: 1;
     }
 
     .divider {
         color: #909399;
         font-size: 2vh;
+    }
+
+    .search{
+        padding: 20px 20px;
+        display: flex;
+        flex-direction: column;
     }
 </style>
