@@ -85,7 +85,7 @@
         <template v-slot:footer>
             <div class="pay-wrap">
                 <div class="total-price">
-                    <span><i class="el-icon-price-tag"></i> 商品金额（运费 ¥1）</span>
+                    <span @click="tip"><i class="el-icon-price-tag"></i> 商品金额（运费 ¥1）</span>
                     <span>共计：<span class="count">¥{{ totalPrice }}</span></span>
                 </div>
                 <el-button class="pay-btn" type="primary" icon="el-icon-download" :disabled="getCount === 0"
@@ -127,9 +127,9 @@
             },
             totalPrice() {
                 if (this.getCount !== 0) {
-                    let count = 100;
+                    let count = 0;
                     this.$store.getters.getCartMap.forEach(function (product) {
-                        count += product.count * product.price
+                        count += product.count * product.price + 100
                     });
                     return common.changePrice(count);
                 } else return '0.00'
@@ -205,6 +205,15 @@
             },
             changeDate(date) {
                 return date.toISOString().split('T')[0] + ' ' + date.toTimeString().split(' ')[0]
+            },
+            tip(){
+                this.$confirm('同家商店收取1元，不同商店另收运费', '运费', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                }).catch(() => {
+                });
             }
         }
     }
