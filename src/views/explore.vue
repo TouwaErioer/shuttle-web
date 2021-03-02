@@ -135,9 +135,16 @@
                     this.getRankProduct();
             },
             getAds() {
-                findAllAds().then(res => {
-                    if (res.code === 1) this.ads = res.data;
-                })
+                let ads = sessionStorage.getItem('ads');
+                if (ads !== null) this.ads = JSON.parse(ads);
+                else {
+                    findAllAds().then(res => {
+                        if (res.code === 1) {
+                            this.ads = res.data;
+                            sessionStorage.setItem('ads', JSON.stringify(res.data));
+                        }
+                    })
+                }
             }
         }
     };
