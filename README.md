@@ -38,9 +38,14 @@ VUE_APP_ADMIN=
 ## 部署
 
 ```sh
+git clone https://github.com/TouwaErioer/shuttle-web.git
+
+cd shuttle-web
+
 # 构建docker镜像
 docker build . -t shuttle-web
 
 # 后台运行
-docker run -d -p 80:80 shuttl-web
+docker run -d -p 80:80 shuttle-web
 ```
+
