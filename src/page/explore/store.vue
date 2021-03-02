@@ -152,7 +152,7 @@
             getComment() {
                 findByStoreId(this.sid).then(res => {
                     if (res.code === 1) {
-                        this.comments = res.data.list;
+                        this.comments = res.data;
                     }
                 })
             }

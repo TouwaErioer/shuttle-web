@@ -2,15 +2,15 @@
 
 ## 依赖
 
-| Syntax | Description | Version|
-|  :----: |  :----: | :----: |
-| JavaScript Frame | Vue.js | 2.6.11|
-| UI | Element UI | 2.15.0 |
-| Router | Vue Router | 3.5.1 |
-| Global Data | Vuex | 3.6.2 |
-| Request | axios | 0.21.1 |
-| Loading | mescroll.js | 1.4.2 |
-| FormatTime | moment.js | 2.29.1 |
+| Description | Version|
+|  :----: | :----: |
+| Vue.js | 2.6.11|
+| Element UI | 2.15.0 |
+| Vue Router | 3.5.1 |
+| Vuex | 3.6.2 |
+| axios | 0.21.1 |
+| mescroll.js | 1.4.2 |
+| moment.js | 2.29.1 |
 
 ## 效果
 
@@ -35,51 +35,12 @@ VUE_APP_WS=
 VUE_APP_ADMIN=
 ```
 
-### nginx配置
+## 部署
 
-```nginx
-server {
-  listen #[port];
-  server_name #[server_name];
-  root #[项目打包文件夹路径];
-  index index.html;
-	
-  # 单页面路由配置
-  location / {
-    try_files $uri $uri/ @router;
-  }
+```sh
+# 构建docker镜像
+docker build . -t shuttle-web
 
-  # 反向代理到后端api 
-  location /api/{
-    proxy_pass #[api];
-  }
-
-  location @router {
-     rewrite ^.*$ /index.html last;
-  }
-}
+# 后台运行
+docker run -d -p 80:80 shuttl-web
 ```
-
-## Project setup
-
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
