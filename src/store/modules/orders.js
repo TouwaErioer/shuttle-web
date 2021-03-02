@@ -7,11 +7,11 @@ const state = () => ({
 });
 
 const getters = {
-    getOrders: (state) => (name) => {
-        if (name === '全部') {
+    getOrders: (state) => (serviceId) => {
+        if (serviceId === 0) {
             return state.orders;
         } else {
-            return state.orders.filter(order => order.service === name);
+            return state.orders.filter(order => order.serviceId === serviceId);
         }
     },
     getReceive: state => {

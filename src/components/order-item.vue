@@ -42,7 +42,7 @@
 <script>
     export default {
         name: "order-item",
-        props: ['type', 'name'],
+        props: ['type', 'serviceId'],
         data() {
             return {
                 userInfo: this.$store.getters.getUserInfo
@@ -50,7 +50,7 @@
         },
         computed: {
             getOrder() {
-                if (this.type === 'receive') return this.$store.getters.getOrders(this.name);
+                if (this.type === 'receive') return this.$store.getters.getOrders(this.serviceId);
                 else if (this.type === 'received') return this.$store.getters.getReceive;
                 else return this.$store.getters.getCompleted
             },
@@ -68,8 +68,6 @@
         },
         methods: {
             handleCurrentChange(order) {
-
-
                 order.path = '/receive';
                 this.$store.commit('setCurrent', order);
                 this.$router.push('/detail');
