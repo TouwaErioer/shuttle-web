@@ -46,6 +46,14 @@
                         <div v-if="comments.length !== 0">
                             <Comment v-for="(comment,index) in comments" :key="index" :comment="comment"
                                      @getComment="getComment"/>
+                            <div v-if="comments.length % 9 === 0 && showLoad" class="load"
+                                 @click="load(comments[comments.length - 1].id)">
+                                <i class="el-icon-loading" v-if="loadTip"></i>
+                                <span v-text="loadTip?' 加载中':'点击加载更多...'"></span>
+                            </div>
+                            <div v-if="!showLoad" class="load">
+                                已加载全部
+                            </div>
                         </div>
                         <div class="empty" v-if="comments.length === 0">
                             <Empty :description="'该商店当前没有评论'" :svg="require('@/assets/undraw_Short_bio_re_fmx0.svg')"/>
@@ -78,7 +86,7 @@
     import {findStoreById} from "@/utils/api/store";
     import ProductDialog from "@/components/product-dialog";
     import Comment from "@/components/comment";
-    import {findByStoreId, insertComments} from "@/utils/api/comments";
+    import {findByStoreId, findByStoreIdAndId, insertComments} from "@/utils/api/comments";
     import Empty from "@/components/empty";
 
     export default {
@@ -94,7 +102,9 @@
                 product: null,
                 type: null,
                 content: null,
-                comments: []
+                comments: [],
+                loadTip: false,
+                showLoad: true
             }
         },
         created() {
@@ -152,7 +162,17 @@
             getComment() {
                 findByStoreId(this.sid).then(res => {
                     if (res.code === 1) {
-                        this.comments = res.data;
+                        if(res.data.list.length === res.data.count) this.showLoad = false;
+                        this.comments = res.data.list;
+                    }
+                })
+            },
+            load(_id) {
+                this.loadTip = true;
+                findByStoreIdAndId(this.sid, _id).then(res => {
+                    if (res.code === 1) {
+                        if(res.data.list.length === 0) this.showLoad = false;
+                        else this.comments.push(...res.data.list);
                     }
                 })
             }
@@ -224,5 +244,11 @@
         justify-content: center;
         align-items: center;
         color: #909399;
+    }
+
+    .load {
+        text-align: center;
+        color: #606266;
+        font-size: 10px;
     }
 </style>
