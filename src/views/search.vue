@@ -30,15 +30,15 @@
             </div>
         </div>
         <div style="flex: 1" v-if="show_search">
-            <StoreItem v-for="result in results" :key="result.name" :item="result">
-                <ProductDialog slot="button" :product="result"/>
-                <el-tag size="mini" v-text="result.store.name" effect="dark" class="tag" type="warning"
-                        slot="tag" @click="$router.push('/store/' + result.storeId)"/>
+            <StoreItem v-for="result in results" :key="result.content.name" :item="result.content">
+                <ProductDialog slot="button" :product="result.content"/>
+                <el-tag size="mini" v-text="result.content.store.name" effect="dark" class="tag" type="warning"
+                        slot="tag" @click="$router.push('/store/' + result.content.storeId)"/>
                 <div slot="price"><i class="el-icon-price-tag"></i> 价格：
-                    <span class="price-text" v-text="getPrice(result.price)"/>
+                    <span class="price-text" v-text="getPrice(result.content.price)"/>
                 </div>
                 <div slot="sales"><i class="el-icon-medal"></i> 销量：
-                    <span>{{ + result.sales}}</span>
+                    <span>{{ + result.content.sales}}</span>
                 </div>
             </StoreItem>
             <empty description="没有找到相关结果" :svg="require('@/assets/undraw_searching_p5ux.svg')" v-if="results.length === 0"/>
@@ -92,7 +92,7 @@
                     this.show_history = false;
                     this.show_search = true;
                     searchProduct(this.keywords).then(res => {
-                        if (res.code === 1) this.results = res.data;
+                        if (res.code === 1) this.results = res.data.searchHits;
                         this.addWords(res.data);
                     });
                 }
