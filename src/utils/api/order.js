@@ -1,6 +1,6 @@
 import {get, post, del} from '@/utils/request/request'
 
-const API = '/order/';
+const API = '/orders/';
 
 // 添加订单
 export const insertOrder = (order, config, isExpired) => post(API + '/insert' + "?isExpired=" + isExpired, order, config);
