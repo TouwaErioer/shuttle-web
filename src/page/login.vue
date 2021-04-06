@@ -97,7 +97,7 @@
                 } else {
                     let expired = localStorage.getItem('expired');
                     let data = {
-                        phone: login_from.user,
+                        account: login_from.user,
                         password: login_from.password,
                         expired: expired === null ? 60 : expired
                     };
