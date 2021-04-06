@@ -2,7 +2,7 @@
     <div style="height: 100%">
         <el-table
                 :data="getOrder"
-                style="width: 100%;height: 100%;"
+                style="width: 100%;height: 100%;margin-bottom: 15px"
                 :stretch="true"
                 @row-click="handleCurrentChange">
             <el-table-column

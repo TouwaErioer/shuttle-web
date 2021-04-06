@@ -23,8 +23,11 @@ export const Receive = (param) => post(API + 'receive', param);
 // 查询全部的待接订单
 export const findByReceive = (pageNo) => get(API + 'findByReceive?pageNo=' + pageNo);
 
-// 根据sid查询所有订单
-export const findBySid = (userId, pageNo) => get(API + 'findBySid/' + userId + '?pageNo=' + pageNo);
+// 查询用户已完成的订单
+export const findBySidOrCompleted = (userId, pageNo, pageSize) => get(API + 'findBySidOrCompleted/' + userId + '?pageNo=' + pageNo + '&pageSize=' + pageSize);
+
+// 查询用户配送中的订单
+export const findBySidOrPresent = (userId, pageNo) => get(API + 'findBySidOrPresent/' + userId + '?pageNo=' + pageNo);
 
 // 完成订单
 export const complete = (order) => post(API + 'completed', order);

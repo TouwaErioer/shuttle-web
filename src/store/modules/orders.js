@@ -3,6 +3,7 @@ import common from "@/utils/commont";
 const state = () => ({
     orders: [],
     receive: [],
+    completed: [],
     current: null
 });
 
@@ -15,10 +16,10 @@ const getters = {
         }
     },
     getReceive: state => {
-        return state.receive.filter(order => order.status === 0);
+        return state.receive;
     },
     getCompleted: state => {
-        return state.receive.filter(order => order.status === 1);
+        return state.completed;
     },
     getCurrent: state => {
         return state.current;
@@ -46,8 +47,18 @@ const mutations = {
     clearOrders(state) {
         state.orders = []
     },
+    setCompleted(state, completed) {
+        state.completed = completed;
+    },
+    loadCompleted(state, completed) {
+
+        state.completed.push(...completed);
+    },
     loadReceive(state, receive) {
-        state.receive.push(...receive);
+        state.receive.push(...receive)
+    },
+    loadOrders(state, orders) {
+        state.orders.push(...orders)
     }
 };
 
