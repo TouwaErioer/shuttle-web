@@ -1,5 +1,5 @@
 import {get} from "@/utils/request/request";
 
-const API = '/category/'
+const API = '/major/category/';
 
-export const findCategoryByServiceId = (serviceId) => get(API + 'findAllByServiceId/' + serviceId)
+export const findCategoryByServiceId = (serviceId) => get(API + 'findAllByServiceId/' + serviceId);

@@ -1,6 +1,6 @@
 import {get} from '@/utils/request/request'
 
-const API = '/store/';
+const API = '/major/store/';
 
 // 根据serviceId查询store
 export const findStoreByServiceId = (serviceId) => get(API + 'findByServiceId/' + serviceId);

@@ -1,6 +1,6 @@
 import {del, get, post} from '@/utils/request/request'
 
-const API = '/comments/';
+const API = '/major/comments/';
 
 export const insertComments = (comments) => post(API + 'insert', comments);
 
