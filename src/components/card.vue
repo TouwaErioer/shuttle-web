@@ -29,7 +29,6 @@
         margin: 10px;
         height: 125px;
         display: flex;
-        box-shadow: 5px 1px 10px 1px #909399;
     }
 
     #icon {

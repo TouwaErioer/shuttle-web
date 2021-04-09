@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background-color: #ebeef5">
         <card v-for="(page,index) in pages" :key="index" :title="page.title" :detail="page.detail" :color="page.color"
               :icon="page.icon">
             <div id="btn" :style="'background-color: ' + page.color" slot="btn" @click="page.router === 'admin' ? openAdminWeb() :$router.push(page.router)">进入
