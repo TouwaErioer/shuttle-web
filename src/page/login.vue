@@ -128,7 +128,7 @@
                     this.$message.error('号码格式错误')
                 } else {
                     const data = {
-                        'phone': register_from.phone,
+                        'account': register_from.phone,
                         'name': register_from.name,
                         'password': register_from.password,
                         'address': register_from.address,

@@ -65,7 +65,7 @@
         line-height: 17px;
     }
 
-    .item-tag{
+    .item-tag {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
