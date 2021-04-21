@@ -131,11 +131,11 @@
                 }
             },
             getStore() {
-                let storeList = this.$store.getters.getStoreById(this.sid);
+                let storeList = this.$store.getters.getStoreById(parseInt(this.sid));
                 if (storeList.length === 0) {
                     findStoreById(this.sid).then(res => {
                         if (res.code === 1) {
-                            this.store = res.data;
+                            this.store = res.data[0];
                         }
                     });
                 } else this.store = storeList[0];
