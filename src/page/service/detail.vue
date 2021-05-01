@@ -271,7 +271,7 @@
             changeRate() {
                 review({
                     id: this.order.pid,
-                    storeId: this.order.storeId,
+                    orderId: this.order.id,
                     rate: this.rate
                 }).then(res => {
                     if (res.code === 1) {
