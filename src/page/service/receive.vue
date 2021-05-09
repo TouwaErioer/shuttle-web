@@ -18,7 +18,8 @@
                     <mescroll-vue ref="mescroll" :down="mescrollDown" @init="mescrollInit"
                                   :style="'top:'+ $store.getters.getHeight">
                         <order-item :type="'received'"/>
-                        <div v-if="order.length % pageSize === 0 && !receive && order.length !== 0" v-text="'点击加载更多'" class="load"
+                        <div v-if="order.length % pageSize === 0 && !receive && order.length !== 0" v-text="'点击加载更多'"
+                             class="load"
                              @click="loadReceive"></div>
                         <div v-if="receive || order.length === 0" v-text="'已加载全部'" class="load"></div>
                     </mescroll-vue>
@@ -45,6 +46,7 @@
     import OrderItem from "@/components/order-item";
     import {findByReceive, findBySidOrCompleted, findBySidOrPresent} from "@/utils/api/order";
     import MescrollVue from 'mescroll.js/mescroll.vue'
+    import common from "@/utils/commont";
 
     export default {
         name: "receive",
@@ -66,26 +68,31 @@
             }
         },
         created() {
-            const height = document.body.clientHeight;
-            this.pageSize = parseInt(((height - 40 - 50 - 47) / 57).toString());
-            this.getOrder(this.pageNo);
-            this.getReceived();
-            this.getCompleted();
-            const push = JSON.parse(localStorage.getItem('push'));
-            if (("WebSocket" in window) && push === null ? true : push) {
-                this.ws = new WebSocket(process.env.VUE_APP_WS);
+            if (!this.checkUserInfo) {
+                this.$message.error('请完善基本信息');
+                this.$router.push('/center/edit');
+            } else {
+                const height = document.body.clientHeight;
+                this.pageSize = parseInt(((height - 40 - 50 - 47) / 57).toString());
+                this.getOrder(this.pageNo);
+                this.getReceived();
+                this.getCompleted();
+                const push = JSON.parse(localStorage.getItem('push'));
+                if (("WebSocket" in window) && push === null ? true : push) {
+                    this.ws = new WebSocket(process.env.VUE_APP_WS);
 
-                this.ws.onopen = function () {
-                    console.log('已连接')
-                };
-                let self = this;
-                this.ws.onmessage = function (evt) {
-                    self.$store.commit('updateOrders', JSON.parse(evt.data));
-                };
+                    this.ws.onopen = function () {
+                        console.log('已连接')
+                    };
+                    let self = this;
+                    this.ws.onmessage = function (evt) {
+                        self.$store.commit('updateOrders', JSON.parse(evt.data));
+                    };
 
-                this.ws.onclose = function () {
-                    console.log('已关闭')
-                };
+                    this.ws.onclose = function () {
+                        console.log('已关闭')
+                    };
+                }
             }
         },
         computed: {
@@ -94,6 +101,10 @@
                 else if (this.activeName === 'second') return this.$store.getters.getReceive;
                 else return this.$store.getters.getCompleted
             },
+            checkUserInfo() {
+                let userInfo = common.getUserInfo();
+                return userInfo.email !== 'null' || userInfo.address !== null || userInfo.name !== null;
+            }
         },
         methods: {
             getOrder(pageNo) {
@@ -140,7 +151,7 @@
                     }
                 })
             },
-            loadReceive(){
+            loadReceive() {
                 this.pageNo += 1;
                 findBySidOrPresent(this.userInfo.id, this.pageNo, this.pageSize).then(res => {
                     if (res.code === 1) {

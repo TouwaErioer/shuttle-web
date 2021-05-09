@@ -29,6 +29,8 @@
 </template>
 
 <script>
+    import common from "@/utils/commont";
+
     export default {
         name: "product-dialog",
         props: ['product'],
@@ -38,9 +40,13 @@
                 dialogInputVisible: false,
             }
         },
-        computed:{
+        computed: {
             getToken() {
                 return localStorage.getItem('token')
+            },
+            checkUserInfo() {
+                let userInfo = common.getUserInfo();
+                return userInfo.email !== 'null' || userInfo.address !== null || userInfo.name !== null;
             }
         },
         methods: {
@@ -65,12 +71,17 @@
                 }
             },
             addToCart() {
-                if (this.product.store.serviceId === 4) {
-                    this.dialogInputVisible = true;
-                } else if (this.product.store.serviceId === 2) {
-                    this.dialogUploadVisible = true;
+                if (!this.checkUserInfo) {
+                    this.$message.error('请完善基本信息');
+                    this.$router.push('/center/edit');
                 } else {
-                    this.toCart(this.product);
+                    if (this.product.store.serviceId === 4) {
+                        this.dialogInputVisible = true;
+                    } else if (this.product.store.serviceId === 2) {
+                        this.dialogUploadVisible = true;
+                    } else {
+                        this.toCart(this.product);
+                    }
                 }
             },
             toCart(product) {

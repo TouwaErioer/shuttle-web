@@ -16,15 +16,30 @@
                 </cell>
             </cells>
             <cells :tidy-header="true">
+                <cell icon="el-icon-message" title="邮箱">
+                    <div :style="'color:' + (userInfo.email === 'null' ? 'gray' : '')"
+                         v-text="getValue(userInfo.email,'null')"/>
+                    <template v-slot:footer>
+                        <edit-dialog
+                                :value="userInfo.email === 'null' ? '' : userInfo.email"
+                                @save="setEmail"
+                                type="email"
+                                icon="el-icon-message"
+                                title="邮箱修改"
+                                regex="^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$"/>
+                    </template>
+                </cell>
                 <cell icon="el-icon-user" title="昵称">
-                    <div v-text="userInfo.name"/>
+                    <div :style="'color:' + (userInfo.name === null ? 'gray' : '')"
+                         v-text="getValue(userInfo.name,null)"/>
                     <template v-slot:footer>
                         <edit-dialog :value="userInfo.name" @save="setName" type="name" icon="el-icon-user"
                                      title="昵称修改"/>
                     </template>
                 </cell>
                 <cell icon="el-icon-mobile-phone" title="电话">
-                    <div v-text="userInfo.phone"/>
+                    <div :style="'color:' + (userInfo.phone === null ? 'gray' : '')"
+                         v-text="getValue(userInfo.phone,null)"/>
                     <template v-slot:footer>
                         <edit-dialog
                                 :value="userInfo.phone"
@@ -41,7 +56,8 @@
                     </template>
                 </cell>
                 <cell icon="el-icon-location-information" title="地址">
-                    <div v-text="userInfo.address"/>
+                    <div :style="'color:' + (userInfo.address === null ? 'gray' : '')"
+                         v-text="getValue(userInfo.address,null)"/>
                     <template v-slot:footer>
                         <edit-dialog
                                 :value="userInfo.address"
@@ -100,6 +116,10 @@
             getUserInfo() {
                 this.userInfo = JSON.parse(localStorage.getItem('userInfo'))
             },
+            setEmail: function (res) {
+                this.userInfo.email = res;
+                this.updateUserInfo();
+            },
             setName: function (res) {
                 this.userInfo.name = res;
                 this.updateUserInfo()
@@ -146,15 +166,18 @@
                 }).catch(() => {
                 });
             },
-            changeInput(value){
-                if(value === '') this.disabled = true;
+            changeInput(value) {
+                if (value === '') this.disabled = true;
                 else this.disabled = false;
+            },
+            getValue(value, none) {
+                return value === none ? '无' : value;
             }
         },
         computed: {
             avatarUrl: function () {
                 return `https://api.multiavatar.com/${this.userInfo.name}.png`;
-            },
+            }
         },
     };
 </script>

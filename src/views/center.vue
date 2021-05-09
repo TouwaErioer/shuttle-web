@@ -8,8 +8,8 @@
                     <el-avatar :src="avatarUrl"/>
                 </template>
                 <div class="info-list">
-                    <cell icon="el-icon-user" :text="userInfo.name"/>
-                    <cell icon="el-icon-phone" :text="userInfo.phone"/>
+                    <cell icon="el-icon-user" :text="getValue(userInfo.name,null)"/>
+                    <cell icon="el-icon-phone" :text="getValue(userInfo.phone,null)"/>
                 </div>
             </cell>
         </div>
@@ -89,6 +89,9 @@
                 }).then(() => {
                 }).catch(() => {
                 });
+            },
+            getValue(value, none) {
+                return value === none ? '无' : value;
             }
         },
         computed: {

@@ -44,8 +44,10 @@
         },
         methods: {
             handle() {
-                if (!this.regExp.test(this.newValue)) this.$message.error('输入手机号格式不正确');
-                else if (this.newValue === '') this.$message.error('输入不能为空');
+                if (!this.regExp.test(this.newValue)) {
+                    let type = this.type === 'phone' ? '手机号' : '邮箱';
+                    this.$message.error(`输入${type}格式不正确`);
+                } else if (this.newValue === '') this.$message.error('输入不能为空');
                 else {
                     this.pass = true;
                     this.editing = false;

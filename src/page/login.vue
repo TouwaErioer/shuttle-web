@@ -6,7 +6,7 @@
                     <h2 class="title">登录</h2>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input placeholder="请输入电话或昵称" id="login-user"/>
+                        <input placeholder="请输入邮箱或电话" id="login-user"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
@@ -18,7 +18,7 @@
                     <h2 class="title">注册</h2>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input placeholder="请输入电话" id="register-phone"/>
+                        <input placeholder="请输入邮箱" id="register-email"/>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
@@ -27,14 +27,6 @@
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
                         <input type="password" placeholder="请重复输入密码" id="register-rePassword"/>
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-address-card"></i>
-                        <input type="text" placeholder="请输入地址" id="register-address"/>
-                    </div>
-                    <div class="input-field">
-                        <i class="fas fa-lock"></i>
-                        <input placeholder="请输入昵称" id="register-name"/>
                     </div>
                     <el-button @click="register()" v-text="'Sign up'" class="btn"/>
                 </form>
@@ -93,7 +85,7 @@
                     password: document.getElementById('login-password').value
                 };
                 if (!Object.values(login_from).every(v => !!v)) {
-                    this.$message.error('请输邮箱或密码')
+                    this.$message.error('必填输入框未输入')
                 } else {
                     let expired = localStorage.getItem('expired');
                     let data = {
@@ -112,33 +104,29 @@
                 }
             },
             register() {
-                const phoneRegEx = /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/;
+                const regEx = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
                 const register_from = {
-                    phone: document.getElementById('register-phone').value,
+                    email: document.getElementById('register-email').value,
                     password: document.getElementById('register-password').value,
-                    rePassword: document.getElementById('register-rePassword').value,
-                    address: document.getElementById('register-address').value,
-                    name: document.getElementById('register-name').value,
+                    rePassword: document.getElementById('register-rePassword').value
                 };
                 if (!Object.values(register_from).every(v => !!v)) {
-                    this.$message.error('请输入 邮箱 或 密码 或 寝室号 或 昵称')
+                    this.$message.error('必填输入框未输入')
                 } else if (register_from.password !== register_from.rePassword) {
                     this.$message.error('两次输入密码不一致')
-                } else if (!phoneRegEx.test(register_from.phone)) {
-                    this.$message.error('号码格式错误')
+                } else if (!regEx.test(register_from.phone)) {
+                    this.$message.error('邮箱格式错误')
                 } else {
                     const data = {
-                        'account': register_from.phone,
-                        'name': register_from.name,
-                        'password': register_from.password,
-                        'address': register_from.address,
+                        'email': register_from.email,
+                        'password': register_from.password
                     };
                     register(data).then(res => {
                         if (res.code === 1) {
                             this.$message.success("注册成功！");
                             let expired = localStorage.getItem('expired');
                             let data = {
-                                phone: register_from.phone,
+                                account: register_from.email,
                                 password: register_from.password,
                                 expired: expired === null ? 60 : expired
                             };
