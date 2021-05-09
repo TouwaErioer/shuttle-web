@@ -1,8 +1,9 @@
 <template>
-    <div style="background-color: #ebeef5">
+    <div class="container">
         <card v-for="(page,index) in pages" :key="index" :title="page.title" :detail="page.detail" :color="page.color"
               :icon="page.icon">
-            <div id="btn" :style="'background-color: ' + page.color" slot="btn" @click="page.router === 'admin' ? openAdminWeb() :$router.push(page.router)">进入
+            <div id="btn" :style="'background-color: ' + page.color" slot="btn"
+                 @click="page.router === 'admin' ? openAdminWeb() :$router.push(page.router)">进入
             </div>
         </card>
     </div>
@@ -39,6 +40,20 @@
                         icon: 'el-icon-shopping-cart-1',
                         router: '/cart'
                     },
+                    {
+                        title: '收藏',
+                        detail: '查看收藏商店或产品',
+                        color: '#e6a23ccc',
+                        icon: 'el-icon-star-off',
+                        router: '/star'
+                    },
+                    {
+                        title: '审批',
+                        detail: '提交商店或产品',
+                        color: '#67c23ac2',
+                        icon: 'el-icon-shopping-cart-1',
+                        router: '/cart'
+                    }
                 ]
             }
         },
@@ -63,17 +78,14 @@
 </script>
 
 <style scoped>
-    .service {
-        margin: 10px;
-        height: 80px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        border-radius: 10px;
+    .container {
+        background-color: #ebeef5
     }
 
-    #btn{
+    .container::-webkit-scrollbar {
+        width: 0 !important
+    }
+    #btn {
         width: 50px;
         height: 30px;
         font-size: 10px;

@@ -12,6 +12,8 @@ import setting from '@/store/modules/setting'
 import user from "@/store/modules/user";
 import popular from "@/store/modules/popular";
 
+import star from "@/store/modules/star";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -24,6 +26,7 @@ export default new Vuex.Store({
         products,
         setting,
         user,
-        popular
+        popular,
+        star
     },
 })

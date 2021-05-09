@@ -1,11 +1,11 @@
 <template>
-    <transition name="slide-fade">
+    <transition name="slide-fade" v-if="item !== null">
         <div class="list-item" :style="color != null?'background-color:unset;border-bottom:unset':null"
              v-if="count == null?true:count > 0">
             <el-image class="item-image" :src="item.image" fit="cover"/>
             <div type="flex" class="goods-info">
                 <div class="item-info">
-                    <span v-text="item.name" class="item-name"></span>
+                    <div v-text="item.name" class="item-name"/>
                     <slot name="tag"/>
                 </div>
                 <div class="item-desc">
@@ -16,6 +16,9 @@
                 <div class="item-tag" :style="price != null?'unset':'height:unset'">
                     <slot name="price"/>
                     <slot name="sales"/>
+                </div>
+                <div class="star">
+                    <slot name="star"/>
                 </div>
             </div>
         </div>
@@ -99,4 +102,7 @@
         float: right;
     }
 
+    .star {
+        margin: 5px 0;
+    }
 </style>

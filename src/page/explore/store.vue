@@ -10,10 +10,14 @@
                      :style="'background:url(' + store.image + ');background-size: cover'"></div>
                 <div class="info" :style="'top:' + $store.getters.getHeight">
                     <item :item="store" :color="false">
-                        <el-tag size="mini" v-text="'外卖'" effect="dark" class="item-tag" type="warning"
+                        <el-tag slot="tag" size="mini" v-text="store.services.name" effect="dark" class="item-tag" type="warning"
                                 style="font-size:2vh;height: unset"></el-tag>
-                        <div slot="sales"><i class="el-icon-medal"></i> 总销量：
-                            <span>{{ + store.sales}}</span>
+                        <div slot="sales">
+                            <i class="el-icon-medal"></i> 总销量：<span>{{ store.sales}}</span>
+                        </div>
+                        <div slot="star" @click="starStore(store.id)">
+                            <i :class="stars.length === 0 ? 'el-icon-star-off' : 'el-icon-star-on'"></i>
+                            <span v-text="stars.length === 0 ? ' 收藏':' 已收藏'"/>
                         </div>
                     </item>
                 </div>
@@ -26,8 +30,11 @@
                         <span slot="label"><i class="el-icon-goods"></i> 商品</span>
                         <div class="content" v-if="products.length !== 0">
                             <div class="products">
-                                <Item v-for="product in products" :key="product.id" :item="product" :price="true">
-                                    <ProductDialog slot="button" :product="product"/>
+                                <Item v-for="product in products" :key="product.id" :item="product" :price="true"
+                                      @click.native="starProduct(product.id)">
+                                    <div slot="button" @click.stop.prevent>
+                                        <ProductDialog :product="product"/>
+                                    </div>
                                     <div slot="price"><i class="el-icon-price-tag"></i> 价格：
                                         <span class="price-text" v-text="getPrice(product.price)"/>
                                     </div>
@@ -88,6 +95,7 @@
     import Comment from "@/components/comment";
     import {findByStoreId, findByStoreIdAndId, insertComments} from "@/utils/api/comments";
     import Empty from "@/components/empty";
+    import {isStarByProductId, isStarByStoreId, star, unStar} from "@/utils/api/star";
 
     export default {
         name: "store",
@@ -104,13 +112,15 @@
                 content: null,
                 comments: [],
                 loadTip: false,
-                showLoad: true
+                showLoad: true,
+                stars: []
             }
         },
         created() {
             this.getProducts();
             this.getStore();
             this.getComment();
+            this.isStarByStoreId();
         },
         methods: {
             getPrice(price) {
@@ -162,7 +172,7 @@
             getComment() {
                 findByStoreId(this.sid).then(res => {
                     if (res.code === 1) {
-                        if(res.data.list.length === res.data.count) this.showLoad = false;
+                        if (res.data.list.length === res.data.count) this.showLoad = false;
                         this.comments = res.data.list;
                     }
                 })
@@ -171,15 +181,108 @@
                 this.loadTip = true;
                 findByStoreIdAndId(this.sid, _id).then(res => {
                     if (res.code === 1) {
-                        if(res.data.list.length === 0) this.showLoad = false;
+                        if (res.data.list.length === 0) this.showLoad = false;
                         else this.comments.push(...res.data.list);
                     }
                 })
-            }
+            },
+            starProduct(id) {
+                isStarByProductId(id).then(res => {
+                    if (res.code === 1) {
+                        let stars = res.data;
+                        if (stars.length !== 0) {
+                            this.$confirm('该产品已被收藏，确定取消该收藏？', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'warning',
+                                center: true
+                            }).then(() => {
+                                    this.ProductUnStar(stars[0].id);
+                                }
+                            ).catch();
+                        } else {
+                            this.$confirm('确认收藏该产品?', '提示', {
+                                confirmButtonText: '确定',
+                                cancelButtonText: '取消',
+                                type: 'warning',
+                                center: true
+                            }).then(() => {
+                                star({
+                                    pid: id,
+                                    type: true
+                                }).then(res => {
+                                    if (res.code === 1) this.$message.success('收藏商店成功！');
+                                });
+                            }).catch();
+                        }
+                    }
+                });
+            },
+            ProductUnStar(id) {
+                unStar({
+                    id: id,
+                    uid: common.getUserInfo().id
+                }).then(res => {
+                    if (res.code === 1) this.$message.success('已取消收藏');
+                });
+            },
+            isStarByStoreId() {
+                if (this.$store.getters.starCache(this.id)) this.stars = this.$store.getters.getStar(this.id);
+                else this.loadStar();
+            },
+            loadStar() {
+                isStarByStoreId(this.sid).then(res => {
+                    if (res.code === 1) {
+                        let data = res.data;
+                        this.stars = data;
+                        this.$store.commit('setStars', {storeId: this.id, star: data});
+                    }
+                });
+            },
+            starStore(id) {
+                if (this.isStar) {
+                    this.$confirm('确认取消收藏?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning',
+                        center: true
+                    }).then(() => {
+                        unStar({
+                            id: this.stars[0].id,
+                            uid: common.getUserInfo().id
+                        }).then(res => {
+                            if (res.code === 1) {
+                                this.loadStar();
+                                this.$message.success('已取消收藏');
+                            }
+                        });
+                    }).catch();
+                } else {
+                    this.$confirm('确认收藏该商店?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning',
+                        center: true
+                    }).then(() => {
+                        star({
+                            sid: id,
+                            type: false
+                        }).then(res => {
+                            if (res.code === 1) {
+                                this.loadStar();
+                                this.$message.success('收藏商店成功！');
+                            }
+                        });
+                    }).catch();
+                }
+            },
         },
         computed: {
             getCount() {
                 return this.$store.getters.getCount
+            },
+            isStar: function () {
+                return this.stars.length !== 0;
             }
         }
     }
@@ -196,10 +299,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .add {
-        float: right;
     }
 
     .info {

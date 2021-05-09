@@ -62,6 +62,10 @@ const routes = [
     {
         path: '/detail',
         component: () => import('@/page/service/detail')
+    },
+    {
+        path: '/star',
+        component: () => import('@/page/service/star')
     }
 ];
 

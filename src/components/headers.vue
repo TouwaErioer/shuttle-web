@@ -5,7 +5,7 @@
             <slot/>
         </div>
         <slot name="icon">
-            <span class="el-icon-more icon_n"></span>
+            <span slot="icon" @click="$router.replace('/home')"><i class="el-icon-house"></i></span>
         </slot>
     </header>
 </template>
