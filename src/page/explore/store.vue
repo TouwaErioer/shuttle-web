@@ -10,8 +10,8 @@
                      :style="'background:url(' + store.image + ');background-size: cover'"></div>
                 <div class="info" :style="'top:' + $store.getters.getHeight">
                     <item :item="store" :color="false">
-                        <el-tag slot="tag" size="mini" v-text="store.services.name" effect="dark" class="item-tag" type="warning"
-                                style="font-size:2vh;height: unset"></el-tag>
+                        <el-tag slot="tag" size="mini" v-text="store.services.name" effect="dark" class="item-tag"
+                                type="warning"/>
                         <div slot="sales">
                             <i class="el-icon-medal"></i> 总销量：<span>{{ store.sales}}</span>
                         </div>
