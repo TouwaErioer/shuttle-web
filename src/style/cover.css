@@ -67,23 +67,24 @@
 
 .el-tabs__content {
     height: 89% !important;
-    overflow-y: auto!important;
+    overflow-y: auto !important;
 }
 
-.el-tabs__content::-webkit-scrollbar{
+.el-tabs__content::-webkit-scrollbar {
     width: 0 !important
 }
 
 .el-tab-pane {
     height: 100% !important;
 }
-.el-dialog{
-    margin-top: 25vh!important;
+
+.el-dialog {
+    margin-top: 25vh !important;
 }
 
 @media screen and (min-width: 1080px) {
-    .all{
-        margin:0 38.5%!important;
+    .all {
+        margin: 0 38.5% !important;
         background-color: #303133;
     }
 
@@ -91,43 +92,43 @@
         width: 0 !important
     }
 
-    .cover-item{
-        width: 98px!important;
-        height: 98px!important;
+    .cover-item {
+        width: 98px !important;
+        height: 98px !important;
     }
 
-    .app{
+    .app {
         background-color: white;
     }
 
-    .mescroll{
-        position: unset!important;
+    .mescroll {
+        position: unset !important;
     }
 
 
-    .el-tabs{
-        position: unset!important;
+    .el-tabs {
+        position: unset !important;
     }
 
-    .receive > .el-tabs__header{
-        position: fixed!important;
-        bottom: 0!important;
+    .receive > .el-tabs__header {
+        position: fixed !important;
+        bottom: 0 !important;
         width: 23%;
     }
 
-    .el-dialog{
-        width: 19%!important;
+    .el-dialog {
+        width: 19% !important;
     }
 
-    .el-message-box{
-        width: 230px!important;
+    .el-message-box {
+        width: 230px !important;
     }
 
-    .el-message{
+    .el-message {
         min-width: 23% !important;
     }
 
-    .el-loading{
-        width: 23%!important;
+    .el-loading {
+        width: 23% !important;
     }
 }

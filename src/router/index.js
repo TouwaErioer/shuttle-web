@@ -66,6 +66,10 @@ const routes = [
     {
         path: '/star',
         component: () => import('@/page/service/star')
+    },
+    {
+        path: '/approve',
+        component: () => import('@/page/service/approve')
     }
 ];
 

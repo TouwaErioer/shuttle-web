@@ -43,16 +43,16 @@
                     {
                         title: '收藏',
                         detail: '查看收藏商店或产品',
-                        color: '#e6a23ccc',
+                        color: '#ffb26b',
                         icon: 'el-icon-star-off',
                         router: '/star'
                     },
                     {
                         title: '审批',
                         detail: '提交商店或产品',
-                        color: '#67c23ac2',
+                        color: '#95e1d3',
                         icon: 'el-icon-shopping-cart-1',
-                        router: '/cart'
+                        router: '/approve'
                     }
                 ]
             }
