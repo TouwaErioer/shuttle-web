@@ -9,7 +9,7 @@
                     <slot name="tag"/>
                 </div>
                 <div class="item-desc">
-                    <el-rate v-model="item.rate" disabled text-color="#ff9900" show-score>
+                    <el-rate :value="rateToFixed(item.rate)" disabled text-color="#ff9900" show-score>
                     </el-rate>
                     <slot name="button"/>
                 </div>
@@ -25,7 +25,14 @@
 <script>
     export default {
         name: "item",
-        props: ['item', 'color', 'price', 'count']
+        props: ['item', 'color', 'price', 'count'],
+        computed: {
+            rateToFixed: function () {
+                return (rate) => {
+                    return rate >= 4.95 ? 5.0 : rate.toFixed(1);
+                }
+            }
+        }
     }
 </script>
 
