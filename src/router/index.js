@@ -72,6 +72,10 @@ const routes = [
     {
         path: '/approve',
         component: () => import('@/page/service/approve')
+    },
+    {
+        path: '/chat',
+        component: () => import('@/page/center/chat')
     }
 ];
 

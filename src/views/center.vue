@@ -33,7 +33,7 @@
                 </cell>
             </cells>
             <cells class="cells">
-                <cell icon="el-icon-service" text="服务中心" :access="true" @click="help"/>
+                <cell icon="el-icon-service" text="服务中心" :access="true" @click="$router.push('/chat')"/>
                 <cell icon="el-icon-turn-off" text="退出登录" @click="exit"/>
             </cells>
         </div>
