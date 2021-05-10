@@ -71,7 +71,7 @@
         },
         methods: {
             openAdminWeb() {
-                window.open(process.env.VUE_APP_ADMIN);
+                window.open(process.env.VUE_APP_ADMIN + '/login/' + localStorage.getItem('token'));
             }
         }
     }
@@ -85,6 +85,7 @@
     .container::-webkit-scrollbar {
         width: 0 !important
     }
+
     #btn {
         width: 50px;
         height: 30px;
