@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import common from "@/utils/commont";
 
+import {Message} from 'element-ui'
 
 Vue.use(VueRouter);
 
@@ -80,12 +82,17 @@ const routers = new VueRouter({
 
 routers.beforeEach((to, from, next) => {
     const token = localStorage.getItem('token');
+    let path = to.path;
+    let userInfo = common.getUserInfo();
     if (!token) {
-        if (to.path !== '/login') next({path: '/login'});
-        else next()
-    } else {
-        next();
-    }
+        if (path !== '/login') next({path: '/login'});
+        else next();
+    } else if (path === '/order' || path === '/receive' || path === '/cart') {
+        if (!(userInfo.email !== 'null' || userInfo.address !== null || userInfo.name !== null)) {
+            Message.error('请完善基本信息');
+            next('/center/edit');
+        } else next();
+    } else next();
 });
 
 export default routers

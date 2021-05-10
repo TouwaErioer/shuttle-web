@@ -160,7 +160,6 @@
     import Headers from "@/components/headers";
     import MescrollVue from 'mescroll.js/mescroll.vue'
     import {deleteOrder, findByUserId} from "@/utils/api/order";
-    import common from "@/utils/commont";
 
     export default {
         name: "order",
@@ -204,19 +203,10 @@
                     const serviceList = this.$store.getters.getService;
                     return serviceList.filter(service => service.id === serviceId)[0];
                 }
-            },
-            checkUserInfo() {
-                let userInfo = common.getUserInfo();
-                return userInfo.email !== 'null' || userInfo.address !== null || userInfo.name !== null;
             }
         },
         created() {
-            if (!this.checkUserInfo) {
-                this.$message.error('请完善基本信息');
-                this.$router.push('/center/edit');
-            } else {
-                this.getOrder();
-            }
+            this.getOrder();
         },
         methods: {
             getOrder() {
