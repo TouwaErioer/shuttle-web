@@ -1,69 +1,42 @@
 <template>
     <div class="container">
-        <card v-for="(page,index) in pages" :key="index" :title="page.title" :detail="page.detail" :color="page.color"
-              :icon="page.icon">
-            <div id="btn" :style="'background-color: ' + page.color" slot="btn"
-                 @click="page.router === 'admin' ? openAdminWeb() :$router.push(page.router)">进入
-            </div>
-        </card>
+        <vue-card-stack :cards="cards" :stack-width="360" :card-width="280">
+            <template v-slot:card="{ card }">
+                <div class="card" @click="card.router === 'admin' ? openAdminWeb() :$router.push(card.router)"
+                     style="width: 100%; height: 100%;"
+                     :style="{ background: card.background }"
+                >
+                    <div :class="card.icon" style="margin: 10px;font-size: 30px"/>
+                    <div v-text="card.label" :icon="card.icon"/>
+                </div>
+            </template>
+        </vue-card-stack>
     </div>
 </template>
 
 <script>
-
-    import card from "@/components/card";
+    import VueCardStack from "vue-card-stack";
 
     export default {
         name: "service",
-        components: {card},
+        components: {VueCardStack},
         data() {
             return {
-                pages: [
-                    {
-                        title: '订单',
-                        detail: '查看已下单的商品',
-                        color: 'rgba(99, 149, 237, 0.79)',
-                        icon: 'el-icon-tickets',
-                        router: '/order'
-                    },
-                    {
-                        title: '接单',
-                        detail: '查看已接收的订单',
-                        color: '#ff7f50a8',
-                        icon: 'el-icon-sell',
-                        router: '/receive'
-                    },
-                    {
-                        title: '购物车',
-                        detail: '查看购物车',
-                        color: 'pink',
-                        icon: 'el-icon-shopping-cart-1',
-                        router: '/cart'
-                    },
-                    {
-                        title: '收藏',
-                        detail: '查看收藏商店或产品',
-                        color: '#ffb26b',
-                        icon: 'el-icon-star-off',
-                        router: '/star'
-                    },
-                    {
-                        title: '审批',
-                        detail: '提交商店或产品',
-                        color: '#95e1d3',
-                        icon: 'el-icon-shopping-cart-1',
-                        router: '/approve'
-                    }
+                cards: [
+                    {background: "rgb(99, 149, 237)", label: '订单', icon: 'el-icon-tickets', router: '/order'},
+                    {background: "#eb8081", label: '接单', icon: 'el-icon-sell', router: '/receive'},
+                    {background: "pink", label: '购物车', icon: 'el-icon-shopping-cart-1', router: '/cart'},
+                    {background: "#ffb26b", label: '收藏', icon: 'el-icon-star-off', router: '/star'},
+                    {background: "#95e1d3", label: '审批', icon: 'el-icon-shopping-cart-1', router: '/approve'},
                 ]
             }
         },
         created() {
             let admin = this.$store.getters.getUserInfo.admin;
             if (admin) {
-                this.pages.push({
-                    title: '后台管理',
-                    detail: '进入后台管理界面',
-                    color: 'thistle',
+                this.cards.push({
+                    label: '后台管理',
+                    background: 'thistle',
                     icon: 'el-icon-data-analysis',
                     router: 'admin'
                 })
@@ -86,13 +59,15 @@
         width: 0 !important
     }
 
-    #btn {
+    .card {
         width: 50px;
         height: 30px;
-        font-size: 10px;
+        font-size: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
+        flex-flow: column;
+        border-radius: 15px;
     }
 </style>

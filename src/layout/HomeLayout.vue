@@ -66,7 +66,6 @@
         },
         methods: {
             menuSelect(current) {
-                console.log(current);
                 this.activeIndex = current;
             },
             handleScroll () {

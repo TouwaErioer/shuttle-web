@@ -55,7 +55,7 @@
 <script>
     import Item from "@/components/item";
     import common from "@/utils/commont";
-    import {businessList} from "@/utils/api/service";
+    import {findAllService} from "@/utils/api/service";
     import {findPopularStore} from "@/utils/api/store";
     import {findPopularProduct} from "@/utils/api/product";
     import ProductDialog from "@/components/product-dialog";
@@ -89,9 +89,9 @@
             getService() {
                 const services = sessionStorage.getItem('serviceList');
                 if (services === null) {
-                    businessList().then(res => {
+                    findAllService().then(res => {
                         if (res.code === 1) {
-                            let services = res.data;
+                            let services = res.data.list;
                             this.services = services;
                             this.$store.commit('setServices', services);
                             sessionStorage.setItem('serviceList', JSON.stringify(services));
