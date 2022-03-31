@@ -114,7 +114,7 @@
                     this.$message.error('必填输入框未输入')
                 } else if (register_from.password !== register_from.rePassword) {
                     this.$message.error('两次输入密码不一致')
-                } else if (!regEx.test(register_from.phone)) {
+                } else if (!regEx.test(register_from.email)) {
                     this.$message.error('邮箱格式错误')
                 } else {
                     const data = {
