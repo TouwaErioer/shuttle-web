@@ -1,16 +1,24 @@
 <template>
     <div class="container">
-        <vue-card-stack :cards="cards" :stack-width="360" :card-width="280">
-            <template v-slot:card="{ card }">
-                <div class="card" @click="card.router === 'admin' ? openAdminWeb() :$router.push(card.router)"
-                     style="width: 100%; height: 100%;"
-                     :style="{ background: card.background }"
-                >
-                    <div :class="card.icon" style="margin: 10px;font-size: 30px"/>
-                    <div v-text="card.label" :icon="card.icon"/>
-                </div>
-            </template>
-        </vue-card-stack>
+                <vue-card-stack :cards="cards" :stack-width="360" :card-width="280">
+                    <template v-slot:card="{ card }">
+                        <el-card :body-style="{ padding: '0px' }">
+                            <div :style="'height:300px;display: flex;justify-content: center;align-items: center;' +
+                                'background-color: ' + card.background">
+                                <i :class="card.icon" style="font-size: 30px;color: white"/>
+                            </div>
+                            <div style="padding: 15px;">
+                                <span v-text="card.label"/>
+                                <div class="bottom clearfix">
+                                    <el-button type="text" class="button"
+                                               @click="card.router === 'admin' ? openAdminWeb() :$router.push(card.router)">
+                                        进入页面
+                                    </el-button>
+                                </div>
+                            </div>
+                        </el-card>
+                    </template>
+                </vue-card-stack>
     </div>
 </template>
 
@@ -28,7 +36,9 @@
                     {background: "pink", label: '购物车', icon: 'el-icon-shopping-cart-1', router: '/cart'},
                     {background: "#ffb26b", label: '收藏', icon: 'el-icon-star-off', router: '/star'},
                     {background: "#95e1d3", label: '审批', icon: 'el-icon-shopping-cart-1', router: '/approve'},
-                ]
+                ],
+                headerOpt: { isVisible: false },
+                footerOpt: { isVisible: false }
             }
         },
         created() {
@@ -69,5 +79,10 @@
         color: white;
         flex-flow: column;
         border-radius: 15px;
+    }
+
+    .vcc {
+        height: 50vh;
+        width: 60vw;
     }
 </style>
