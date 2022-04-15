@@ -129,9 +129,7 @@
             getProducts() {
                 if (this.$store.getters.productsCache(parseInt(this.sid))) {
                     this.products = this.$store.getters.getProducts(this.sid);
-                    console.log('缓存storeId为' + this.sid + '的products');
                 } else {
-                    console.log('获取storeId为' + this.sid + '的products');
                     findProductsByStoreId(this.sid).then(res => {
                         if (res.code === 1) {
                             this.products = res.data;

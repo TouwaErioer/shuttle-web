@@ -133,9 +133,7 @@
             getStores() {
                 if (this.$store.getters.storesCache(this.serviceId)) {
                     this.stores = this.$store.getters.getStoresBySid(this.serviceId);
-                    console.log('缓存id为' + this.sid + '的stores')
                 } else {
-                    console.log('获取id为' + this.sid + '的stores');
                     findStoreByServiceId(this.sid).then(res => {
                         if (res.code === 1) {
                             let stores = res.data.list;
@@ -148,9 +146,7 @@
             getCategories() {
                 if (this.$store.getters.categoriesCache(this.serviceId)) {
                     this.categories = this.$store.getters.getCategories(this.serviceId);
-                    console.log('缓存id为' + this.sid + '的categories')
                 } else {
-                    console.log('获取id为' + this.sid + '的categories');
                     findCategoryByServiceId(this.sid).then(res => {
                         if (res.code === 1) {
                             this.categories = res.data;

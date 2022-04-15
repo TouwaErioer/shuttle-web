@@ -61,8 +61,7 @@
             };
         },
         mounted () {
-            window.addEventListener('scroll', this.handleScroll, true)
-            console.log(this.scrollTop);
+            window.addEventListener('scroll', this.handleScroll, true);
         },
         methods: {
             menuSelect(current) {
@@ -75,11 +74,6 @@
         destroyed () {
             // 离开该页面需要移除这个监听的事件，不然会报错
             window.removeEventListener('scroll', this.handleScroll)
-        },
-        watch:{
-            scrollTop(){
-                console.log(this.scrollTop);
-            }
         }
     };
 </script>

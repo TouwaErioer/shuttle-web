@@ -5,10 +5,6 @@ const state = () => ({
 
 const getters = {
     getNewOrders: (state) => {
-        // var orders = [...state.orders];
-        // // 清空数组
-        // state.orders.splice(0); 
-        // return orders;
         return state.orders;
     },
 }
@@ -20,7 +16,6 @@ const mutations = {
             state.ws = ws;
 
             ws.onopen = () => {
-                console.info("websocket open")
                 page && page.$message({
                     type: 'success',
                     message: '订阅新订单',
@@ -32,7 +27,6 @@ const mutations = {
                 var order = JSON.parse(evt.data);
                 // 添加order到数组起始位置
                 state.orders.unshift(order);
-                console.log(order)
             };
 
             ws.onclose = () => {

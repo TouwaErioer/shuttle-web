@@ -234,11 +234,10 @@ mock.order = function () {
 // 接单（全部订单）
 mock.receive = function () {
     return orders.filter(order => order.status = -1)
-}
+};
 
 // 接单（用户已接单、已完成）
 mock.received = function () {
-    console.log(orders)
     return [{
         id: 1,
         product: '套餐一',

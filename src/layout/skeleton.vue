@@ -62,7 +62,6 @@ export default {
 
   methods: {
     menuSelect(current) {
-      console.log(current);
       this.activeIndex = current;
       this.$refs.MyCarousel.setActiveItem(current);
     },
