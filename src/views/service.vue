@@ -34,8 +34,7 @@
                     {background: "rgb(99, 149, 237)", label: '订单', icon: 'el-icon-tickets', router: '/order'},
                     {background: "#eb8081", label: '接单', icon: 'el-icon-sell', router: '/receive'},
                     {background: "pink", label: '购物车', icon: 'el-icon-shopping-cart-1', router: '/cart'},
-                    {background: "#ffb26b", label: '收藏', icon: 'el-icon-star-off', router: '/star'},
-                    {background: "#95e1d3", label: '审批', icon: 'el-icon-shopping-cart-1', router: '/approve'},
+                    {background: "#ffb26b", label: '收藏', icon: 'el-icon-star-off', router: '/star'}
                 ],
                 headerOpt: { isVisible: false },
                 footerOpt: { isVisible: false }

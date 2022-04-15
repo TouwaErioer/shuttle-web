@@ -140,7 +140,7 @@ routers.beforeEach((to, from, next) => {
         if (path !== '/login') next({path: '/login'});
         else next();
     } else if (path === '/order' || path === '/receive' || path === '/cart') {
-        if (!(userInfo.email !== 'null' || userInfo.address !== null || userInfo.name !== null)) {
+        if (userInfo.email === null || userInfo.address === null || userInfo.name === null) {
             Message.error('请完善基本信息');
             next('/center/edit');
         } else next();
