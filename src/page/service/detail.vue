@@ -102,7 +102,7 @@
                     </div>
                 </div>
 
-                <div class="tip" v-if="order.status === -1">暂无服务者</div>
+                <div class="tip" style="height: 150px;" v-else>暂无服务者</div>
             </div>
             <el-dialog title="请评价该产品" :visible.sync="dialogEvaluateVisible" width="80%" center>
                 <div class="rate">
