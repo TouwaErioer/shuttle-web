@@ -30,12 +30,12 @@
                         <span slot="label"><i class="el-icon-goods"></i> 商品</span>
                         <div class="content" v-if="products.length !== 0">
                             <div class="products">
-                                <Item v-for="product in products" :key="product.id" :item="product" :price="true"
-                                      @click.native="starProduct(product.id)">
-                                    <div slot="button" @click.stop.prevent>
+                                <Item v-for="product in products" :key="product.id" :item="product" :price="true">
+                                    <div slot="button">
                                         <ProductDialog :product="product"/>
                                     </div>
-                                    <div slot="price"><i class="el-icon-price-tag"></i> 价格：
+                                    <div slot="price" @click="starProduct(product.id)"><i class="el-icon-price-tag"></i>
+                                        价格：
                                         <span class="price-text" v-text="getPrice(product.price)"/>
                                     </div>
                                     <div slot="sales"><i class="el-icon-medal"></i> 销量：
