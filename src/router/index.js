@@ -3,9 +3,10 @@ import VueRouter from 'vue-router'
 import common from "@/utils/commont";
 
 import {Message} from 'element-ui'
+import {findScore} from "@/utils/api/user";
+import store from "@/store";
 
 Vue.use(VueRouter);
-
 
 const house = localStorage.getItem('house');
 
@@ -136,6 +137,11 @@ routers.beforeEach((to, from, next) => {
     const token = localStorage.getItem('token');
     let path = to.path;
     let userInfo = common.getUserInfo();
+    if (to.path === '/result/1') {
+        findScore(userInfo.id).then(res => {
+            store.commit('changeScore', res.data);
+        });
+    }
     if (!token) {
         if (path !== '/login') next({path: '/login'});
         else next();

@@ -12,7 +12,7 @@ const mutations = {
     changeScore(state, score) {
         state.userInfo.score = score;
     }
-}
+};
 
 export default {
     state,
