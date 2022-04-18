@@ -38,6 +38,7 @@
             return {
                 dialogUploadVisible: false,
                 dialogInputVisible: false,
+                value: null
             }
         },
         computed: {
